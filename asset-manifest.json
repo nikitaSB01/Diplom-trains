@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Diplom-trains/static/css/main.dbebb464.css",
+    "main.js": "/Diplom-trains/static/js/main.a482b500.js",
+    "static/js/453.b9d1581c.chunk.js": "/Diplom-trains/static/js/453.b9d1581c.chunk.js",
+    "index.html": "/Diplom-trains/index.html",
+    "main.dbebb464.css.map": "/Diplom-trains/static/css/main.dbebb464.css.map",
+    "main.a482b500.js.map": "/Diplom-trains/static/js/main.a482b500.js.map",
+    "453.b9d1581c.chunk.js.map": "/Diplom-trains/static/js/453.b9d1581c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dbebb464.css",
+    "static/js/main.a482b500.js"
+  ]
+}
