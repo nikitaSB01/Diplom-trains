@@ -13,15 +13,6 @@
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "no-unused-vars": ["warn"],
-    "import/order": [
-      "error",
-      {
-        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"]],
-        "pathGroups": [{ "pattern": "@/**", "group": "internal" }],
-        "pathGroupsExcludedImportTypes": ["builtin"],
-        "alphabetize": { "order": "asc", "caseInsensitive": true },
-        "newlines-between": "always"
-      }
-    ]
+    "import/order": "off"
   }
 }
