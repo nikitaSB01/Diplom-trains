@@ -1,19 +1,87 @@
+/* Общие параметры */
 .header {
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+    min-height: 985px;
+    max-height: 985px;
+    color: #fff;
+    background-image: url("../../../assets/img/train-bg.png");
+    background-size: 1920px auto; /* фикс ширины, без растягивания */
+    background-repeat: no-repeat;
+    background-position: center top;
+    overflow: hidden;
+}
+
+/* ======== Верхний блок с логотипом ======== */
+.logoBar {
+    height: 64px;
+    background: rgba(0, 0, 0, 0.6);
+
+    padding: 15px 0 0 258px; /* отступ слева */
+}
+
+.logo {
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 36px;
+}
+
+/* ======== Навигация ======== */
+.navBar {
+    background-color: rgba(41, 41, 41, 1);
+    height: 94px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #2d2d2d;
-    color: white;
-    padding: 20px 24px;
+    padding-left: 258px; /* якорные ссылки с тем же отступом */
+}
+
+.nav {
+    display: flex;
+    gap: 40px;
 }
 
 .nav a {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
-    margin-left: 32px;
-    transition: color 0.3s;
+    font-size: 16px;
+    transition: color 0.3s ease;
 }
 
 .nav a:hover {
-    color: #ffa800;
+    color: #fcdc2a;
+}
+
+/* ======== Герой-блок ======== */
+.hero {
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.heroContent {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding-left: 349px;
+}
+
+.textBlock h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    font-weight: 300;
+    color: #fff;
+}
+
+.textBlock span {
+    font-weight: 700;
+}
+
+.formBlock {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 24px;
+    border-radius: 8px;
+    max-width: 420px;
 }
