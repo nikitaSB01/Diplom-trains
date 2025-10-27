@@ -1,32 +1,105 @@
+/* Основной контейнер блока */
+.search {
+    width: 730px;
+    height: 574px;
+    background: rgba(41, 41, 41, 0.8);
+    box-sizing: border-box;
+    padding: 80px 20px 90px 20px;
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Форма */
 .form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-}
-
-.row {
-    display: flex;
-    gap: 12px;
-}
-
-input {
+    gap: 90px; /* расстояние между контейнером полей и кнопкой */
     width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: none;
-    outline: none;
 }
 
-button {
-    background-color: #fcdc2a;
+/* Контейнер с двумя группами (Направление и Дата) */
+.fieldsBox {
+    display: flex;
+    flex-direction: column;
+    gap: 60px; /* интервал между секциями */
+    width: 100%;
+}
+
+/* Каждая группа: заголовок + поля */
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Заголовки "Направление" и "Дата" */
+.label {
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 100%;
+    color: rgba(255, 255, 255, 1);
+}
+
+/* Ряд полей (Направления или Даты) */
+.row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 690px; /* 2 поля по 325px + 40px между ними */
+}
+
+/* Кнопка обмена направлений */
+.swapBtn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
     border: none;
-    padding: 12px;
-    font-weight: 700;
+    background: transparent;
     cursor: pointer;
-    border-radius: 4px;
-    transition: 0.3s;
+    z-index: 2;
 }
 
-button:hover {
-    background-color: #ffd500;
+.swapBtn img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+}
+
+.swapBtn:hover img {
+    opacity: 1;
+}
+
+/* Кнопка Найти билеты */
+.submitBtn {
+    align-self: flex-end;
+    width: 325px;
+    height: 60px;
+    border: none;
+    border-radius: 4px;
+    background: #ffa800;
+    cursor: pointer;
+
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgba(41, 41, 41, 1);
+
+    transition: filter 0.2s ease;
+}
+
+.submitBtn:hover {
+    filter: brightness(1.06);
+}
+
+.submitBtn:active {
+    filter: brightness(0.95);
 }
