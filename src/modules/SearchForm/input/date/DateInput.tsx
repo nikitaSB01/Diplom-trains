@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './DateInput.module.css';
 import calendarIcon from '../../../../assets/icons/SearchForm/calendar.svg';
+import arrowLeft from '../../../../assets/icons/SearchForm/arrowL.png';
+import arrowRight from '../../../../assets/icons/SearchForm/arrowR.png';
 
 interface DateInputProps {
   placeholder: string;
@@ -76,21 +78,25 @@ export const DateInput: React.FC<DateInputProps> = ({ placeholder }) => {
       });
     }
 
-    // Добавляем дни следующего месяца, чтобы всего было 42 (6 недель)
-    while (days.length < 42) {
-      const nextDay: Date = new Date(
-        year,
-        month,
-        lastDay.getDate() + (days.length - (startDayOfWeek - 1)) + 1,
-      );
+    // Добавляем дни следующего месяца, чтобы общее количество было кратно 7
+    const totalCells = Math.ceil(days.length / 7) * 7;
+    const extraDays = totalCells - days.length;
 
-      days.push({ date: nextDay, otherMonth: true });
+    for (let i = 1; i <= extraDays; i++) {
+      days.push({
+        date: new Date(year, month + 1, i),
+        otherMonth: true,
+      });
     }
 
     return days;
   };
 
   const days = getDaysInMonth(currentYear, currentMonth);
+
+  // определяем высоту календаря
+  const rowsCount = Math.ceil(days.length / 7);
+  const popupHeight = rowsCount === 6 ? '322px' : '302px';
 
   return (
     <div className={styles.inputWrapper} ref={calendarRef}>
@@ -105,20 +111,49 @@ export const DateInput: React.FC<DateInputProps> = ({ placeholder }) => {
       <img src={calendarIcon} alt="Календарь" className={`${styles.icon} ${styles.iconCalendar}`} />
 
       {showCalendar && (
-        <div className={styles.calendarPopup}>
+        <div className={styles.calendarPopup} style={{ height: popupHeight }}>
           <div className={styles.calendarHeader}>
-            {today.toLocaleString('ru-RU', { month: 'long' })} {currentYear}
+            <button
+              type="button"
+              className={styles.arrowBtn}
+              onClick={() => {
+                if (currentMonth === 0) {
+                  setCurrentMonth(11);
+                  setCurrentYear((y) => y - 1);
+                } else {
+                  setCurrentMonth((m) => m - 1);
+                }
+              }}
+            >
+              <img src={arrowLeft} alt="Назад" />
+            </button>
+
+            <span className={styles.monthName}>
+              {new Date(currentYear, currentMonth).toLocaleString('ru-RU', {
+                month: 'long',
+              })}
+            </span>
+
+            <button
+              type="button"
+              className={styles.arrowBtn}
+              onClick={() => {
+                if (currentMonth === 11) {
+                  setCurrentMonth(0);
+                  setCurrentYear((y) => y + 1);
+                } else {
+                  setCurrentMonth((m) => m + 1);
+                }
+              }}
+            >
+              <img src={arrowRight} alt="Вперёд" />
+            </button>
           </div>
+
           <div className={styles.calendarGrid}>
-            {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((d) => (
-              <div key={d} className={styles.day} style={{ fontWeight: 700 }}>
-                {d}
-              </div>
-            ))}
             {days.map(({ date, otherMonth }) => {
               const isPast =
-                date < new Date(today.getFullYear(), today.getMonth(), today.getDate()) &&
-                !otherMonth;
+                date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
               const isSunday = date.getDay() === 0;
               const isSelected =
                 selectedDate &&
@@ -129,8 +164,10 @@ export const DateInput: React.FC<DateInputProps> = ({ placeholder }) => {
               const dayClassName = [
                 styles.day,
                 otherMonth ? styles.otherMonth : '',
-                isPast ? styles.pastDay : '',
-                isSunday ? styles.sunday : '',
+                isPast && !otherMonth ? styles.pastDay : '',
+                isSunday && otherMonth ? styles.otherSunday : '',
+                isSunday && isPast && !otherMonth ? styles.pastSunday : '',
+                isSunday && !isPast && !otherMonth ? styles.sunday : '',
                 isSelected ? styles.selected : '',
               ].join(' ');
 
@@ -138,13 +175,9 @@ export const DateInput: React.FC<DateInputProps> = ({ placeholder }) => {
                 <div
                   key={date.toISOString()}
                   className={dayClassName}
-                  onClick={() => {
-                    if (!otherMonth) {
-                      handleDayClick(date);
-                    }
-                  }}
+                  onClick={() => !isPast && handleDayClick(date)}
                   onKeyDown={(e) => {
-                    if (!otherMonth && (e.key === 'Enter' || e.key === ' ')) {
+                    if ((e.key === 'Enter' || e.key === ' ') && !isPast) {
                       handleDayClick(date);
                     }
                   }}
