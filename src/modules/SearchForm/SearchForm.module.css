@@ -81,8 +81,8 @@
     width: 325px;
     height: 60px;
     border: none;
-    border-radius: 4px;
-    background: #ffa800;
+    border-radius: 5px;
+    background: rgba(255, 168, 0, 1);
     cursor: pointer;
 
     font-family: Roboto, sans-serif;
@@ -92,12 +92,17 @@
     text-transform: uppercase;
     text-align: center;
     color: rgba(41, 41, 41, 1);
-
     transition: filter 0.2s ease;
+}
+.submitBtn:active {
+    border: 1px solid rgba(255, 168, 0, 1);
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: rgba(255, 168, 0, 1);
 }
 
 .submitBtn:hover {
-    filter: brightness(1.06);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .submitBtn:active {
