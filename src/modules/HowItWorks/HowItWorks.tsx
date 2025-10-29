@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './HowItWorks.module.css';
 
-import icon1 from '../../assets/icons/\HowItWorks/icon1.svg';
-import icon2 from '../../assets/icons/\HowItWorks/icon2.svg';
-import icon3 from '../../assets/icons/\HowItWorks/icon3.svg';
+import icon1 from '../../assets/icons/HowItWorks/icon1.svg';
+import icon2 from '../../assets/icons/HowItWorks/icon2.svg';
+import icon3 from '../../assets/icons/HowItWorks/icon3.svg';
 
 const HowItWorks: React.FC = () => {
   return (
