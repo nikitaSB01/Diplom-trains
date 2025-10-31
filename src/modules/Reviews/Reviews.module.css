@@ -1,0 +1,127 @@
+.reviews {
+    max-width: 1920px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 150px 0 120px 0;
+    display: flex;
+    flex-direction: column;
+    /*     align-items: center;
+ */
+}
+
+/* Титульник */
+.titleBlock {
+    width: 1400px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 252px;
+}
+
+.title {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-transform: uppercase;
+    color: rgba(41, 41, 41, 1);
+}
+
+/* Контейнер с отзывами */
+.reviewsContainer {
+    display: flex;
+    margin-left: 252px;
+    gap: 85px;
+    margin-top: 33px;
+    margin-bottom: 140px;
+    width: 1400px;
+    transition: 0.3s ease;
+}
+
+.review {
+    display: flex;
+    align-items: center;
+    width: 650px;
+}
+
+.imageBlock img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.textBlock {
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+    max-width: 400px;
+}
+
+.name {
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(0, 0, 0, 1);
+    margin-bottom: 15px;
+}
+
+.text {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 100%;
+    color: rgba(146, 143, 148, 1);
+    font-style: italic;
+    position: relative;
+}
+/* Кавычки */
+.text::before,
+.text::after {
+    font-size: 36px;
+    vertical-align: top;
+    color: rgba(146, 143, 148, 1);
+    position: relative;
+}
+
+.text::before {
+    content: "“";
+    margin-right: 4px;
+}
+
+.text::after {
+    content: "”";
+    margin-left: 4px;
+    top: 20px;
+}
+
+/* Индикаторы */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    height: 19px;
+}
+
+.dot {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background-color: rgba(217, 217, 217, 1);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dot.active {
+    background-color: rgba(120, 120, 120, 1);
+}
+
+.dot:focus {
+    outline: none;
+}
