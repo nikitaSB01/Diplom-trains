@@ -1,5 +1,6 @@
 .howItWorks {
-    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
     height: 575px;
     background: url("../../assets/img/HowItWorks/background.png") center/cover no-repeat;
     display: flex;

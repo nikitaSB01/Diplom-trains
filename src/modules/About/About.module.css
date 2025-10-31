@@ -1,5 +1,6 @@
 .about {
-    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
     height: 560px;
     background-color: #fff;
     display: flex;
