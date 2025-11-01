@@ -5,7 +5,11 @@ import { DirectionInput } from './input/direction/DirectionInput';
 import { DateInput } from './input/date/DateInput';
 import swapIcon from '../../assets/icons/SearchForm/swap.svg';
 
-const SearchForm: React.FC = () => {
+interface SearchFormProps {
+  isCompact?: boolean;
+}
+
+const SearchForm: React.FC<SearchFormProps> = ({ isCompact = false }) => {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
 
@@ -18,16 +22,16 @@ const SearchForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // при желании можно добавить в будущем валидацию или передачу данных
     navigate('/search');
   };
 
   return (
-    <section className={styles.search}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        {/* Основной контейнер с полями */}
+    <section className={`${styles.search} ${isCompact ? styles.compactSearch : ''}`}>
+      <form
+        className={`${styles.form} ${isCompact ? styles.compactForm : ''}`}
+        onSubmit={handleSubmit}
+      >
         <div className={styles.fieldsBox}>
-          {/* Блок Направление */}
           <div className={styles.group}>
             <h3 className={styles.label}>Направление</h3>
             <div className={styles.row}>
@@ -44,7 +48,6 @@ const SearchForm: React.FC = () => {
             </div>
           </div>
 
-          {/* Блок Дата */}
           <div className={styles.group}>
             <h3 className={styles.label}>Дата</h3>
             <div className={styles.row}>
@@ -54,7 +57,6 @@ const SearchForm: React.FC = () => {
           </div>
         </div>
 
-        {/* Кнопка Найти билеты */}
         <button type="submit" className={styles.submitBtn}>
           Найти билеты
         </button>

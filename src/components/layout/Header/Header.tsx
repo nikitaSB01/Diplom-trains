@@ -2,9 +2,13 @@ import React from 'react';
 import styles from './Header.module.css';
 import SearchForm from '../../../modules/SearchForm/SearchForm';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  isInner?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ isInner = false }) => {
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isInner ? styles.innerHeader : ''}`}>
       {/* Верхняя часть — логотип */}
       <div className={styles.logoBar}>
         <div className={styles.logo}>Лого</div>
@@ -23,14 +27,19 @@ const Header: React.FC = () => {
       {/* Герой-блок */}
       <div className={styles.hero}>
         <div className={styles.heroContent}>
-          <div className={styles.textBlock}>
-            <h1>
-              Вся жизнь — <br />
-              <span>путешествие!</span>
-            </h1>
-          </div>
+          {/* Текстовый блок отображаем только на главной */}
+          {!isInner && (
+            <div className={styles.textBlock}>
+              <h1>
+                Вся жизнь — <br />
+                <span>путешествие!</span>
+              </h1>
+            </div>
+          )}
+
+          {/* Блок формы — SearchForm теперь умеет быть компактным */}
           <div className={styles.formBlock}>
-            <SearchForm />
+            <SearchForm isCompact={isInner} />
           </div>
         </div>
       </div>

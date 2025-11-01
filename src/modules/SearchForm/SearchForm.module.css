@@ -7,8 +7,14 @@
     padding: 80px 20px 90px 20px;
     display: flex;
     align-items: flex-start;
+    flex-direction: column;
+    /* justify-content: center; */
 }
-
+.compactSearch {
+    width: 1490px;
+    height: 330px;
+    padding: 30px 40px 0 40px;
+}
 /* Форма */
 .form {
     display: flex;
@@ -16,12 +22,20 @@
     gap: 90px; /* расстояние между контейнером полей и кнопкой */
     width: 100%;
 }
+.compactForm {
+    gap: 50px;
+}
+
+.compactForm .fieldsBox {
+    flex-direction: row;
+    gap: 35px;
+}
 
 /* Контейнер с двумя группами (Направление и Дата) */
 .fieldsBox {
     display: flex;
     flex-direction: column;
-    gap: 60px; /* интервал между секциями */
+    gap: 60px;
     width: 100%;
 }
 

@@ -14,15 +14,22 @@
     /* overflow: hidden; */
     border-bottom: 8px solid rgba(255, 168, 0, 1);
 }
+.innerHeader {
+    min-height: 596px;
+    max-height: 596px;
+    border-bottom: none;
+    background-image: url("../../../assets/img/header/imgNoFull.png");
+}
 
 /* ======== Верхний блок с логотипом ======== */
 .logoBar {
     height: 64px;
     background: rgba(0, 0, 0, 0.6);
-
     padding: 15px 0 0 258px; /* отступ слева */
 }
-
+.innerHeader .logoBar {
+    background: rgba(41, 41, 41, 0.6);
+}
 .logo {
     font-weight: 700;
     color: #ffffff;
@@ -69,12 +76,20 @@
     display: flex;
     align-items: center;
 }
+.innerHeader .hero {
+    margin-top: 110px;
+    min-height: 0;
+}
 
 .heroContent {
     display: flex;
     align-items: start;
     gap: 120px;
     padding-left: 350px;
+}
+.innerHeader .heroContent {
+    padding: 0;
+    margin: 0 auto;
 }
 
 .textBlock h1 {
