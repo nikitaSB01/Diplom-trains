@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './SearchForm.module.css';
 import { DirectionInput } from './input/direction/DirectionInput';
 import { DateInput } from './input/date/DateInput';
@@ -8,14 +9,22 @@ const SearchForm: React.FC = () => {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
 
+  const navigate = useNavigate();
+
   const handleSwap = () => {
     setFrom(to);
     setTo(from);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // при желании можно добавить в будущем валидацию или передачу данных
+    navigate('/search');
+  };
+
   return (
     <section className={styles.search}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         {/* Основной контейнер с полями */}
         <div className={styles.fieldsBox}>
           {/* Блок Направление */}
