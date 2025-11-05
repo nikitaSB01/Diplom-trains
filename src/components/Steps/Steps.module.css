@@ -1,0 +1,59 @@
+.stepsContainer {
+    width: 1920px;
+    height: 98px;
+    display: flex;
+    background-color: #2e2e2e;
+    overflow: hidden;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+    background-color: inherit;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Задаём ширины */
+.step:nth-child(1),
+.step:nth-child(4) {
+    width: 620px;
+}
+
+.step:nth-child(2),
+.step:nth-child(3) {
+    width: 340px;
+}
+
+/* Добавляем "стрелку" справа */
+.step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 49px solid transparent;
+    border-bottom: 49px solid transparent;
+    border-left: 20px solid #c72929; /* цвет фона */
+}
+
+/* Добавляем контур стрелки (тонкая белая линия) */
+.step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 49px solid transparent;
+    border-bottom: 49px solid transparent;
+    border-left: 20px solid #f6ecec; /* цвет линии стрелки */
+
+    transform: translateX(1px); /* чуть смещаем чтобы не было просвета */
+    z-index: 2;
+}
