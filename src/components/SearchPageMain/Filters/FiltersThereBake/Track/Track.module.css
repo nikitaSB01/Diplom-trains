@@ -1,57 +1,77 @@
-.track {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.price {
+    color: #ffffff;
 }
 
-.label {
-    font-size: 16px;
-    font-weight: 500;
+.title {
+    margin-bottom: 15px;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
 }
 
-.sliderContainer {
+.sliderWrapper {
     position: relative;
     width: 100%;
+    height: 65px;
 }
 
-.slider {
+.track {
     position: absolute;
-    width: 100%;
-    -webkit-appearance: none;
-    background: transparent;
-    pointer-events: none;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    background: white;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    cursor: pointer;
-    pointer-events: all;
-}
-
-.slider::-webkit-slider-runnable-track {
-    height: 4px;
-    background: transparent;
-}
-
-.trackLine {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 4px;
-    background: #ffa800;
+    top: 14px;
     left: 0;
     right: 0;
-    z-index: -1;
+    height: 4px;
+    background: #c4c4c4;
+    border-radius: 4px;
 }
 
-.values {
-    display: flex;
-    justify-content: space-between;
+.range {
+    position: absolute;
+    top: 14px;
+    height: 4px;
+    background: #ffa800;
+    border-radius: 4px;
+}
+
+.thumb {
+    position: absolute;
+    width: 100%;
+    height: 48px;
+    background: none;
+    pointer-events: none;
+    appearance: none;
+}
+
+.thumb::-webkit-slider-thumb {
+    appearance: none;
+    pointer-events: all;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.value {
+    position: absolute;
+    top: 38px;
+    /* ✅ все значения теперь на одной линии */
+    white-space: nowrap;
+    font-family: Roboto;
+    font-weight: 400;
     font-size: 14px;
-    opacity: 0.8;
+    line-height: 100%;
+    color: #e5e5e5;
+    transition: none;
+}
+
+.staticLeft {
+    left: 0;
+    text-align: left;
+}
+
+.staticRight {
+    right: 0;
+    text-align: right;
 }
