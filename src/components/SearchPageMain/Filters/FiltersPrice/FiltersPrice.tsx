@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import styles from "./FiltersPrice.module.css";
 
 export const FiltersPrice: React.FC = () => {
     const minLimit = 1920;
     const maxLimit = 7000;
-    const minGap = 1000; // минимальная разница между значениями
+    const minGap = 1000;
 
     const [minValue, setMinValue] = useState(1920);
     const [maxValue, setMaxValue] = useState(4500);
+    const [sliderWidth, setSliderWidth] = useState(0);
+
+    const sliderRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        if (sliderRef.current) {
+            const resizeObserver = new ResizeObserver(() => {
+                setSliderWidth(sliderRef.current?.offsetWidth || 0);
+            });
+            resizeObserver.observe(sliderRef.current);
+            setSliderWidth(sliderRef.current.offsetWidth);
+            return () => resizeObserver.disconnect();
+        }
+    }, []);
 
     const getPercent = (value: number) =>
         ((value - minLimit) / (maxLimit - minLimit)) * 100;
@@ -25,47 +39,27 @@ export const FiltersPrice: React.FC = () => {
     const leftPercent = getPercent(minValue);
     const rightPercent = getPercent(maxValue);
 
-    // Насколько близко друг к другу (в процентах ширины)
-    const valuesTooClose = rightPercent - leftPercent < 15;
+    const hideStaticRight = maxValue >= 5950;
+    const showStaticLeft = minValue >= 2970;
 
-    // Скрываем статичное 7000, когда правый бегунок ушёл далеко вправо
-    const hideStaticRight = maxValue > 5780;
+    // === вычисляем безопасную позицию, чтобы не выходить за края ===
+    const getSafePosition = (percent: number, value: number): React.CSSProperties => {
+        const position = (percent / 100) * sliderWidth;
+        const textWidth = String(value).length * 9 + 10; // приблизительная ширина текста
 
-    // --- стили для левого значения ---
-    const leftValueStyle: React.CSSProperties = {
-        top: 35,
+        // если число у левого края
+        if (position - textWidth / 2 < 0) {
+            return { left: 0, transform: "none" };
+        }
+
+        // если число у правого края
+        if (position + textWidth / 2 > sliderWidth) {
+            return { right: 0, transform: "none" };
+        }
+
+        // стандартное положение под бегунком
+        return { left: `${position}px`, transform: "translateX(-50%)" };
     };
-
-    if (leftPercent < 5) {
-        // очень близко к левому краю — прижимаем к краю
-        leftValueStyle.left = 0;
-    } else if (valuesTooClose) {
-        // значения рядом — чуть уводим левое влево
-        leftValueStyle.left = `${leftPercent}%`;
-        leftValueStyle.transform = "translateX(-60%)";
-    } else {
-        // обычное положение — по центру под бегунком
-        leftValueStyle.left = `${leftPercent}%`;
-        leftValueStyle.transform = "translateX(-50%)";
-    }
-
-    // --- стили для правого значения ---
-    const rightValueStyle: React.CSSProperties = {
-        top: 35,
-    };
-
-    if (rightPercent > 95) {
-        // очень близко к правому краю — прижимаем к краю
-        rightValueStyle.right = hideStaticRight ? 0 : 48; // 48px отступ от статичного 7000
-    } else if (valuesTooClose) {
-        // значения рядом — чуть уводим правое вправо
-        rightValueStyle.left = `${rightPercent}%`;
-        rightValueStyle.transform = "translateX(-40%)";
-    } else {
-        // обычное положение — по центру под бегунком
-        rightValueStyle.left = `${rightPercent}%`;
-        rightValueStyle.transform = "translateX(-50%)";
-    }
 
     return (
         <div className={styles.price}>
@@ -76,9 +70,8 @@ export const FiltersPrice: React.FC = () => {
                 <span>до</span>
             </div>
 
-            <div className={styles.sliderWrapper}>
-                {/* полоса */}
-                <div className={styles.track} />
+            <div className={styles.sliderWrapper} ref={sliderRef}>
+                <div className={styles.track}></div>
                 <div
                     className={styles.range}
                     style={{
@@ -87,7 +80,6 @@ export const FiltersPrice: React.FC = () => {
                     }}
                 />
 
-                {/* бегунки */}
                 <input
                     type="range"
                     min={minLimit}
@@ -106,17 +98,38 @@ export const FiltersPrice: React.FC = () => {
                 />
 
                 {/* значения под бегунками */}
-                <div className={styles.value} style={leftValueStyle}>
+                <div
+                    className={styles.value}
+                    style={{
+                        top: "43px",
+                        ...getSafePosition(leftPercent, minValue),
+                    }}
+                >
                     {minValue}
                 </div>
 
-                <div className={styles.value} style={rightValueStyle}>
+                <div
+                    className={styles.value}
+                    style={{
+                        top: "43px",
+                        ...getSafePosition(rightPercent, maxValue),
+                    }}
+                >
                     {maxValue}
                 </div>
 
-                {/* статичное 7000 на том же уровне */}
+                {/* статичное 7000 */}
                 {!hideStaticRight && (
-                    <div className={`${styles.value} ${styles.staticRight}`}>{maxLimit}</div>
+                    <div className={`${styles.value} ${styles.staticRight}`}>
+                        {maxLimit}
+                    </div>
+                )}
+
+                {/* статичное 1920 */}
+                {showStaticLeft && (
+                    <div className={`${styles.value} ${styles.staticLeft}`}>
+                        {minLimit}
+                    </div>
                 )}
             </div>
         </div>
