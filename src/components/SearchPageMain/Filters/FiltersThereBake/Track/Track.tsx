@@ -11,7 +11,8 @@ export const Track: React.FC<TrackProps> = ({ label }) => {
     const [sliderWidth, setSliderWidth] = useState(0);
 
     const sliderRef = useRef<HTMLDivElement>(null);
-    const minGap = 3; // минимальное расстояние между ползунками (в часах)
+    const minGap = 6; // минимальное расстояние между ползунками
+    const thumbSize = 18; // диаметр ползунка
 
     useEffect(() => {
         if (sliderRef.current) {
@@ -21,8 +22,10 @@ export const Track: React.FC<TrackProps> = ({ label }) => {
 
     const formatTime = (val: number) => `${val}:00`;
 
+    // Конвертация значения в пиксели
     const getPos = (value: number) => (value / 24) * sliderWidth;
 
+    // Коррекция позиции числового блока (как в FiltersPrice)
     const getSafeValuePosition = (x: number, textWidth = 40) => {
         if (x < textWidth / 2) return 0;
         if (x > sliderWidth - textWidth / 2) return sliderWidth - textWidth;
@@ -42,9 +45,8 @@ export const Track: React.FC<TrackProps> = ({ label }) => {
     const minPos = getPos(minValue);
     const maxPos = getPos(maxValue);
 
-    // ✅ правильные условия скрытия статических подписей
-    const hideLeftStatic = minValue <= 5;
-    const hideRightStatic = maxValue >= 18;
+    const hideLeftStatic = minValue <= 4;
+    const hideRightStatic = maxValue >= 19;
 
     return (
         <div className={styles.price}>
@@ -52,6 +54,8 @@ export const Track: React.FC<TrackProps> = ({ label }) => {
 
             <div className={styles.sliderWrapper} ref={sliderRef}>
                 <div className={styles.track}></div>
+
+                {/* Линия диапазона от центра до центра */}
                 <div
                     className={styles.range}
                     style={{
@@ -77,7 +81,7 @@ export const Track: React.FC<TrackProps> = ({ label }) => {
                     className={styles.thumb}
                 />
 
-                {/* Цифры под ползунками */}
+                {/* Значения под ползунками */}
                 <span
                     className={styles.value}
                     style={{ left: `${getSafeValuePosition(minPos)}px` }}
@@ -91,7 +95,7 @@ export const Track: React.FC<TrackProps> = ({ label }) => {
                     {formatTime(maxValue)}
                 </span>
 
-                {/* Фиксированные подписи */}
+                {/* Краевые значения */}
                 {!hideLeftStatic && (
                     <span className={`${styles.value} ${styles.staticLeft}`}>0:00</span>
                 )}

@@ -7,16 +7,15 @@
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 0;
-  margin-bottom: 22px;
-  cursor: pointer;
-  color: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
 }
 
 .headerLeft {
@@ -33,8 +32,12 @@
 }
 
 .title {
-    font-weight: 700;
-    font-size: 18px;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF;
 }
 
 .toggle {
@@ -43,8 +46,8 @@
 }
 
 .body {
-    margin-top: 10px;
+    margin-top: 22px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 46px;
 }
