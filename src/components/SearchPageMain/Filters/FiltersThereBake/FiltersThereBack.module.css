@@ -1,0 +1,48 @@
+.container {
+    color: #fff;
+    padding: 10px 15px;
+    border-bottom: 1px solid #E5E5E5;
+    cursor: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.iconWrapper {
+    padding: 4px 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+}
+
+.body {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

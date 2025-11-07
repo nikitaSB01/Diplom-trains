@@ -1,0 +1,57 @@
+.track {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.sliderContainer {
+    position: relative;
+    width: 100%;
+}
+
+.slider {
+    position: absolute;
+    width: 100%;
+    -webkit-appearance: none;
+    background: transparent;
+    pointer-events: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: white;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.slider::-webkit-slider-runnable-track {
+    height: 4px;
+    background: transparent;
+}
+
+.trackLine {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 4px;
+    background: #ffa800;
+    left: 0;
+    right: 0;
+    z-index: -1;
+}
+
+.values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    opacity: 0.8;
+}
