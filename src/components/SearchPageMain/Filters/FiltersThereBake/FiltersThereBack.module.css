@@ -3,8 +3,12 @@
     border-bottom: 1px solid #E5E5E5;
     cursor: pointer;
     padding: 24px 34px 30px 26px;
-
 }
+
+.container:last-child {
+    border-bottom: none
+}
+
 
 .header {
     display: flex;
@@ -21,7 +25,7 @@
 .headerLeft {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .iconWrapper {
@@ -33,10 +37,11 @@
 
 .title {
     font-family: Roboto;
-    font-weight: 400;
-    font-size: 24px;
+    font-weight: 700;
+    font-size: 30px;
     line-height: 100%;
     letter-spacing: 0%;
+
     color: #FFFFFF;
 }
 

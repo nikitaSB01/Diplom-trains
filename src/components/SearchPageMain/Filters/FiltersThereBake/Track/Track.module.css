@@ -3,7 +3,7 @@
 }
 
 .title {
-    /* margin-bottom: 15px; */
+    margin-bottom: 5px;
     margin-left: 4px;
     color: #E5E5E5;
     font-family: Roboto;
@@ -12,6 +12,12 @@
     line-height: 100%;
     letter-spacing: 0%;
 
+}
+
+/* выравнивание заголовка прибытия */
+.titleRight {
+    text-align: right;
+    margin-right: 4px;
 }
 
 .sliderWrapper {
@@ -61,13 +67,16 @@
     position: absolute;
     top: 38px;
     white-space: nowrap;
-    font-family: Roboto;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 100%;
     color: #e5e5e5;
     transform: translateX(0);
     transition: none;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: right;
+
 }
 
 .staticLeft {

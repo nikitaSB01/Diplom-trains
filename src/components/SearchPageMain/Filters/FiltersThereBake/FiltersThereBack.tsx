@@ -36,8 +36,8 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({ title }) => 
 
       {isOpen && (
         <div className={styles.body}>
-          <Track label="Время отбытия" />
-          <Track label="Время прибытия" />
+          <Track label="Время отбытия" />        {/* выравнивание по левому краю */}
+          <Track label="Время прибытия" align="right" />  {/* выравнивание по правому */}
         </div>
       )}
     </div>

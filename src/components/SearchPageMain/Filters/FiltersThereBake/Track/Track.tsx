@@ -3,9 +3,10 @@ import styles from "./Track.module.css";
 
 interface TrackProps {
     label: string;
+    align?: "left" | "right";
 }
 
-export const Track: React.FC<TrackProps> = ({ label }) => {
+export const Track: React.FC<TrackProps> = ({ label, align = "left" }) => {
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(15);
     const [sliderWidth, setSliderWidth] = useState(0);
@@ -50,7 +51,9 @@ export const Track: React.FC<TrackProps> = ({ label }) => {
 
     return (
         <div className={styles.price}>
-            <p className={styles.title}>{label}</p>
+            <p className={`${styles.title} ${align === "right" ? styles.titleRight : ""}`}>
+                {label}
+            </p>
 
             <div className={styles.sliderWrapper} ref={sliderRef}>
                 <div className={styles.track}></div>
