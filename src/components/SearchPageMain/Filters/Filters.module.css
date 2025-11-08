@@ -20,11 +20,20 @@
   gap: 16px;
   padding: 40px 36px 30px 28px;
   border-bottom: 1px solid #E5E5E5;
+}
 
+.inputsSpan {
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 100%;
+  letter-spacing: 0%;
+
+  color: #FFFFFF;
+  margin-bottom: 16px;
 }
 
 .InputsOne, .InputsTwo {
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }

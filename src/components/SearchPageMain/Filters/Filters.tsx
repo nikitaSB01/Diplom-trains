@@ -16,12 +16,12 @@ export const Filters: React.FC = () => {
       <div className={styles.inner}>
         <div className={styles.DateInputs}>
           <div className={styles.InputsOne}>
-            <span>Дата отправлления</span>
-            <DateInput placeholder="ДД/ММ/ГГ" />
+            <span className={styles.inputsSpan}>Дата  поездки</span>
+            <DateInput placeholder="ДД/ММ/ГГ" isCompact />
           </div>
           <div className={styles.InputsTwo}>
-            <span>Дата возвращения</span>
-            <DateInput placeholder="ДД/ММ/ГГ" />
+            <span className={styles.inputsSpan}>Дата возвращения</span>
+            <DateInput placeholder="ДД/ММ/ГГ" isCompact />
           </div>
         </div>
         <FiltersOptions />

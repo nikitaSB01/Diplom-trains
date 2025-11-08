@@ -6,9 +6,10 @@ import arrowRight from '../../../../assets/icons/SearchForm/arrowR.png';
 
 interface DateInputProps {
   placeholder: string;
+  isCompact?: boolean;
 }
 
-export const DateInput: React.FC<DateInputProps> = ({ placeholder }) => {
+export const DateInput: React.FC<DateInputProps> = ({ placeholder, isCompact = false}) => {
   const [value, setValue] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -99,8 +100,10 @@ export const DateInput: React.FC<DateInputProps> = ({ placeholder }) => {
   const popupHeight = rowsCount === 6 ? '322px' : '302px';
 
   return (
-    <div className={styles.inputWrapper} ref={calendarRef}>
-      <input
+    <div
+      className={`${styles.inputWrapper} ${isCompact ? styles.compact : ""}`}
+      ref={calendarRef}
+    >      <input
         type="text"
         placeholder={placeholder}
         value={value}
