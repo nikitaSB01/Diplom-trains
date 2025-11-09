@@ -6,15 +6,18 @@ import Filters from '../../components/SearchPageMain/Filters/Filters';
 import FiltersLastTickets from '../../components/SearchPageMain/FiltersLastTickets/FiltersLastTickets';
 import Trains from '../../components/SearchPageMain/Trains/Trains';
 
-
 const Main: React.FC = () => {
   return (
     <section className={styles.main}>
-      <Steps currentStep={2} /> {/* 1 - активный шаг */}
+      <Steps currentStep={2} />
       <div className={styles.container}>
-        <Filters /> 
-        <FiltersLastTickets /> 
-        <Trains/>
+        <div className={styles.leftColumn}>
+          <Filters />
+          <FiltersLastTickets />
+        </div>
+        <div className={styles.rightColumn}>
+          <Trains />
+        </div>
       </div>
     </section>
   );

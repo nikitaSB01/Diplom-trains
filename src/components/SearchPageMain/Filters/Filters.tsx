@@ -5,10 +5,8 @@ import styles from "./Filters.module.css";
 import { DateInput } from "../../../modules/SearchForm/input/date/DateInput"
 import { FiltersOptions } from "../Filters/FiltersOptions/FiltersOptions";
 import { FiltersPrice } from "../Filters/FiltersPrice/FiltersPrice";
-import FiltersThereBack from "../Filters/FiltersThereBake/FiltersThereBack";
+import { FiltersThereBack } from "../Filters/FiltersThereBake/FiltersThereBack";
 
-/*   import { FiltersThere } from "../FiltersThere/FiltersThere";
-import { FiltersBack } from "../FiltersBack/FiltersBack"; */
 
 export const Filters: React.FC = () => {
   return (
