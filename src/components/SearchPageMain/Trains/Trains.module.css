@@ -1,0 +1,125 @@
+.trainsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Общая карточка поезда */
+.trainCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trainCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Левая часть: номер и маршрут */
+.left {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #292929;
+}
+
+.trainNumber {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 4px;
+    color: #292929;
+}
+
+.route {
+    font-size: 14px;
+    color: #7b7b7b;
+}
+
+/* Средняя часть: время отправления и прибытия */
+.middle {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.timeBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.timeBlock p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #292929;
+    margin-bottom: 6px;
+}
+
+.timeBlock span {
+    font-size: 13px;
+    line-height: 1.3;
+    color: #7b7b7b;
+}
+
+.arrow {
+    font-size: 22px;
+    color: #ffb700;
+    font-weight: bold;
+}
+
+/* Правая часть: цена и кнопка */
+.right {
+    flex: 1;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.right p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #292929;
+}
+
+.button {
+    background-color: #ffa800;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.button:hover {
+    background-color: #ffb700;
+}
+
+/* Состояния загрузки, ошибки и пустого списка */
+.loading,
+.error,
+.empty {
+    text-align: center;
+    margin: 40px auto;
+    font-size: 16px;
+    color: #7b7b7b;
+}
+
+.error {
+    color: #d9534f;
+}
