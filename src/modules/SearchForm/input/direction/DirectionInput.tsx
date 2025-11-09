@@ -1,22 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import styles from './DirectionInput.module.css';
-import { cities } from '../../cities';
-import locationIcon from '../../../../assets/icons/SearchForm/geo.svg';
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./DirectionInput.module.css";
+import LocationIcon from '../../../../assets/icons/SearchForm/geo.svg';
+
 
 interface DirectionInputProps {
   placeholder: string;
   value: string;
-  onChange: (newValue: string) => void;
+  onChange: (value: string) => void;
 }
 
-export const DirectionInput: React.FC<DirectionInputProps> = ({ placeholder, value, onChange }) => {
-  const [isFocused, setIsFocused] = useState(false);
+interface City {
+  _id: string;
+  name: string;
+}
 
-  const filteredCities = cities.filter((city) => city.toLowerCase().includes(value.toLowerCase()));
+export const DirectionInput: React.FC<DirectionInputProps> = ({
+  placeholder,
+  value,
+  onChange,
+}) => {
+  const [cities, setCities] = useState<City[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const dropdownRef = useRef<HTMLUListElement>(null);
 
-  const handleSelect = (city: string) => {
-    onChange(city);
-    setIsFocused(false);
+  // Загрузка городов с сервера при вводе
+  useEffect(() => {
+    const fetchCities = async () => {
+      if (value.trim().length < 2) {
+        setCities([]);
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `https://students.netoservices.ru/fe-diplom/routes/cities?name=${encodeURIComponent(value)}`
+        );
+        if (!response.ok) throw new Error("Ошибка при получении данных");
+        const data = await response.json();
+        setCities(data);
+      } catch (error) {
+        console.error("Ошибка загрузки городов:", error);
+        setCities([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const delayDebounce = setTimeout(fetchCities, 300);
+    return () => clearTimeout(delayDebounce);
+  }, [value]);
+
+  const handleSelectCity = (cityName: string) => {
+    onChange(cityName);
+    setIsOpen(false);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
+    setIsOpen(true);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    // Проверяем, не кликнули ли мы по выпадающему списку
+    setTimeout(() => {
+      if (!dropdownRef.current?.contains(document.activeElement)) {
+        setIsOpen(false);
+      }
+    }, 150);
   };
 
   return (
@@ -25,24 +77,38 @@ export const DirectionInput: React.FC<DirectionInputProps> = ({ placeholder, val
         type="text"
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setTimeout(() => setIsFocused(false), 150)}
+        onChange={handleInputChange}
+        onFocus={() => setIsOpen(true)}
+        onBlur={handleBlur}
         className={styles.input}
+        autoComplete="off"
       />
-      <img src={locationIcon} alt="Локация" className={`${styles.icon} ${styles.iconLocation}`} />
-
-      {isFocused && (
-        <ul className={styles.dropdown}>
-          {filteredCities.map((city) => (
-            <li key={city}>
-              <button type="button" className={styles.option} onClick={() => handleSelect(city)}>
-                {city}
-              </button>
-            </li>
-          ))}
+      <img
+        src={LocationIcon}
+        alt="Геолокация"
+        className={`${styles.icon} ${styles.iconLocation}`}
+      />
+      {isOpen && (cities.length > 0 || loading) && (
+        <ul className={styles.dropdown} ref={dropdownRef}>
+          {loading ? (
+            <li className={styles.option}>Загрузка...</li>
+          ) : (
+            cities.map((city) => (
+              <li key={city._id}>
+                <button
+                  type="button"
+                  className={styles.option}
+                  onMouseDown={() => handleSelectCity(city.name)}
+                >
+                  {city.name}
+                </button>
+              </li>
+            ))
+          )}
         </ul>
       )}
     </div>
   );
 };
+
+export default DirectionInput;
