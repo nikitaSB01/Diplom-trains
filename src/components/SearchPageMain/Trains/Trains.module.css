@@ -57,7 +57,8 @@
     color: #928f94;
     margin-bottom: 6px;
     text-transform: capitalize;
-    white-space: nowrap; /* ✅ запрещает перенос на новую строку */
+    white-space: nowrap;
+    /* ✅ запрещает перенос на новую строку */
 }
 
 /* Основной маршрут */
@@ -84,7 +85,8 @@
     color: #000000;
     text-align: left;
     text-transform: capitalize;
-    white-space: nowrap; /* ✅ запрещает перенос на новую строку */
+    white-space: nowrap;
+    /* ✅ запрещает перенос на новую строку */
 }
 
 /* Чёрная стрелка */
@@ -107,67 +109,99 @@
     color: #7b7b7b;
 }
 
-/* === ЦЕНТРАЛЬНАЯ ЧАСТЬ === */
+/* === ЦЕНТРАЛЬНЫЙ БЛОК === */
 .center {
-    flex: 2;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 20px 30px;
-    gap: 16px;
+    width: 480px;
+    justify-content: center;
+    align-items: center;
+    padding: 54px 36px 80px 40px;
+    gap: 45px;
 }
 
 .directionBlock {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-}
-
-.directionLabel {
-    font-size: 13px;
-    font-weight: 600;
-    color: #7b7b7b;
-    text-transform: uppercase;
-}
-
-.middle {
-    display: flex;
     align-items: center;
-    justify-content: space-between;
+    width: 100%;
+}
+
+.direction {
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
 }
 
 .timeBlock {
     display: flex;
     flex-direction: column;
+    gap: 4px;
+}
+
+.direction .timeBlock:last-child {
+    margin-left: 38px;
+}
+
+
+/* Центральный блок (стрелка и время пути) */
+.arrowBlock {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    width: 50px;
     text-align: center;
+    gap: 6px;
 }
 
-.timeBlock p {
-    font-size: 20px;
-    font-weight: 600;
-    color: #292929;
-    margin-bottom: 4px;
+/* Время отправления / прибытия */
+.time {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    color: #000000;
 }
 
-.timeBlock span {
-    font-size: 13px;
-    line-height: 1.3;
-    color: #7b7b7b;
-}
-
-.arrow {
+/* Название города */
+.city {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
     font-size: 18px;
-    color: #ffb700;
-    font-weight: bold;
-    text-align: center;
+    line-height: 100%;
+    color: #292929;
+    text-transform: capitalize;
+    white-space: nowrap;
 }
+
+/* Название вокзала */
+.station {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    color: #928f94;
+    white-space: nowrap;
+}
+
+
 
 .duration {
-    font-size: 13px;
-    color: #b0b0b0;
-    margin-top: 4px;
-    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: #928f94;
+    margin-bottom: 6px;
+}
+
+.arrowSvg {
+    width: 36px;
+    height: 20px;
 }
 
 /* === ПРАВАЯ КОЛОНКА === */

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Trains.module.css";
+import { ReactComponent as ArrowThere } from "../../../assets/icons/Train/arrowThere.svg";
+import { ReactComponent as ArrowBack } from "../../../assets/icons/Train/arrowBack.svg";
 
 interface City {
   _id: string;
@@ -132,6 +134,15 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
         const dep = train.departure;
         const arr = train.arrival;
 
+        const formatDuration = (seconds?: number) => {
+          if (!seconds) return "";
+          const hours = Math.floor(seconds / 3600);
+          const minutes = Math.floor((seconds % 3600) / 60);
+          return `${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}`;
+        };
+
         return (
           <div key={index} className={styles.trainCard}>
             {/* Левая часть */}
@@ -158,75 +169,48 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
             </div>
 
             {/* Центральная часть: "Туда" и "Обратно" */}
+            {/* === Центральный блок (Туда и Обратно) === */}
             <div className={styles.center}>
-              {/* Блок "Туда" */}
+              {/* ---- ТУДА ---- */}
               <div className={styles.directionBlock}>
-                <div className={styles.directionLabel}>Туда</div>
-                <div className={styles.middle}>
+                <div className={styles.direction}>
                   <div className={styles.timeBlock}>
-                    <p>
-                      {new Date(dep?.from?.datetime * 1000).toLocaleTimeString("ru-RU", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                    <span>{dep?.from?.city?.name}</span>
-                    <span>{dep?.from?.railway_station_name}</span>
+                    <p className={styles.time}>{new Date(dep?.from?.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}</p>
+                    <p className={styles.city}>{dep?.from?.city?.name}</p>
+                    <p className={styles.station}>{dep?.from?.railway_station_name}</p>
                   </div>
 
-                  <div>
-                    <div className={styles.arrow}>→</div>
-                    <div className={styles.duration}>
-                      {Math.floor(dep?.duration / 3600)} ч{" "}
-                      {Math.floor((dep?.duration % 3600) / 60)} мин
-                    </div>
+                  <div className={styles.arrowBlock}>
+                    <p className={styles.duration}>{formatDuration(dep?.duration)}</p>
+                    <ArrowThere className={styles.arrowSvg} />
                   </div>
 
                   <div className={styles.timeBlock}>
-                    <p>
-                      {new Date(dep?.to?.datetime * 1000).toLocaleTimeString("ru-RU", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                    <span>{dep?.to?.city?.name}</span>
-                    <span>{dep?.to?.railway_station_name}</span>
+                    <p className={styles.time}>{new Date(dep?.to?.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}</p>
+                    <p className={styles.city}>{dep?.to?.city?.name}</p>
+                    <p className={styles.station}>{dep?.to?.railway_station_name}</p>
                   </div>
                 </div>
               </div>
 
-              {/* Блок "Обратно" */}
+              {/* ---- ОБРАТНО ---- */}
               <div className={styles.directionBlock}>
-                <div className={styles.directionLabel}>Обратно</div>
-                <div className={styles.middle}>
-                  <div className={styles.timeBlock}>
-                    <p>
-                      {new Date(arr?.from?.datetime * 1000).toLocaleTimeString("ru-RU", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                    <span>{arr?.from?.city?.name}</span>
-                    <span>{arr?.from?.railway_station_name}</span>
+                <div className={styles.direction}>
+                  <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
+                    <p className={styles.time}>{new Date(arr?.from?.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}</p>
+                    <p className={styles.city}>{arr?.from?.city?.name}</p>
+                    <p className={styles.station}>{arr?.from?.railway_station_name}</p>
                   </div>
 
-                  <div>
-                    <div className={styles.arrow}>→</div>
-                    <div className={styles.duration}>
-                      {Math.floor(arr?.duration / 3600)} ч{" "}
-                      {Math.floor((arr?.duration % 3600) / 60)} мин
-                    </div>
+                  <div className={styles.arrowBlock}>
+                    <p className={styles.duration}>{formatDuration(arr?.duration)}</p>
+                    <ArrowBack className={styles.arrowSvg} />
                   </div>
 
-                  <div className={styles.timeBlock}>
-                    <p>
-                      {new Date(arr?.to?.datetime * 1000).toLocaleTimeString("ru-RU", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                    <span>{arr?.to?.city?.name}</span>
-                    <span>{arr?.to?.railway_station_name}</span>
+                  <div className={`${styles.timeBlock} ${styles.rightBlock}`}>
+                    <p className={styles.time}>{new Date(arr?.to?.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}</p>
+                    <p className={styles.city}>{arr?.to?.city?.name}</p>
+                    <p className={styles.station}>{arr?.to?.railway_station_name}</p>
                   </div>
                 </div>
               </div>
