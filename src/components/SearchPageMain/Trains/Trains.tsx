@@ -5,6 +5,10 @@ import { ReactComponent as ArrowBack } from "../../../assets/icons/Train/arrowBa
 import { ReactComponent as Cup } from "../../../assets/icons/Train/cup.svg";
 import { ReactComponent as Wifi } from "../../../assets/icons/Train/wifi.svg";
 import { ReactComponent as Express } from "../../../assets/icons/Train/express.svg";
+import { ReactComponent as Сonditioning } from "../../../assets/icons/Train/conditioning.svg";
+import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwear.svg";
+
+
 
 
 
@@ -239,8 +243,12 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                   <Express className={styles.cupSvg} />
                 )}
                 {dep?.have_air_conditioning && (
-                  <Cup className={styles.cupSvg} />
+                  <Сonditioning className={styles.cupSvg} />
                 )}
+                <Cup className={styles.cupSvg} />
+                <Underwear className={styles.cupSvg} />
+
+
               </div>
 
               <button className={styles.button}>Выбрать места</button>
