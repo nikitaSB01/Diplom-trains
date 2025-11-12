@@ -1,55 +1,139 @@
 .trainsList {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
     width: 100%;
 }
 
-/* Общая карточка поезда */
+/* === КАРТОЧКА ПОЕЗДА === */
 .trainCard {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     background: #ffffff;
     border-radius: 8px;
-    padding: 20px 30px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.trainCard:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* Левая часть: номер и маршрут */
+/* === ЛЕВАЯ КОЛОНКА === */
 .left {
-    flex: 1.2;
+    max-width: 200px;
+    background: #e5e5e5;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: #292929;
+    padding: 58px 18px 90px 26px;
+    border-right: 1px solid #dcdcdc;
 }
 
+/* Иконка */
+.trainIcon {
+    width: 86px;
+    height: 86px;
+    margin: 0 0 17px 17px;
+    background: url("../../../assets/icons/Train/train.svg") center/contain no-repeat;
+}
+
+/* Название поезда */
 .trainNumber {
-    font-weight: 600;
-    font-size: 18px;
-    margin-bottom: 4px;
-    color: #292929;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* Серый город (если поезд стартует не из города отправления) */
+.routeCityStart {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: #928f94;
+    margin-bottom: 6px;
+    text-transform: capitalize;
+    white-space: nowrap; /* ✅ запрещает перенос на новую строку */
+}
+
+/* Основной маршрут */
+.routeMain {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+/* Линия с городом отправления и стрелкой */
+.routeLine {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Названия городов */
+.routeCity {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: #000000;
+    text-align: left;
+    text-transform: capitalize;
+    white-space: nowrap; /* ✅ запрещает перенос на новую строку */
+}
+
+/* Чёрная стрелка */
+.routeArrowBlack {
+    width: 18px;
+    height: 14px;
+    background: url("../../../assets/icons/Train/arrowMinThereBlack.svg") center/contain no-repeat;
+}
+
+/* Серая стрелка (для дополнительного маршрута) */
+.routeArrowGray {
+    width: 18px;
+    height: 14px;
+    background: url("../../../assets/icons/Train/arrowMinThereGray.svg") center/contain no-repeat;
 }
 
 .route {
     font-size: 14px;
+    line-height: 1.3;
     color: #7b7b7b;
 }
 
-/* Средняя часть: время отправления и прибытия */
-.middle {
+/* === ЦЕНТРАЛЬНАЯ ЧАСТЬ === */
+.center {
     flex: 2;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 30px;
+    gap: 16px;
+}
+
+.directionBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.directionLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: #7b7b7b;
+    text-transform: uppercase;
+}
+
+.middle {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 40px;
+    justify-content: space-between;
 }
 
 .timeBlock {
@@ -63,7 +147,7 @@
     font-size: 20px;
     font-weight: 600;
     color: #292929;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .timeBlock span {
@@ -73,44 +157,75 @@
 }
 
 .arrow {
-    font-size: 22px;
+    font-size: 18px;
     color: #ffb700;
     font-weight: bold;
+    text-align: center;
 }
 
-/* Правая часть: цена и кнопка */
+.duration {
+    font-size: 13px;
+    color: #b0b0b0;
+    margin-top: 4px;
+    text-align: center;
+}
+
+/* === ПРАВАЯ КОЛОНКА === */
 .right {
-    flex: 1;
-    text-align: right;
+    width: 250px;
+    border-left: 1px solid #e5e5e5;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: flex-end;
-    gap: 10px;
+    padding: 20px 24px;
+    gap: 8px;
 }
 
-.right p {
-    font-size: 18px;
+.priceRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.priceLabel {
+    font-size: 14px;
+    color: #7b7b7b;
+}
+
+.priceSeats {
+    font-size: 13px;
+    color: #ffa800;
     font-weight: 600;
+}
+
+.priceValue {
+    font-weight: 600;
+    font-size: 15px;
     color: #292929;
 }
 
+/* === КНОПКА === */
 .button {
     background-color: #ffa800;
     border: none;
-    border-radius: 6px;
-    padding: 10px 16px;
+    border-radius: 4px;
+    padding: 10px 18px;
     color: #fff;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.15s ease;
+    align-self: flex-end;
+    margin-top: 10px;
 }
 
 .button:hover {
     background-color: #ffb700;
 }
 
-/* Состояния загрузки, ошибки и пустого списка */
+/* === СЛУЖЕБНЫЕ СОСТОЯНИЯ === */
 .loading,
 .error,
 .empty {

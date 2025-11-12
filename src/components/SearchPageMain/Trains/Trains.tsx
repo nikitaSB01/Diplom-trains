@@ -41,7 +41,6 @@ interface DirectionInfo {
   };
   from: PointInfo;
   to: PointInfo;
-  price_info?: unknown;
 }
 
 interface Train {
@@ -73,7 +72,6 @@ interface TrainsProps {
 
 const formatDateForApi = (value: string | undefined): string | undefined => {
   if (!value) return undefined;
-  // Преобразуем 2025-03-01 → 2025-03-01 (если формат уже верный, возвращаем)
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
   const [day, month, year] = value.split("/");
   if (!day || !month || !year) return undefined;
@@ -138,44 +136,118 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
           <div key={index} className={styles.trainCard}>
             {/* Левая часть */}
             <div className={styles.left}>
-              <div className={styles.trainNumber}>
-                {dep?.train?.name || "Без названия"}
-              </div>
-              <div className={styles.route}>
-                {dep?.from?.city?.name} → {dep?.to?.city?.name}
+              <div className={styles.trainIcon}></div>
+              <div className={styles.trainNumber}>{dep?.train?.name || "Без названия"}</div>
+
+              {/* если поезд начинается не из выбранного города */}
+              {dep?.from?.city?.name?.toLowerCase() !== fromCity?.name?.toLowerCase() && (
+                <div className={styles.routeCityStart}>
+                  {dep?.from?.city?.name}
+                  <span className={styles.routeArrowGray}></span>
+                </div>
+              )}
+
+              {/* основной маршрут */}
+              <div className={styles.routeMain}>
+                <div className={styles.routeLine}>
+                  <span className={styles.routeCity}>{fromCity?.name}</span>
+                  <span className={styles.routeArrowBlack}></span>
+                </div>
+                <div className={styles.routeCity}>{toCity?.name}</div>
               </div>
             </div>
 
-            {/* Средняя часть (время туда) */}
-            <div className={styles.middle}>
-              <div className={styles.timeBlock}>
-                <p>
-                  {new Date(dep?.from?.datetime * 1000).toLocaleTimeString("ru-RU", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
-                <span>{dep?.from?.city?.name}</span>
-                <span>{dep?.from?.railway_station_name}</span>
+            {/* Центральная часть: "Туда" и "Обратно" */}
+            <div className={styles.center}>
+              {/* Блок "Туда" */}
+              <div className={styles.directionBlock}>
+                <div className={styles.directionLabel}>Туда</div>
+                <div className={styles.middle}>
+                  <div className={styles.timeBlock}>
+                    <p>
+                      {new Date(dep?.from?.datetime * 1000).toLocaleTimeString("ru-RU", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                    <span>{dep?.from?.city?.name}</span>
+                    <span>{dep?.from?.railway_station_name}</span>
+                  </div>
+
+                  <div>
+                    <div className={styles.arrow}>→</div>
+                    <div className={styles.duration}>
+                      {Math.floor(dep?.duration / 3600)} ч{" "}
+                      {Math.floor((dep?.duration % 3600) / 60)} мин
+                    </div>
+                  </div>
+
+                  <div className={styles.timeBlock}>
+                    <p>
+                      {new Date(dep?.to?.datetime * 1000).toLocaleTimeString("ru-RU", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                    <span>{dep?.to?.city?.name}</span>
+                    <span>{dep?.to?.railway_station_name}</span>
+                  </div>
+                </div>
               </div>
 
-              <div className={styles.arrow}>→</div>
+              {/* Блок "Обратно" */}
+              <div className={styles.directionBlock}>
+                <div className={styles.directionLabel}>Обратно</div>
+                <div className={styles.middle}>
+                  <div className={styles.timeBlock}>
+                    <p>
+                      {new Date(arr?.from?.datetime * 1000).toLocaleTimeString("ru-RU", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                    <span>{arr?.from?.city?.name}</span>
+                    <span>{arr?.from?.railway_station_name}</span>
+                  </div>
 
-              <div className={styles.timeBlock}>
-                <p>
-                  {new Date(dep?.to?.datetime * 1000).toLocaleTimeString("ru-RU", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
-                <span>{dep?.to?.city?.name}</span>
-                <span>{dep?.to?.railway_station_name}</span>
+                  <div>
+                    <div className={styles.arrow}>→</div>
+                    <div className={styles.duration}>
+                      {Math.floor(arr?.duration / 3600)} ч{" "}
+                      {Math.floor((arr?.duration % 3600) / 60)} мин
+                    </div>
+                  </div>
+
+                  <div className={styles.timeBlock}>
+                    <p>
+                      {new Date(arr?.to?.datetime * 1000).toLocaleTimeString("ru-RU", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                    <span>{arr?.to?.city?.name}</span>
+                    <span>{arr?.to?.railway_station_name}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Правая часть */}
             <div className={styles.right}>
-              <p>от {dep?.min_price || "-"} ₽</p>
+              <div className={styles.priceRow}>
+                <span className={styles.priceLabel}>Купе</span>
+                <span className={styles.priceSeats}>
+                  {dep?.available_seats_info?.second || 0}
+                </span>
+                <span className={styles.priceValue}>от {dep?.min_price} ₽</span>
+              </div>
+              <div className={styles.priceRow}>
+                <span className={styles.priceLabel}>Люкс</span>
+                <span className={styles.priceSeats}>
+                  {arr?.available_seats_info?.first || 0}
+                </span>
+                <span className={styles.priceValue}>от {arr?.min_price} ₽</span>
+              </div>
               <button className={styles.button}>Выбрать места</button>
             </div>
           </div>
