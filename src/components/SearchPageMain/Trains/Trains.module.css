@@ -7,6 +7,7 @@
 
 /* === КАРТОЧКА ПОЕЗДА === */
 .trainCard {
+    max-width: 960px;
     display: flex;
     background: #ffffff;
     border-radius: 8px;
@@ -14,9 +15,10 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* === ЛЕВАЯ КОЛОНКА === */
+/*! === ЛЕВАЯ КОЛОНКА === */
 .left {
     max-width: 200px;
+    width: 100%;
     background: #e5e5e5;
     display: flex;
     flex-direction: column;
@@ -109,11 +111,12 @@
     color: #7b7b7b;
 }
 
-/* === ЦЕНТРАЛЬНЫЙ БЛОК === */
+/*! === ЦЕНТРАЛЬНЫЙ БЛОК === */
 .center {
     display: flex;
     flex-direction: column;
-    width: 480px;
+    max-width: 480px;
+    width: 100%;
     justify-content: center;
     align-items: center;
     padding: 54px 36px 80px 40px;
@@ -206,14 +209,26 @@
 
 /*! === ПРАВАЯ КОЛОНКА === */
 .right {
-    width: 250px;
+    max-width: 280px;
+    width: 100%;
     border-left: 1px solid #e5e5e5;
+
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: flex-end;
-    padding: 20px 24px;
-    gap: 10px;
+    justify-content: flex-start;
+
+    padding: 40px 22px 22px 25px;
+    gap: 20px;
+}
+
+.priceList {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    margin-bottom: auto;
+    /* 🟢 вытолкнет блоки услуг и кнопку вниз */
 }
 
 /* Ряд с типом мест */
@@ -222,15 +237,20 @@
     justify-content: flex-end;
     align-items: center;
     width: 100%;
-    gap: 8px;
+    gap: 15px;
 }
 
 .priceLabel {
-    font-size: 16px;
-    color: #7b7b7b;
-    font-family: "Roboto", sans-serif;
     flex: 1;
     text-align: left;
+
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(62, 60, 65, 1);
+
 }
 
 .priceSeats {
@@ -248,6 +268,30 @@
     white-space: nowrap;
 }
 
+.pricePrefix {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: rgba(146, 143, 148, 1);
+}
+
+.priceNumber {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    color: #292929;
+}
+
+.rubleIcon {
+    width: 14px;
+    height: 14px;
+    margin-left: 2px;
+    fill: #292929;
+    vertical-align: middle;
+}
+
 /* --- ИКОНКИ УСЛУГ --- */
 .services {
     display: flex;
@@ -259,33 +303,40 @@
 }
 
 .serviceIcon {
-    width: 22px;
-    height: 22px;
-    opacity: 0.8;
     object-fit: contain;
+    width: 20px;
+    height: 20px;
+    fill: rgba(196, 196, 196, 1);
 }
 
 /* --- КНОПКА --- */
 .button {
-    background-color: #ffa800;
+    width: 228px;
+    height: 39px;
+    background-color: rgba(255, 168, 0, 1);
+    color: rgba(255, 255, 255, 1);
+
     border: none;
-    border-radius: 6px;
-    padding: 10px 18px;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 500;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.15s ease;
-    align-self: flex-end;
-    margin-top: 10px;
+
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+
 }
 
 .button:hover {
-    background-color: #ffb700;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.cupSvg {
-    width: 20px;
-    height: 20px;
-    fill: rgba(196, 196, 196, 1);
+.button:active {
+    background-color: rgb(255, 255, 255);
+    color: rgba(255, 168, 0, 1);
+    border: 1px solid rgba(255, 168, 0, 1);
+    box-shadow: none;
+
 }

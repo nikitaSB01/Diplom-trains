@@ -7,6 +7,8 @@ import { ReactComponent as Wifi } from "../../../assets/icons/Train/wifi.svg";
 import { ReactComponent as Express } from "../../../assets/icons/Train/express.svg";
 import { ReactComponent as Сonditioning } from "../../../assets/icons/Train/conditioning.svg";
 import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwear.svg";
+import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
+
 
 
 
@@ -206,51 +208,71 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
 
             {/* Правая часть */}
             <div className={styles.right}>
-              {dep?.have_third_class && (
-                <div className={styles.priceRow}>
-                  <span className={styles.priceLabel}>Плацкарт</span>
-                  <span className={styles.priceSeats}>{getSeats(dep, "third")}</span>
-                  <span className={styles.priceValue}>от {getPrice(dep, "third")} ₽</span>
-                </div>
-              )}
-              {dep?.have_second_class && (
-                <div className={styles.priceRow}>
-                  <span className={styles.priceLabel}>Купе</span>
-                  <span className={styles.priceSeats}>{getSeats(dep, "second")}</span>
-                  <span className={styles.priceValue}>от {getPrice(dep, "second")} ₽</span>
-                </div>
-              )}
-              {dep?.have_first_class && (
-                <div className={styles.priceRow}>
-                  <span className={styles.priceLabel}>Люкс</span>
-                  <span className={styles.priceSeats}>{getSeats(dep, "first")}</span>
-                  <span className={styles.priceValue}>от {getPrice(dep, "first")} ₽</span>
-                </div>
-              )}
-              {dep?.have_fourth_class && (
-                <div className={styles.priceRow}>
-                  <span className={styles.priceLabel}>Сидячий</span>
-                  <span className={styles.priceSeats}>{getSeats(dep, "fourth")}</span>
-                  <span className={styles.priceValue}>от {getPrice(dep, "fourth")} ₽</span>
-                </div>
-              )}
-
-              <div className={styles.services}>
-                {dep?.have_wifi && (
-                  <Wifi className={styles.cupSvg} />
+              {/* Список типов мест */}
+              <div className={styles.priceList}>
+                {dep?.have_third_class && (
+                  <div className={styles.priceRow}>
+                    <span className={styles.priceLabel}>Плацкарт</span>
+                    <span className={styles.priceSeats}>{getSeats(dep, "third")}</span>
+                    <span className={styles.priceValue}>
+                      <span className={styles.pricePrefix}>от</span>{" "}
+                      <span className={styles.priceNumber}>
+                        {getPrice(dep, "third")?.toLocaleString("ru-RU")}
+                      </span>{" "}
+                      <Ruble className={styles.rubleIcon} />
+                    </span>                  </div>
                 )}
-                {dep?.is_express && (
-                  <Express className={styles.cupSvg} />
+                {dep?.have_second_class && (
+                  <div className={styles.priceRow}>
+                    <span className={styles.priceLabel}>Купе</span>
+                    <span className={styles.priceSeats}>{getSeats(dep, "second")}</span>
+                    <span className={styles.priceValue}>
+                      <span className={styles.pricePrefix}>от</span>{" "}
+                      <span className={styles.priceNumber}>
+                        {getPrice(dep, "second")?.toLocaleString("ru-RU")}
+                      </span>{" "}
+                      <Ruble className={styles.rubleIcon} />
+                    </span>
+                  </div>
                 )}
-                {dep?.have_air_conditioning && (
-                  <Сonditioning className={styles.cupSvg} />
+                {dep?.have_first_class && (
+                  <div className={styles.priceRow}>
+                    <span className={styles.priceLabel}>Люкс</span>
+                    <span className={styles.priceSeats}>{getSeats(dep, "first")}</span>
+                    <span className={styles.priceValue}>
+                      <span className={styles.pricePrefix}>от</span>{" "}
+                      <span className={styles.priceNumber}>
+                        {getPrice(dep, "first")?.toLocaleString("ru-RU")}
+                      </span>{" "}
+                      <Ruble className={styles.rubleIcon} />
+                    </span>
+                  </div>
                 )}
-                <Cup className={styles.cupSvg} />
-                <Underwear className={styles.cupSvg} />
-
-
+                {dep?.have_fourth_class && (
+                  <div className={styles.priceRow}>
+                    <span className={styles.priceLabel}>Сидячий</span>
+                    <span className={styles.priceSeats}>{getSeats(dep, "fourth")}</span>
+                    <span className={styles.priceValue}>
+                      <span className={styles.pricePrefix}>от</span>{" "}
+                      <span className={styles.priceNumber}>
+                        {getPrice(dep, "fourth")?.toLocaleString("ru-RU")}
+                      </span>{" "}
+                      <Ruble className={styles.rubleIcon} />
+                    </span>
+                  </div>
+                )}
               </div>
 
+              {/* Услуги */}
+              <div className={styles.services}>
+                {dep?.have_wifi && <Wifi className={styles.serviceIcon} />}
+                {dep?.is_express && <Express className={styles.serviceIcon} />}
+                {dep?.have_air_conditioning && <Сonditioning className={styles.serviceIcon} />}
+                <Cup className={styles.serviceIcon} />
+                <Underwear className={styles.serviceIcon} />
+              </div>
+
+              {/* Кнопка */}
               <button className={styles.button}>Выбрать места</button>
             </div>
           </div>
