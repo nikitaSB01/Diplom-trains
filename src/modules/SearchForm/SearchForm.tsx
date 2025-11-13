@@ -4,6 +4,8 @@ import styles from './SearchForm.module.css';
 import { DirectionInput } from './input/direction/DirectionInput';
 import { DateInput } from './input/date/DateInput';
 import swapIcon from '../../assets/icons/SearchForm/swap.svg';
+import { City } from '../../types/City';
+
 
 interface SearchFormProps {
   isCompact?: boolean;
@@ -12,6 +14,10 @@ interface SearchFormProps {
 const SearchForm: React.FC<SearchFormProps> = ({ isCompact = false }) => {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
+  const [fromCityObj, setFromCityObj] = useState<City | null>(null);
+  const [toCityObj, setToCityObj] = useState<City | null>(null);
+  const [dateStart, setDateStart] = useState('');
+  const [dateEnd, setDateEnd] = useState('');
 
   const navigate = useNavigate();
 
@@ -22,7 +28,14 @@ const SearchForm: React.FC<SearchFormProps> = ({ isCompact = false }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/search');
+    navigate('/search', {
+      state: {
+        from: fromCityObj,
+        to: toCityObj,
+        dateStart,
+        dateEnd,
+      },
+    });
   };
 
   return (
@@ -35,7 +48,8 @@ const SearchForm: React.FC<SearchFormProps> = ({ isCompact = false }) => {
           <div className={styles.group}>
             <h3 className={styles.label}>Направление</h3>
             <div className={styles.row}>
-              <DirectionInput placeholder="Откуда" value={from} onChange={setFrom} />
+              <DirectionInput placeholder="Откуда" value={from} onChange={setFrom} onCitySelect={setFromCityObj}
+              />
               <button
                 type="button"
                 className={styles.swapBtn}
@@ -44,15 +58,25 @@ const SearchForm: React.FC<SearchFormProps> = ({ isCompact = false }) => {
               >
                 <img src={swapIcon} alt="Поменять направления" />
               </button>
-              <DirectionInput placeholder="Куда" value={to} onChange={setTo} />
+              <DirectionInput placeholder="Куда" value={to} onChange={setTo} onCitySelect={setToCityObj}
+              />
             </div>
           </div>
 
           <div className={styles.group}>
             <h3 className={styles.label}>Дата</h3>
             <div className={styles.row}>
-              <DateInput placeholder="ДД/ММ/ГГ" />
-              <DateInput placeholder="ДД/ММ/ГГ" />
+              <DateInput
+                placeholder="ДД/ММ/ГГ"
+                value={dateStart}
+                onChange={setDateStart}
+              />
+
+              <DateInput
+                placeholder="ДД/ММ/ГГ"
+                value={dateEnd}
+                onChange={setDateEnd}
+              />
             </div>
           </div>
         </div>

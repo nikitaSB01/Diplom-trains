@@ -7,6 +7,8 @@ interface DirectionInputProps {
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
+  onCitySelect?: (city: City) => void; // ← ДОБАВИЛ
+
 }
 
 interface City {
@@ -18,6 +20,7 @@ export const DirectionInput: React.FC<DirectionInputProps> = ({
   placeholder,
   value,
   onChange,
+  onCitySelect,
 }) => {
   const [cities, setCities] = useState<City[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -52,14 +55,18 @@ export const DirectionInput: React.FC<DirectionInputProps> = ({
     return () => clearTimeout(delayDebounce);
   }, [value]);
 
-  const handleSelectCity = (cityName: string) => {
+  const handleSelectCity = (cityName: string, cityObj: City) => {
     onChange(cityName);
+    onCitySelect?.(cityObj); // ← ОТПРАВЛЯЕМ ВЕСЬ ГОРОД НАРУЖУ
     setIsOpen(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
     setIsOpen(true);
+    /* //todo 👉 Сбрасываем выбранный объект города, если пользователь снова вводит текст?
+    onCitySelect?.(null); */
+
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -98,8 +105,7 @@ export const DirectionInput: React.FC<DirectionInputProps> = ({
                 <button
                   type="button"
                   className={styles.option}
-                  onMouseDown={() => handleSelectCity(city.name)}
-                >
+                  onMouseDown={() => handleSelectCity(city.name, city)}>
                   {city.name}
                 </button>
               </li>

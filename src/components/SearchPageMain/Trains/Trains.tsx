@@ -10,11 +10,6 @@ import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwe
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 
 
-
-
-
-
-
 // Импортируем все типы из общего файла
 import {
   Train,

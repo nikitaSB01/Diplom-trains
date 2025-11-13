@@ -7,10 +7,22 @@ import arrowRight from '../../../../assets/icons/SearchForm/arrowR.png';
 interface DateInputProps {
   placeholder: string;
   isCompact?: boolean;
+  value?: string;                       // ← ДОБАВИЛ
+  onChange?: (value: string) => void;   // ← ДОБАВИЛ
 }
 
-export const DateInput: React.FC<DateInputProps> = ({ placeholder, isCompact = false}) => {
+export const DateInput: React.FC<DateInputProps> = ({
+  placeholder,
+  isCompact = false,
+  value: externalValue,
+  onChange,
+}) => {
   const [value, setValue] = useState('');
+  useEffect(() => {
+    if (externalValue !== undefined) {
+      setValue(externalValue);
+    }
+  }, [externalValue]);
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
@@ -38,6 +50,13 @@ export const DateInput: React.FC<DateInputProps> = ({ placeholder, isCompact = f
     return `${day}/${month}/${year}`;
   };
 
+  const formatForApi = (date: Date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;  // формат YYYY-MM-DD
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let input = e.target.value.replace(/\D/g, '');
     if (input.length > 8) input = input.slice(0, 8);
@@ -47,11 +66,18 @@ export const DateInput: React.FC<DateInputProps> = ({ placeholder, isCompact = f
       input = input.replace(/(\d{2})(\d{0,2})/, '$1/$2');
     }
     setValue(input);
+    onChange?.(input);        // ← ДОБАВИЛ
   };
 
   const handleDayClick = (date: Date) => {
     setSelectedDate(date);
     setValue(formatDate(date));
+    const display = formatDate(date);      // DD/MM/YY
+    setValue(display);
+
+    const apiValue = formatForApi(date);   // YYYY-MM-DD
+    onChange?.(apiValue);
+
     setShowCalendar(false);
   };
 
