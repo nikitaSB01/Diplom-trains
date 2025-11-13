@@ -197,3 +197,5 @@ export const DateInput: React.FC<DateInputProps> = ({ placeholder, isCompact = f
     </div>
   );
 };
+
+export default DateInput;

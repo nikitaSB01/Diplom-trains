@@ -17,16 +17,34 @@ const Main: React.FC = () => {
         </div>
         <div className={styles.rightColumn}>
           <Trains
-            fromCity={{ _id: "67ceb6548c75f00047c8f78d", name: "москва" }}
-            toCity={{ _id: "67ceb6548c75f00047c8f78e", name: "санкт-петербург" }}
-            dateStart="2024-03-01"
-            dateEnd="2024-10-30"
+            fromCity={{ _id: "67ceb6548c75f00047c8f78f", name: "астрахань" }}
+            toCity={{ _id: "67ceb6548c75f00047c8f78d", name: "москва" }}
+            dateStart="2024-01-11"
+            dateEnd="2024-01-13"
           />
           <Trains
-            fromCity={{ _id: "67ceb6548c75f00047c8f78d", name: "москва" }}
-            toCity={{ _id: "67ceb6548c75f00047c8f78f", name: "астрахань" }}
+            fromCity={{ _id: "67ceb6548c75f00047c8f78f", name: "астрахань" }}
+            toCity={{ _id: "67ceb6548c75f00047c8f78d", name: "москва" }}
             dateStart="2024-01-11"
-            dateEnd="2024-03-13"
+            dateEnd="2024-01-14"
+          />
+          <Trains
+            fromCity={{ _id: "67ceb6548c75f00047c8f78f", name: "астрахань" }}
+            toCity={{ _id: "67ceb6548c75f00047c8f78d", name: "москва" }}
+            dateStart="2024-01-12"
+            dateEnd="2024-01-17"
+          />
+          <Trains
+            fromCity={{ _id: "67ceb6548c75f00047c8f78f", name: "астрахань" }}
+            toCity={{ _id: "67ceb6548c75f00047c8f78d", name: "москва" }}
+            dateStart="2024-01-14"
+            dateEnd="2024-01-18"
+          />
+          <Trains
+            fromCity={{ _id: "67ceb6548c75f00047c8f78f", name: "астрахань" }}
+            toCity={{ _id: "67ceb6548c75f00047c8f78d", name: "москва" }}
+            dateStart="2024-01-15"
+            dateEnd="2024-01-18"
           />
         </div>
       </div>
