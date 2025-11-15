@@ -446,3 +446,33 @@
     align-items: center;
 
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 32px 0;
+}
+
+.pageBtn, .arrowBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: 1px solid #DCDCDC;
+    background: #FFFFFF;
+    font-family: "Roboto";
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.arrowBtn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.activePage {
+    background: #FFA800;
+    border-color: #FFA800;
+    color: white;
+}

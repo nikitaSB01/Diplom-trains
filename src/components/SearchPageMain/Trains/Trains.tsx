@@ -50,12 +50,24 @@ const getPrice = (dir: DirectionInfo, cls: WagonClass) =>
 
 const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd }) => {
   const [trains, setTrains] = useState<Train[]>([]);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
   // Класс вагона, на который навели курсор (first, second, third, fourth)
   const [hover, setHover] = useState<{ index: number; cls: WagonClass } | null>(null);
+  /* количество поездов на странице */
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const limit = 5;
+
+  /* функция отображения видимых переключателей страниц */
+  const getVisiblePages = () => {
+    if (totalPages <= 3) return Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    if (page === 1) return [1, 2, 3];
+    if (page === totalPages) return [totalPages - 2, totalPages - 1, totalPages];
+
+    return [page - 1, page, page + 1];
+  };
 
   useEffect(() => {
     if (!fromCity || !toCity) return;  // ← теперь работает и без даты
@@ -68,7 +80,11 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
         const params = new URLSearchParams({
           from_city_id: fromCity._id,
           to_city_id: toCity._id,
+          /* limit: String(limit),
+          offset: String((page - 1) * limit), */
         });
+        params.append("limit", limit.toString());
+        params.append("offset", ((page - 1) * limit).toString());
 
         // Добавляем даты ТОЛЬКО если они заданы и не пустые
         if (dateStart) {
@@ -93,6 +109,7 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
 
         const data = await response.json();
         setTrains(data.items || []);
+        setTotal(data.total_count || 0);
       } catch (err: any) {
         setError(err.message || "Не удалось загрузить поезда");
       } finally {
@@ -101,7 +118,8 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
     };
 
     fetchTrains();
-  }, [fromCity, toCity, dateStart, dateEnd]);
+  }, [fromCity, toCity, dateStart, dateEnd, page]);
+  const totalPages = Math.ceil(total / limit);
 
   if (loading) return <div className={styles.loading}>Загрузка...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
@@ -376,7 +394,38 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
             </div>
           </div>
         );
-      })}
+      })}{totalPages > 1 && (
+        <div className={styles.pagination}>
+          {/* Кнопка назад */}
+          <button
+            className={styles.arrowBtn}
+            disabled={page === 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          >
+            &lt;
+          </button>
+
+          {/* Номера страниц */}
+          {getVisiblePages().map((num) => (
+            <button
+              key={num}
+              className={`${styles.pageBtn} ${page === num ? styles.activePage : ""}`}
+              onClick={() => setPage(num)}
+            >
+              {num}
+            </button>
+          ))}
+
+          {/* Кнопка вперед */}
+          <button
+            className={styles.arrowBtn}
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
+            &gt;
+          </button>
+        </div>
+      )}
     </div>
   );
 };
