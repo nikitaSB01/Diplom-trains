@@ -54,7 +54,7 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!fromCity || !toCity || !dateStart) return;
+    if (!fromCity || !toCity) return;  // ← теперь работает и без даты
 
     const fetchTrains = async () => {
       setLoading(true);
@@ -66,11 +66,20 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
           to_city_id: toCity._id,
         });
 
-        const apiDateStart = formatDateForApi(dateStart);
-        const apiDateEnd = formatDateForApi(dateEnd);
+        // Добавляем даты ТОЛЬКО если они заданы и не пустые
+        if (dateStart) {
+          const apiDateStart = formatDateForApi(dateStart);
+          if (apiDateStart) {
+            params.append("date_start", apiDateStart);
+          }
+        }
 
-        if (apiDateStart) params.append("date_start", apiDateStart);
-        if (apiDateEnd) params.append("date_end", apiDateEnd);
+        if (dateEnd) {
+          const apiDateEnd = formatDateForApi(dateEnd);
+          if (apiDateEnd) {
+            params.append("date_end", apiDateEnd);
+          }
+        }
 
         const response = await fetch(
           `https://students.netoservices.ru/fe-diplom/routes?${params.toString()}`

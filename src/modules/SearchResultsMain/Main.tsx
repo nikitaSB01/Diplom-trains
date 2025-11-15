@@ -10,10 +10,12 @@ import { useLocation } from 'react-router-dom';
 const Main: React.FC = () => {
   const location = useLocation();
   const { from, to, dateStart, dateEnd } = location.state || {};
+  /*   проверки в виде вывода в консоль   */
   console.log("FROM CITY:", from);
   console.log("TO CITY:", to);
   console.log("DATE START:", dateStart);
   console.log("DATE END:", dateEnd);
+
   return (
     <section className={styles.main}>
       <Steps currentStep={2} />
