@@ -50,8 +50,12 @@ const getPrice = (dir: DirectionInfo, cls: WagonClass) =>
 
 const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd }) => {
   const [trains, setTrains] = useState<Train[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Класс вагона, на который навели курсор (first, second, third, fourth)
+  const [hover, setHover] = useState<{ index: number; cls: WagonClass } | null>(null);
 
   useEffect(() => {
     if (!fromCity || !toCity) return;  // ← теперь работает и без даты
@@ -104,6 +108,26 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
   if (trains.length === 0)
     return <div className={styles.empty}>Нет найденных маршрутов</div>;
 
+  // Формирование tooltip для выбранного класса вагона
+  const getTooltipInfo = (dir: DirectionInfo, cls: WagonClass) => {
+    const price = dir.price_info?.[cls];
+    const seats = dir.available_seats_info?.[cls];
+
+    if (!price) return null;
+
+    const info = [];
+
+    if (price.top_price)
+      info.push({ label: "верхние", price: price.top_price, count: seats });
+
+    if (price.bottom_price)
+      info.push({ label: "нижние", price: price.bottom_price, count: seats });
+
+    if (price.side_price)
+      info.push({ label: "боковые", price: price.side_price, count: seats });
+
+    return info.length > 0 ? info : null;
+  };
   return (
     <div className={styles.trainsList}>
       {trains.map((train, index) => {
@@ -215,54 +239,125 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
               {/* Список типов мест */}
               <div className={styles.priceList}>
                 {dep?.have_third_class && (
-                  <div className={styles.priceRow}>
-                    <span className={styles.priceLabel}>Плацкарт</span>
+                  <div
+                    className={styles.priceRow}
+                    onMouseEnter={() => setHover({ index, cls: "third" })}
+                    onMouseLeave={() => setHover(null)}
+                  ><span className={styles.priceLabel}>Плацкарт</span>
                     <span className={styles.priceSeats}>{getSeats(dep, "third")}</span>
                     <span className={styles.priceValue}>
                       <span className={styles.pricePrefix}>от</span>{" "}
                       <span className={styles.priceNumber}>
                         {getPrice(dep, "third")?.toLocaleString("ru-RU")}
+                        <Ruble className={styles.rubleIcon} />
                       </span>{" "}
-                      <Ruble className={styles.rubleIcon} />
-                    </span>                  </div>
+                    </span>
+                    {/* TOOLTIP */}
+                    {hover?.index === index &&
+                      hover.cls === "third" &&
+                      getTooltipInfo(dep, "third") && (
+                        <div className={styles.tooltip}>
+                          {getTooltipInfo(dep, "third")!.map((row, i) => (
+                            <div key={i} className={styles.tooltipRow}>
+                              <span className={styles.tooltipLabel}>{row.label}</span>
+                              <span className={styles.tooltipCount}>{row.count}</span>
+                              <span className={styles.tooltipPrice}> {row.price.toLocaleString("ru-RU")}
+                                <Ruble className={styles.rubleIcon} />
+                              </span></div>
+                          ))}
+                        </div>
+                      )}
+                  </div>
                 )}
                 {dep?.have_second_class && (
-                  <div className={styles.priceRow}>
-                    <span className={styles.priceLabel}>Купе</span>
+                  <div
+                    className={styles.priceRow}
+                    onMouseEnter={() => setHover({ index, cls: "second" })}
+                    onMouseLeave={() => setHover(null)}
+                  ><span className={styles.priceLabel}>Купе</span>
                     <span className={styles.priceSeats}>{getSeats(dep, "second")}</span>
                     <span className={styles.priceValue}>
                       <span className={styles.pricePrefix}>от</span>{" "}
                       <span className={styles.priceNumber}>
                         {getPrice(dep, "second")?.toLocaleString("ru-RU")}
+                        <Ruble className={styles.rubleIcon} />
                       </span>{" "}
-                      <Ruble className={styles.rubleIcon} />
                     </span>
+                    {/* TOOLTIP */}
+                    {hover?.index === index &&
+                      hover.cls === "second" &&
+                      getTooltipInfo(dep, "second") && (
+                        <div className={styles.tooltip}>
+                          {getTooltipInfo(dep, "second")!.map((row, i) => (
+                            <div key={i} className={styles.tooltipRow}>
+                              <span className={styles.tooltipLabel}>{row.label}</span>
+                              <span className={styles.tooltipCount}>{row.count}</span>
+                              <span className={styles.tooltipPrice}>{row.price.toLocaleString("ru-RU")}<Ruble className={styles.rubleIcon} />
+                              </span></div>
+                          ))}
+                        </div>
+                      )}
                   </div>
                 )}
                 {dep?.have_first_class && (
-                  <div className={styles.priceRow}>
-                    <span className={styles.priceLabel}>Люкс</span>
+                  <div
+                    className={styles.priceRow}
+                    onMouseEnter={() => setHover({ index, cls: "first" })}
+                    onMouseLeave={() => setHover(null)}
+                  ><span className={styles.priceLabel}>Люкс</span>
                     <span className={styles.priceSeats}>{getSeats(dep, "first")}</span>
                     <span className={styles.priceValue}>
                       <span className={styles.pricePrefix}>от</span>{" "}
                       <span className={styles.priceNumber}>
                         {getPrice(dep, "first")?.toLocaleString("ru-RU")}
+                        <Ruble className={styles.rubleIcon} />
                       </span>{" "}
-                      <Ruble className={styles.rubleIcon} />
                     </span>
+                    {/* TOOLTIP */}
+                    {hover?.index === index &&
+                      hover.cls === "first" &&
+                      getTooltipInfo(dep, "first") && (
+                        <div className={styles.tooltip}>
+                          {getTooltipInfo(dep, "first")!.map((row, i) => (
+                            <div key={i} className={styles.tooltipRow}>
+                              <span className={styles.tooltipLabel}>{row.label}</span>
+                              <span className={styles.tooltipCount}>{row.count}</span>
+                              <span className={styles.tooltipPrice}>{row.price.toLocaleString("ru-RU")}
+                                <Ruble className={styles.rubleIcon} />
+                              </span></div>
+                          ))}
+                        </div>
+                      )}
                   </div>
                 )}
                 {dep?.have_fourth_class && (
-                  <div className={styles.priceRow}>
-                    <span className={styles.priceLabel}>Сидячий</span>
+                  <div
+                    className={styles.priceRow}
+                    onMouseEnter={() => setHover({ index, cls: "fourth" })}
+                    onMouseLeave={() => setHover(null)}
+                  ><span className={styles.priceLabel}>Сидячий</span>
                     <span className={styles.priceSeats}>{getSeats(dep, "fourth")}</span>
                     <span className={styles.priceValue}>
                       <span className={styles.pricePrefix}>от</span>{" "}
                       <span className={styles.priceNumber}>
                         {getPrice(dep, "fourth")?.toLocaleString("ru-RU")}
+                        <Ruble className={styles.rubleIcon} />
                       </span>{" "}
-                      <Ruble className={styles.rubleIcon} />
                     </span>
+                    {/* TOOLTIP */}
+                    {hover?.index === index &&
+                      hover.cls === "fourth" &&
+                      getTooltipInfo(dep, "fourth") && (
+                        <div className={styles.tooltip}>
+                          {getTooltipInfo(dep, "fourth")!.map((row, i) => (
+                            <div key={i} className={styles.tooltipRow}>
+                              <span className={styles.tooltipLabel}>{row.label}</span>
+                              <span className={styles.tooltipCount}>{row.count}</span>
+                              <span className={styles.tooltipPrice}>{row.price.toLocaleString("ru-RU")}<Ruble className={styles.rubleIcon} />
+                              </span></div>
+                          ))}
+                        </div>
+                      )}
                   </div>
                 )}
               </div>
