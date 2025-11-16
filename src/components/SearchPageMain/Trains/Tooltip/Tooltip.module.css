@@ -1,0 +1,100 @@
+.tooltip {
+    position: absolute;
+    left: -11%;
+    bottom: -10px;
+
+    transform: translateY(100%);
+    /* появляется под строкой */
+
+    min-width: 276px;
+    background: rgba(245, 244, 246, 1);
+    /* border: 1px solid #dcdcdc; */
+    border-radius: 6px;
+    padding: 25px 15px 20px 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    z-index: 999;
+}
+
+.tooltip::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    /* стрелка над тултипом */
+    left: 130px;
+    /* смещение стрелки влево (подбери по макету) */
+
+    width: 0;
+    height: 0;
+
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgba(245, 244, 246, 1);
+    /* цвет тултипа */
+    /* маленькая тень как в макете */
+    /*  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.15)); */
+}
+
+.tooltipRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    gap: 10px;
+
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    /* как priceLabel */
+    font-size: 16px;
+    line-height: 100%;
+    color: #3e3c41;
+    /* как priceLabel */
+
+}
+
+.tooltipLabel {
+    flex: 1;
+    text-align: left;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+}
+
+.tooltipCount {
+    font-size: 16px;
+    color: #ffa800;
+    font-weight: 600;
+    width: 25px;
+    text-align: right;
+}
+
+.tooltipPrice {
+    min-width: 100px;
+    text-align: right;
+    font-family: Roboto;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(45, 43, 47, 1);
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+
+}
+
+.rubleIcon {
+    margin-left: 5px;
+    fill: #292929;
+    vertical-align: middle;
+}
