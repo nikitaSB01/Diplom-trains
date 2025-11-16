@@ -8,6 +8,7 @@ import { ReactComponent as Express } from "../../../assets/icons/Train/express.s
 import { ReactComponent as Сonditioning } from "../../../assets/icons/Train/conditioning.svg";
 import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwear.svg";
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
+import Pagination from "./Pagination/Pagination"; 
 
 
 // Импортируем все типы из общего файла
@@ -57,33 +58,13 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
   /* количество поездов на странице */
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  // окно видимых страниц (1 = 1..3, 2 = 4..6, 3 = 7..9 ...)
+  const [startPage, setStartPage] = useState(1);
+  const visibleCount = 3;
   const [pageWindow, setPageWindow] = useState(1); // 1 = страницы 1-3, 2 = 4-6, 3 = 7-9 ...
   const limit = 5;
 
-  /* функция отображения видимых переключателей страниц */
-  const getVisiblePages = () => {
-    const start = (pageWindow - 1) * 3 + 1;
-    const end = Math.min(start + 2, totalPages);
 
-    const pages = [];
-    for (let p = start; p <= end; p++) pages.push(p);
-
-    return pages;
-  };
-  // Назад — перемещает окно на -1
-  const handlePrev = () => {
-    if (pageWindow > 1) {
-      setPageWindow(pageWindow - 1);
-    }
-  };
-
-  // Вперёд — перемещает окно на +1
-  const handleNext = () => {
-    const maxWindow = Math.ceil(totalPages / 3);
-    if (pageWindow < maxWindow) {
-      setPageWindow(pageWindow + 1);
-    }
-  };
 
   useEffect(() => {
     if (!fromCity || !toCity) return;  // ← теперь работает и без даты
@@ -136,6 +117,37 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
     fetchTrains();
   }, [fromCity, toCity, dateStart, dateEnd, page]);
   const totalPages = Math.ceil(total / limit);
+
+  // получить 3 видимые страницы
+  const getVisiblePages = () => {
+    const pages = [];
+    for (let i = 0; i < visibleCount; i++) {
+      const p = startPage + i;
+      if (p <= totalPages) pages.push(p);
+    }
+    return pages;
+  };
+
+  // вычислить bigPage (10, 20, 30...)
+  const bigPage = Math.min(Math.ceil(startPage / 10) * 10, totalPages);
+
+  // клик по bigPage
+  const handleBigPage = () => {
+    setStartPage(bigPage);
+    setPage(bigPage);
+  };
+
+  // стрелка "вперёд"
+  const handleNext = () => {
+    const next = startPage + visibleCount;
+    if (next <= totalPages) setStartPage(next);
+  };
+
+  // стрелка "назад"
+  const handlePrev = () => {
+    const prev = startPage - visibleCount;
+    setStartPage(prev >= 1 ? prev : 1);
+  };
 
   if (loading) return <div className={styles.loading}>Загрузка...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
@@ -410,35 +422,13 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
             </div>
           </div>
         );
-      })}{totalPages > 1 && (
-        <div className={styles.pagination}>
-          <button
-            className={styles.arrowBtn}
-            disabled={pageWindow === 1}
-            onClick={handlePrev}
-          >
-            &lt;
-          </button>
+      })}
+<Pagination
+  page={page}
+  totalPages={totalPages}
+  onChange={(p) => setPage(p)}
+/>
 
-          {getVisiblePages().map((num) => (
-            <button
-              key={num}
-              className={`${styles.pageBtn} ${page === num ? styles.activePage : ""}`}
-              onClick={() => setPage(num)}
-            >
-              {num}
-            </button>
-          ))}
-
-          <button
-            className={styles.arrowBtn}
-            disabled={pageWindow === Math.ceil(totalPages / 3)}
-            onClick={handleNext}
-          >
-            &gt;
-          </button>
-        </div>
-      )}
     </div>
   );
 };
