@@ -9,6 +9,7 @@ import { ReactComponent as Сonditioning } from "../../../assets/icons/Train/con
 import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwear.svg";
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 import Pagination from "./Pagination/Pagination";
+import Tooltip from "./Tooltip/Tooltip";
 
 // Типы
 import {
@@ -263,22 +264,7 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                     {hover?.index === index &&
                       hover.cls === "third" &&
                       getTooltipInfo(dep, "third") && (
-                        <div className={styles.tooltip}>
-                          {getTooltipInfo(dep, "third")!.map((row, i) => (
-                            <div key={i} className={styles.tooltipRow}>
-                              <span className={styles.tooltipLabel}>
-                                {row.label}
-                              </span>
-                              <span className={styles.tooltipCount}>
-                                {row.count}
-                              </span>
-                              <span className={styles.tooltipPrice}>
-                                {row.price.toLocaleString("ru-RU")}
-                                <Ruble className={styles.rubleIcon} />
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                        <Tooltip items={getTooltipInfo(dep, "third")!} />
                       )}
                   </div>
                 )}
@@ -302,22 +288,8 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                     {hover?.index === index &&
                       hover.cls === "second" &&
                       getTooltipInfo(dep, "second") && (
-                        <div className={styles.tooltip}>
-                          {getTooltipInfo(dep, "second")!.map((row, i) => (
-                            <div key={i} className={styles.tooltipRow}>
-                              <span className={styles.tooltipLabel}>
-                                {row.label}
-                              </span>
-                              <span className={styles.tooltipCount}>
-                                {row.count}
-                              </span>
-                              <span className={styles.tooltipPrice}>
-                                {row.price.toLocaleString("ru-RU")}
-                                <Ruble className={styles.rubleIcon} />
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                        <Tooltip items={getTooltipInfo(dep, "second")!} />
+
                       )}
                   </div>
                 )}
@@ -341,24 +313,7 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                     {hover?.index === index &&
                       hover.cls === "first" &&
                       getTooltipInfo(dep, "first") && (
-                        <div className={styles.tooltip}>
-                          {getTooltipInfo(dep, "first")!.map((row, i) => (
-                            <div key={i} className={styles.tooltipRow}>
-                              <span className={styles.tooltipLabel}>
-                                {row.label}
-                              </span>
-                              <span className={styles.tooltipCount}>
-                                {row.count}
-                              </span>
-                              <span
-                                className={styles.tooltipPrice}
-                              >
-                                {row.price.toLocaleString("ru-RU")}
-                                <Ruble className={styles.rubleIcon} />
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                        <Tooltip items={getTooltipInfo(dep, "first")!} />
                       )}
                   </div>
                 )}
@@ -382,22 +337,7 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                     {hover?.index === index &&
                       hover.cls === "fourth" &&
                       getTooltipInfo(dep, "fourth") && (
-                        <div className={styles.tooltip}>
-                          {getTooltipInfo(dep, "fourth")!.map((row, i) => (
-                            <div key={i} className={styles.tooltipRow}>
-                              <span className={styles.tooltipLabel}>
-                                {row.label}
-                              </span>
-                              <span className={styles.tooltipCount}>
-                                {row.count}
-                              </span>
-                              <span className={styles.tooltipPrice}>
-                                {row.price.toLocaleString("ru-RU")}
-                                <Ruble className={styles.rubleIcon} />
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                        <Tooltip items={getTooltipInfo(dep, "fourth")!} />
                       )}
                   </div>
                 )}
