@@ -57,16 +57,32 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
   /* количество поездов на странице */
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  const [pageWindow, setPageWindow] = useState(1); // 1 = страницы 1-3, 2 = 4-6, 3 = 7-9 ...
   const limit = 5;
 
   /* функция отображения видимых переключателей страниц */
   const getVisiblePages = () => {
-    if (totalPages <= 3) return Array.from({ length: totalPages }, (_, i) => i + 1);
+    const start = (pageWindow - 1) * 3 + 1;
+    const end = Math.min(start + 2, totalPages);
 
-    if (page === 1) return [1, 2, 3];
-    if (page === totalPages) return [totalPages - 2, totalPages - 1, totalPages];
+    const pages = [];
+    for (let p = start; p <= end; p++) pages.push(p);
 
-    return [page - 1, page, page + 1];
+    return pages;
+  };
+  // Назад — перемещает окно на -1
+  const handlePrev = () => {
+    if (pageWindow > 1) {
+      setPageWindow(pageWindow - 1);
+    }
+  };
+
+  // Вперёд — перемещает окно на +1
+  const handleNext = () => {
+    const maxWindow = Math.ceil(totalPages / 3);
+    if (pageWindow < maxWindow) {
+      setPageWindow(pageWindow + 1);
+    }
   };
 
   useEffect(() => {
@@ -396,16 +412,14 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
         );
       })}{totalPages > 1 && (
         <div className={styles.pagination}>
-          {/* Кнопка назад */}
           <button
             className={styles.arrowBtn}
-            disabled={page === 1}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={pageWindow === 1}
+            onClick={handlePrev}
           >
             &lt;
           </button>
 
-          {/* Номера страниц */}
           {getVisiblePages().map((num) => (
             <button
               key={num}
@@ -416,11 +430,10 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
             </button>
           ))}
 
-          {/* Кнопка вперед */}
           <button
             className={styles.arrowBtn}
-            disabled={page === totalPages}
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={pageWindow === Math.ceil(totalPages / 3)}
+            onClick={handleNext}
           >
             &gt;
           </button>
