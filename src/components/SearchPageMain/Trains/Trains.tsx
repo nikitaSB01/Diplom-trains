@@ -10,6 +10,8 @@ import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwe
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 import Pagination from "./Pagination/Pagination";
 import Tooltip from "./Tooltip/Tooltip";
+import TrainsTopFilter from "./TrainsTopFilter/TrainsTopFilter";
+
 
 // Типы
 import {
@@ -59,9 +61,14 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
 
+
+  // Состояния сортировки и лимита
+  const [sort, setSort] = useState<"date" | "price" | "duration">("date");
+  const [limit, setLimit] = useState<number>(5);
   /* для пагинации */
-  const limit = 5;
+  /* const limit = 5; */
   const totalPages = Math.ceil(total / limit);
+
 
   // ======================= Загрузка поездов =======================
 
@@ -79,6 +86,8 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
         });
         params.append("limit", limit.toString());
         params.append("offset", ((page - 1) * limit).toString());
+        // сортировка
+        params.append("sort", sort); // "date" | "price" | "duration"
 
         if (dateStart) {
           const apiDateStart = formatDateForApi(dateStart);
@@ -107,7 +116,7 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
     };
 
     fetchTrains();
-  }, [fromCity, toCity, dateStart, dateEnd, page]);
+  }, [fromCity, toCity, dateStart, dateEnd, page, sort, limit]);
 
   // ======================= Состояния загрузки =======================
 
@@ -141,6 +150,29 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
 
   return (
     <div className={styles.trainsList}>
+
+      <TrainsTopFilter
+        total={total}
+        sort={
+          sort === "date"
+            ? "времени"
+            : sort === "price"
+              ? "стоимости"
+              : "длительности"
+        }
+        onSortChange={(value) => {
+          if (value === "времени") setSort("date");
+          if (value === "стоимости") setSort("price");
+          if (value === "длительности") setSort("duration");
+          setPage(1); // сброс на первую страницу
+        }}
+        limit={limit}
+        onLimitChange={(value) => {
+          setLimit(value);
+          setPage(1); // тоже сброс
+        }}
+      />
+
       {trains.map((train, index) => {
         const dep = train.departure;
         const arr = train.arrival;
