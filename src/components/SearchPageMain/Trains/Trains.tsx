@@ -8,10 +8,9 @@ import { ReactComponent as Express } from "../../../assets/icons/Train/express.s
 import { ReactComponent as Сonditioning } from "../../../assets/icons/Train/conditioning.svg";
 import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwear.svg";
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
-import Pagination from "./Pagination/Pagination"; 
+import Pagination from "./Pagination/Pagination";
 
-
-// Импортируем все типы из общего файла
+// Типы
 import {
   Train,
   DirectionInfo,
@@ -58,16 +57,15 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
   /* количество поездов на странице */
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  // окно видимых страниц (1 = 1..3, 2 = 4..6, 3 = 7..9 ...)
-  const [startPage, setStartPage] = useState(1);
-  const visibleCount = 3;
-  const [pageWindow, setPageWindow] = useState(1); // 1 = страницы 1-3, 2 = 4-6, 3 = 7-9 ...
+
+  /* для пагинации */
   const limit = 5;
+  const totalPages = Math.ceil(total / limit);
 
-
+  // ======================= Загрузка поездов =======================
 
   useEffect(() => {
-    if (!fromCity || !toCity) return;  // ← теперь работает и без даты
+    if (!fromCity || !toCity) return;
 
     const fetchTrains = async () => {
       setLoading(true);
@@ -77,25 +75,18 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
         const params = new URLSearchParams({
           from_city_id: fromCity._id,
           to_city_id: toCity._id,
-          /* limit: String(limit),
-          offset: String((page - 1) * limit), */
         });
         params.append("limit", limit.toString());
         params.append("offset", ((page - 1) * limit).toString());
 
-        // Добавляем даты ТОЛЬКО если они заданы и не пустые
         if (dateStart) {
           const apiDateStart = formatDateForApi(dateStart);
-          if (apiDateStart) {
-            params.append("date_start", apiDateStart);
-          }
+          if (apiDateStart) params.append("date_start", apiDateStart);
         }
 
         if (dateEnd) {
           const apiDateEnd = formatDateForApi(dateEnd);
-          if (apiDateEnd) {
-            params.append("date_end", apiDateEnd);
-          }
+          if (apiDateEnd) params.append("date_end", apiDateEnd);
         }
 
         const response = await fetch(
@@ -116,49 +107,19 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
 
     fetchTrains();
   }, [fromCity, toCity, dateStart, dateEnd, page]);
-  const totalPages = Math.ceil(total / limit);
 
-  // получить 3 видимые страницы
-  const getVisiblePages = () => {
-    const pages = [];
-    for (let i = 0; i < visibleCount; i++) {
-      const p = startPage + i;
-      if (p <= totalPages) pages.push(p);
-    }
-    return pages;
-  };
-
-  // вычислить bigPage (10, 20, 30...)
-  const bigPage = Math.min(Math.ceil(startPage / 10) * 10, totalPages);
-
-  // клик по bigPage
-  const handleBigPage = () => {
-    setStartPage(bigPage);
-    setPage(bigPage);
-  };
-
-  // стрелка "вперёд"
-  const handleNext = () => {
-    const next = startPage + visibleCount;
-    if (next <= totalPages) setStartPage(next);
-  };
-
-  // стрелка "назад"
-  const handlePrev = () => {
-    const prev = startPage - visibleCount;
-    setStartPage(prev >= 1 ? prev : 1);
-  };
+  // ======================= Состояния загрузки =======================
 
   if (loading) return <div className={styles.loading}>Загрузка...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
   if (trains.length === 0)
     return <div className={styles.empty}>Нет найденных маршрутов</div>;
 
-  // Формирование tooltip для выбранного класса вагона
+  // ======================= TOOLTIP =======================
+
   const getTooltipInfo = (dir: DirectionInfo, cls: WagonClass) => {
     const price = dir.price_info?.[cls];
     const seats = dir.available_seats_info?.[cls];
-
     if (!price) return null;
 
     const info = [];
@@ -174,6 +135,9 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
 
     return info.length > 0 ? info : null;
   };
+
+  // ======================= Рендер =======================
+
   return (
     <div className={styles.trainsList}>
       {trains.map((train, index) => {
@@ -222,7 +186,6 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                   <div className={styles.arrowBlock}>
                     <p className={styles.duration}>{formatDuration(dep?.duration)}</p>
                     <ArrowThere className={styles.arrowSvg} />
-
                   </div>
 
                   <div className={`${styles.timeBlock} ${styles.rightBlock}`}>
@@ -242,7 +205,6 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
               {arr && (
                 <div className={styles.directionBlock}>
                   <div className={styles.direction}>
-                    {/* Левая часть — теперь город Москва (то есть arr.to) */}
                     <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
                       <p className={styles.time}>
                         {arr?.to?.datetime
@@ -256,13 +218,11 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                       <p className={styles.station}>{arr?.to?.railway_station_name}</p>
                     </div>
 
-                    {/* Центральная стрелка и время в пути */}
                     <div className={styles.arrowBlock}>
                       <p className={styles.duration}>{formatDuration(arr?.duration)}</p>
                       <ArrowBack className={styles.arrowSvg} />
                     </div>
 
-                    {/* Правая часть — теперь город Санкт-Петербург (то есть arr.from) */}
                     <div className={`${styles.timeBlock} ${styles.rightBlock}`}>
                       <p className={styles.time}>
                         {arr?.from?.datetime
@@ -289,7 +249,8 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                     className={styles.priceRow}
                     onMouseEnter={() => setHover({ index, cls: "third" })}
                     onMouseLeave={() => setHover(null)}
-                  ><span className={styles.priceLabel}>Плацкарт</span>
+                  >
+                    <span className={styles.priceLabel}>Плацкарт</span>
                     <span className={styles.priceSeats}>{getSeats(dep, "third")}</span>
                     <span className={styles.priceValue}>
                       <span className={styles.pricePrefix}>от</span>{" "}
@@ -305,22 +266,30 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                         <div className={styles.tooltip}>
                           {getTooltipInfo(dep, "third")!.map((row, i) => (
                             <div key={i} className={styles.tooltipRow}>
-                              <span className={styles.tooltipLabel}>{row.label}</span>
-                              <span className={styles.tooltipCount}>{row.count}</span>
-                              <span className={styles.tooltipPrice}> {row.price.toLocaleString("ru-RU")}
+                              <span className={styles.tooltipLabel}>
+                                {row.label}
+                              </span>
+                              <span className={styles.tooltipCount}>
+                                {row.count}
+                              </span>
+                              <span className={styles.tooltipPrice}>
+                                {row.price.toLocaleString("ru-RU")}
                                 <Ruble className={styles.rubleIcon} />
-                              </span></div>
+                              </span>
+                            </div>
                           ))}
                         </div>
                       )}
                   </div>
                 )}
+
                 {dep?.have_second_class && (
                   <div
                     className={styles.priceRow}
                     onMouseEnter={() => setHover({ index, cls: "second" })}
                     onMouseLeave={() => setHover(null)}
-                  ><span className={styles.priceLabel}>Купе</span>
+                  >
+                    <span className={styles.priceLabel}>Купе</span>
                     <span className={styles.priceSeats}>{getSeats(dep, "second")}</span>
                     <span className={styles.priceValue}>
                       <span className={styles.pricePrefix}>от</span>{" "}
@@ -336,21 +305,30 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                         <div className={styles.tooltip}>
                           {getTooltipInfo(dep, "second")!.map((row, i) => (
                             <div key={i} className={styles.tooltipRow}>
-                              <span className={styles.tooltipLabel}>{row.label}</span>
-                              <span className={styles.tooltipCount}>{row.count}</span>
-                              <span className={styles.tooltipPrice}>{row.price.toLocaleString("ru-RU")}<Ruble className={styles.rubleIcon} />
-                              </span></div>
+                              <span className={styles.tooltipLabel}>
+                                {row.label}
+                              </span>
+                              <span className={styles.tooltipCount}>
+                                {row.count}
+                              </span>
+                              <span className={styles.tooltipPrice}>
+                                {row.price.toLocaleString("ru-RU")}
+                                <Ruble className={styles.rubleIcon} />
+                              </span>
+                            </div>
                           ))}
                         </div>
                       )}
                   </div>
                 )}
+
                 {dep?.have_first_class && (
                   <div
                     className={styles.priceRow}
                     onMouseEnter={() => setHover({ index, cls: "first" })}
                     onMouseLeave={() => setHover(null)}
-                  ><span className={styles.priceLabel}>Люкс</span>
+                  >
+                    <span className={styles.priceLabel}>Люкс</span>
                     <span className={styles.priceSeats}>{getSeats(dep, "first")}</span>
                     <span className={styles.priceValue}>
                       <span className={styles.pricePrefix}>от</span>{" "}
@@ -366,22 +344,32 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                         <div className={styles.tooltip}>
                           {getTooltipInfo(dep, "first")!.map((row, i) => (
                             <div key={i} className={styles.tooltipRow}>
-                              <span className={styles.tooltipLabel}>{row.label}</span>
-                              <span className={styles.tooltipCount}>{row.count}</span>
-                              <span className={styles.tooltipPrice}>{row.price.toLocaleString("ru-RU")}
+                              <span className={styles.tooltipLabel}>
+                                {row.label}
+                              </span>
+                              <span className={styles.tooltipCount}>
+                                {row.count}
+                              </span>
+                              <span
+                                className={styles.tooltipPrice}
+                              >
+                                {row.price.toLocaleString("ru-RU")}
                                 <Ruble className={styles.rubleIcon} />
-                              </span></div>
+                              </span>
+                            </div>
                           ))}
                         </div>
                       )}
                   </div>
                 )}
+
                 {dep?.have_fourth_class && (
                   <div
                     className={styles.priceRow}
                     onMouseEnter={() => setHover({ index, cls: "fourth" })}
                     onMouseLeave={() => setHover(null)}
-                  ><span className={styles.priceLabel}>Сидячий</span>
+                  >
+                    <span className={styles.priceLabel}>Сидячий</span>
                     <span className={styles.priceSeats}>{getSeats(dep, "fourth")}</span>
                     <span className={styles.priceValue}>
                       <span className={styles.pricePrefix}>от</span>{" "}
@@ -397,10 +385,17 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
                         <div className={styles.tooltip}>
                           {getTooltipInfo(dep, "fourth")!.map((row, i) => (
                             <div key={i} className={styles.tooltipRow}>
-                              <span className={styles.tooltipLabel}>{row.label}</span>
-                              <span className={styles.tooltipCount}>{row.count}</span>
-                              <span className={styles.tooltipPrice}>{row.price.toLocaleString("ru-RU")}<Ruble className={styles.rubleIcon} />
-                              </span></div>
+                              <span className={styles.tooltipLabel}>
+                                {row.label}
+                              </span>
+                              <span className={styles.tooltipCount}>
+                                {row.count}
+                              </span>
+                              <span className={styles.tooltipPrice}>
+                                {row.price.toLocaleString("ru-RU")}
+                                <Ruble className={styles.rubleIcon} />
+                              </span>
+                            </div>
                           ))}
                         </div>
                       )}
@@ -423,11 +418,12 @@ const Trains: React.FC<TrainsProps> = ({ fromCity, toCity, dateStart, dateEnd })
           </div>
         );
       })}
-<Pagination
-  page={page}
-  totalPages={totalPages}
-  onChange={(p) => setPage(p)}
-/>
+
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onChange={(p) => setPage(p)}
+      />
 
     </div>
   );
