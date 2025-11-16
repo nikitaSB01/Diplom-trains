@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Pagination.module.css";
+import { ReactComponent as PaginationSvg } from "../../../../assets/icons/Train/pagination.svg";
+
+
 
 interface PaginationProps {
     page: number;
@@ -84,7 +87,7 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, onChange }) =
 
             {windowEnd < totalPages && (
                 <>
-                    <span className={styles.dots}>...</span>
+                    <span className={styles.dots}><PaginationSvg className={styles.dotsSvg} /></span>
 
                     <button
                         className={styles.pageBtn}
