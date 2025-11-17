@@ -7,8 +7,10 @@
 }
 
 .total {
-    font-size: 16px;
-    color: #6b6b6b;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(146, 143, 148, 1);
 }
 
 .rightSection {
@@ -40,7 +42,7 @@
 
 .dropdown {
     position: absolute;
-    top: -3px;
+    top: -8px;
     /* опустить вниз — регулируй по макету */
     left: 140px;
     /* выровнять под сортировкой */

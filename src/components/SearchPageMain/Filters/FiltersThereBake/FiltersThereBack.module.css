@@ -50,6 +50,17 @@
     align-items: center;
 }
 
+.container:hover :global(.tooglePlus) path {
+    fill: rgba(252, 220, 157, 1);
+    stroke: rgba(252, 220, 157, 1);
+}
+
+.container:hover :global(.tooglePlus) rect {
+    stroke: rgba(252, 220, 157, 1);
+}
+
+
+
 .body {
     margin-top: 22px;
     display: flex;

@@ -30,7 +30,7 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({ title }) => 
           <p className={styles.title}>{title}</p>
         </div>
         <div className={styles.toggle}>
-          {isOpen ? <ToggleIconMinus /> : <ToggleIconPlus />}
+          {isOpen ? <ToggleIconMinus /> : <ToggleIconPlus className="tooglePlus" />}
         </div>
       </button>
 

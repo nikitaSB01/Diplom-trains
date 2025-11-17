@@ -21,6 +21,19 @@
     cursor: pointer;
 }
 
+.pageBtn:hover, .arrowBtn:hover {
+    background: rgba(255, 255, 255, 1);
+    color: rgba(255, 168, 0, 1);
+    border: 2px solid rgba(255, 168, 0, 1);
+}
+
+.arrowBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
 .arrowBtn:disabled {
     opacity: 0.4;
     cursor: default;
@@ -32,11 +45,7 @@
     color: rgba(255, 255, 255, 1);
 }
 
-.pageBtn:hover {
-    background: rgba(255, 255, 255, 1);
-    color: rgba(255, 168, 0, 1);
-    border: 2px solid rgba(255, 168, 0, 1);
-}
+
 
 
 .dots {
