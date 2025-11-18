@@ -81,4 +81,10 @@ export interface TrainsProps {
     toCity: City | null;
     dateStart: string;
     dateEnd?: string;
+    filters?: {
+        options: { [key: string]: boolean };
+        price: [number, number] | null;
+        thereTime: { from: number; to: number } | null;
+        backTime: { from: number; to: number } | null;
+    };
 }
