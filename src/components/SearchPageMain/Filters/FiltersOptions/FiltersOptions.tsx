@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./FiltersOptions.module.css";
 
-import { ReactComponent as ExpressIcon } from "../../../../assets/icons/Filters/FiltersOptions/1.svg"
-import { ReactComponent as LuxIcon } from "../../../../assets/icons/Filters/FiltersOptions/2.svg"
-import { ReactComponent as SeatIcon } from "../../../../assets/icons/Filters/FiltersOptions/3.svg"
-import { ReactComponent as WifiIcon } from "../../../../assets/icons/Filters/FiltersOptions/4.svg"
-import { ReactComponent as CoupeIcon } from "../../../../assets/icons/Filters/FiltersOptions/5.svg"
-import { ReactComponent as PlazIcon } from "../../../../assets/icons/Filters/FiltersOptions/6.svg"
+import { ReactComponent as ExpressIcon } from "../../../../assets/icons/Filters/FiltersOptions/1.svg";
+import { ReactComponent as LuxIcon } from "../../../../assets/icons/Filters/FiltersOptions/2.svg";
+import { ReactComponent as SeatIcon } from "../../../../assets/icons/Filters/FiltersOptions/3.svg";
+import { ReactComponent as WifiIcon } from "../../../../assets/icons/Filters/FiltersOptions/4.svg";
+import { ReactComponent as CoupeIcon } from "../../../../assets/icons/Filters/FiltersOptions/5.svg";
+import { ReactComponent as PlazIcon } from "../../../../assets/icons/Filters/FiltersOptions/6.svg";
 
 const optionsList = [
     { id: "coupe", label: "Купе", Icon: CoupeIcon },
@@ -15,10 +15,18 @@ const optionsList = [
     { id: "lux", label: "Люкс", Icon: LuxIcon },
     { id: "wifi", label: "Wi-Fi", Icon: WifiIcon },
     { id: "express", label: "Экспресс", Icon: ExpressIcon },
-];
+] as const;
 
-export const FiltersOptions: React.FC = () => {
-    const [activeOptions, setActiveOptions] = useState<{ [key: string]: boolean }>({
+type OptionId = (typeof optionsList)[number]["id"];
+
+export type OptionsState = Record<OptionId, boolean>;
+
+interface FiltersOptionsProps {
+    onChange?: (options: OptionsState) => void;
+}
+
+export const FiltersOptions: React.FC<FiltersOptionsProps> = ({ onChange }) => {
+    const [activeOptions, setActiveOptions] = useState<OptionsState>({
         coupe: false,
         plaz: false,
         seat: false,
@@ -27,8 +35,16 @@ export const FiltersOptions: React.FC = () => {
         express: false,
     });
 
-    const toggleOption = (id: string) => {
-        setActiveOptions((prev) => ({ ...prev, [id]: !prev[id] }));
+    // ⬇️ уведомляем родителя уже ПОСЛЕ рендера
+    useEffect(() => {
+        onChange?.(activeOptions);
+    }, [activeOptions, onChange]);
+
+    const toggleOption = (id: OptionId) => {
+        setActiveOptions((prev) => ({
+            ...prev,
+            [id]: !prev[id],
+        }));
     };
 
     return (
@@ -39,6 +55,7 @@ export const FiltersOptions: React.FC = () => {
                         <Icon className={styles.icon} />
                         <p>{label}</p>
                     </div>
+
                     <button
                         type="button"
                         className={`${styles.toggle} ${activeOptions[id] ? styles.active : ""}`}

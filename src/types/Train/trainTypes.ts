@@ -1,3 +1,6 @@
+import { FiltersState } from "../filtersTypes/filtersTypes";
+
+
 // ======================= Типы для структуры ответа от API =======================
 
 /** Основные классы вагонов */
@@ -84,7 +87,11 @@ export interface TrainsProps {
     filters?: {
         options: { [key: string]: boolean };
         price: [number, number] | null;
-        thereTime: { from: number; to: number } | null;
-        backTime: { from: number; to: number } | null;
+
+        thereDeparture: { from: number; to: number } | null;
+        thereArrival: { from: number; to: number } | null;
+
+        backDeparture: { from: number; to: number } | null;
+        backArrival: { from: number; to: number } | null;
     };
 }

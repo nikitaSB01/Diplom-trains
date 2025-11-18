@@ -1,13 +1,17 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
 import styles from "./FiltersPrice.module.css";
 
-export const FiltersPrice: React.FC = () => {
-  const minLimit = 1920;
+interface FiltersPriceProps {
+  onChange?: (min: number, max: number) => void;
+}
+
+export const FiltersPrice: React.FC<FiltersPriceProps> = ({ onChange }) => {
+  const minLimit = 500;
   const maxLimit = 7000;
   const minGap = 1100;
   const thumbWidth = 24;
 
-  const [minValue, setMinValue] = useState(1920);
+  const [minValue, setMinValue] = useState(500);
   const [maxValue, setMaxValue] = useState(4500);
   const [sliderWidth, setSliderWidth] = useState(0);
 
@@ -24,7 +28,6 @@ export const FiltersPrice: React.FC = () => {
     }
   }, []);
 
-  // вычисляем координату центра бегунка
   const getXPosition = (value: number) => {
     const percent = (value - minLimit) / (maxLimit - minLimit);
     return percent * (sliderWidth - thumbWidth) + thumbWidth / 2;
@@ -33,11 +36,13 @@ export const FiltersPrice: React.FC = () => {
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Math.min(Number(e.target.value), maxValue - minGap);
     setMinValue(newValue);
+    onChange?.(newValue, maxValue);
   };
 
   const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Math.max(Number(e.target.value), minValue + minGap);
     setMaxValue(newValue);
+    onChange?.(minValue, newValue);
   };
 
   const leftX = getXPosition(minValue);
@@ -46,9 +51,8 @@ export const FiltersPrice: React.FC = () => {
   const hideStaticRight = maxValue >= 6000;
   const showStaticLeft = minValue >= 2900;
 
-  // вычисляем безопасные координаты для числовых блоков
-  const edgePadding = 6; // внутренний отступ
-  const textWidth = 40; // примерная ширина блока числа
+  const edgePadding = 6;
+  const textWidth = 40;
 
   let minValueLeft = leftX - textWidth / 2;
   let maxValueLeft = rightX - textWidth / 2;
@@ -70,10 +74,8 @@ export const FiltersPrice: React.FC = () => {
       </div>
 
       <div className={styles.sliderWrapper} ref={sliderRef}>
-        {/* серый трек */}
         <div className={styles.track}></div>
 
-        {/* жёлтая полоса строго от центра до центра */}
         <div
           className={styles.range}
           style={{
@@ -82,7 +84,6 @@ export const FiltersPrice: React.FC = () => {
           }}
         />
 
-        {/* ползунки */}
         <input
           type="range"
           min={minLimit}
@@ -100,7 +101,6 @@ export const FiltersPrice: React.FC = () => {
           className={`${styles.thumb} ${styles.thumbRight}`}
         />
 
-        {/* цифровые значения под бегунками (с защитой от выхода за контейнер) */}
         <div
           className={styles.value}
           style={{
@@ -121,18 +121,12 @@ export const FiltersPrice: React.FC = () => {
           {maxValue}
         </div>
 
-        {/* статичное значение справа */}
         {!hideStaticRight && (
-          <div className={`${styles.value} ${styles.staticRight}`}>
-            {maxLimit}
-          </div>
+          <div className={`${styles.value} ${styles.staticRight}`}>{maxLimit}</div>
         )}
 
-        {/* статичное значение слева */}
         {showStaticLeft && (
-          <div className={`${styles.value} ${styles.staticLeft}`}>
-            {minLimit}
-          </div>
+          <div className={`${styles.value} ${styles.staticLeft}`}>{minLimit}</div>
         )}
       </div>
     </div>

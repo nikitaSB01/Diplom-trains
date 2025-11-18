@@ -4,29 +4,34 @@ import styles from "./Track.module.css";
 interface TrackProps {
     label: string;
     align?: "left" | "right";
+    onChange?: (range: { from: number; to: number }) => void;
 }
 
-export const Track: React.FC<TrackProps> = ({ label, align = "left" }) => {
+export const Track: React.FC<TrackProps> = ({ label, align = "left", onChange }) => {
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(15);
     const [sliderWidth, setSliderWidth] = useState(0);
+    const [touched, setTouched] = useState(false); // ← добавили
 
     const sliderRef = useRef<HTMLDivElement>(null);
-    const minGap = 6; // минимальное расстояние между ползунками
-    const thumbSize = 18; // диаметр ползунка
+    const minGap = 6;
 
+    // фикс ширины
     useEffect(() => {
         if (sliderRef.current) {
             setSliderWidth(sliderRef.current.offsetWidth);
         }
     }, []);
 
-    const formatTime = (val: number) => `${val}:00`;
+    // Вызываем onChange только если пользователь ТРОГАЛ ползунок
+    useEffect(() => {
+        if (!touched) return;
+        onChange?.({ from: minValue, to: maxValue });
+    }, [minValue, maxValue, touched]);
 
-    // Конвертация значения в пиксели
+    const formatTime = (val: number) => `${val}:00`;
     const getPos = (value: number) => (value / 24) * sliderWidth;
 
-    // Коррекция позиции числового блока (как в FiltersPrice)
     const getSafeValuePosition = (x: number, textWidth = 40) => {
         if (x < textWidth / 2) return 0;
         if (x > sliderWidth - textWidth / 2) return sliderWidth - textWidth;
@@ -34,11 +39,13 @@ export const Track: React.FC<TrackProps> = ({ label, align = "left" }) => {
     };
 
     const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTouched(true); // ← отмечаем что ползунок потроган
         const newValue = Number(e.target.value);
         if (newValue <= maxValue - minGap) setMinValue(newValue);
     };
 
     const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTouched(true);
         const newValue = Number(e.target.value);
         if (newValue >= minValue + minGap) setMaxValue(newValue);
     };
@@ -58,7 +65,6 @@ export const Track: React.FC<TrackProps> = ({ label, align = "left" }) => {
             <div className={styles.sliderWrapper} ref={sliderRef}>
                 <div className={styles.track}></div>
 
-                {/* Линия диапазона от центра до центра */}
                 <div
                     className={styles.range}
                     style={{
@@ -75,6 +81,7 @@ export const Track: React.FC<TrackProps> = ({ label, align = "left" }) => {
                     onChange={handleMinChange}
                     className={styles.thumb}
                 />
+
                 <input
                     type="range"
                     min="0"
@@ -84,13 +91,13 @@ export const Track: React.FC<TrackProps> = ({ label, align = "left" }) => {
                     className={styles.thumb}
                 />
 
-                {/* Значения под ползунками */}
                 <span
                     className={styles.value}
                     style={{ left: `${getSafeValuePosition(minPos)}px` }}
                 >
                     {formatTime(minValue)}
                 </span>
+
                 <span
                     className={styles.value}
                     style={{ left: `${getSafeValuePosition(maxPos)}px` }}
@@ -98,7 +105,6 @@ export const Track: React.FC<TrackProps> = ({ label, align = "left" }) => {
                     {formatTime(maxValue)}
                 </span>
 
-                {/* Краевые значения */}
                 {!hideLeftStatic && (
                     <span className={`${styles.value} ${styles.staticLeft}`}>0:00</span>
                 )}
