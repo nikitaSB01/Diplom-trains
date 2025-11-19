@@ -54,6 +54,26 @@ const toMinutes = (unix: number) => {
   return date.getHours() * 60 + date.getMinutes();
 };
 
+// ======================= TOOLTIP =======================
+/*     const getTooltipInfo = (dir: DirectionInfo, cls: WagonClass) => {
+      const price = dir.price_info?.[cls];
+      const seats = dir.available_seats_info?.[cls];
+      if (!price) return null;
+
+      const info = [];
+
+      if (price.top_price)
+        info.push({ label: "верхние", price: price.top_price, count: seats });
+
+      if (price.bottom_price)
+        info.push({ label: "нижние", price: price.bottom_price, count: seats });
+
+      if (price.side_price)
+        info.push({ label: "боковые", price: price.side_price, count: seats });
+
+      return info.length > 0 ? info : null;
+    };
+ */
 // ======================= Компонент =======================
 
 const Trains: React.FC<TrainsProps> = ({
@@ -209,27 +229,6 @@ const Trains: React.FC<TrainsProps> = ({
       });
     }
 
-    // ======================= TOOLTIP =======================
-
-    const getTooltipInfo = (dir: DirectionInfo, cls: WagonClass) => {
-      const price = dir.price_info?.[cls];
-      const seats = dir.available_seats_info?.[cls];
-      if (!price) return null;
-
-      const info = [];
-
-      if (price.top_price)
-        info.push({ label: "верхние", price: price.top_price, count: seats });
-
-      if (price.bottom_price)
-        info.push({ label: "нижние", price: price.bottom_price, count: seats });
-
-      if (price.side_price)
-        info.push({ label: "боковые", price: price.side_price, count: seats });
-
-      return info.length > 0 ? info : null;
-    };
-
     // ======================= Рендер =======================
 
     return (
@@ -377,11 +376,11 @@ const Trains: React.FC<TrainsProps> = ({
                         </span>{" "}
                       </span>
                       {/* TOOLTIP */}
-                      {hover?.index === index &&
+                    {/*   {hover?.index === index &&
                         hover.cls === "third" &&
                         getTooltipInfo(dep, "third") && (
                           <Tooltip items={getTooltipInfo(dep, "third")!} />
-                        )}
+                        )} */}
                     </div>
                   )}
 
@@ -401,12 +400,6 @@ const Trains: React.FC<TrainsProps> = ({
                         </span>{" "}
                       </span>
                       {/* TOOLTIP */}
-                      {hover?.index === index &&
-                        hover.cls === "second" &&
-                        getTooltipInfo(dep, "second") && (
-                          <Tooltip items={getTooltipInfo(dep, "second")!} />
-
-                        )}
                     </div>
                   )}
 
@@ -426,11 +419,6 @@ const Trains: React.FC<TrainsProps> = ({
                         </span>{" "}
                       </span>
                       {/* TOOLTIP */}
-                      {hover?.index === index &&
-                        hover.cls === "first" &&
-                        getTooltipInfo(dep, "first") && (
-                          <Tooltip items={getTooltipInfo(dep, "first")!} />
-                        )}
                     </div>
                   )}
 
@@ -450,11 +438,6 @@ const Trains: React.FC<TrainsProps> = ({
                         </span>{" "}
                       </span>
                       {/* TOOLTIP */}
-                      {hover?.index === index &&
-                        hover.cls === "fourth" &&
-                        getTooltipInfo(dep, "fourth") && (
-                          <Tooltip items={getTooltipInfo(dep, "fourth")!} />
-                        )}
                     </div>
                   )}
                 </div>
@@ -483,7 +466,7 @@ const Trains: React.FC<TrainsProps> = ({
 
       </div>
     );
-    
+
   }
   return null;  // если filters может отсутствовать
 };
