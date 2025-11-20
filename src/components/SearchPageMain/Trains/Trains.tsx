@@ -68,6 +68,7 @@ const Trains: React.FC<TrainsProps> = ({
   dateStart,
   dateEnd,
   filters,
+  onLoadingChange
 }) => {
 
   // загрузка
@@ -119,6 +120,7 @@ const Trains: React.FC<TrainsProps> = ({
 
     const refresh = async () => {
       setLoading(true);
+      onLoadingChange?.(true);
       setError("");
       setPage(1);
       setCache([]);
@@ -132,6 +134,7 @@ const Trains: React.FC<TrainsProps> = ({
         setError(e.message);
       } finally {
         setLoading(false);
+        onLoadingChange?.(false);
       }
     };
 
@@ -208,18 +211,24 @@ const Trains: React.FC<TrainsProps> = ({
     if (filtered.length >= need) return;
     if (isEnd) return;
 
+    onLoadingChange?.(true);  // <<< ДОБАВИЛИ
+
     const next = serverOffset + serverLimit;
 
     try {
       const more = await loadServerPage(next);
       if (more.length === 0) {
         setIsEnd(true);
+        onLoadingChange?.(false);   // <<< ДОБАВИЛИ
         return;
       }
+
       setCache(prev => [...prev, ...more]);
       setServerOffset(next);
     } catch {
       setIsEnd(true);
+    } finally {
+      onLoadingChange?.(false);  // <<< ДОБАВИЛИ
     }
   };
 
@@ -231,7 +240,7 @@ const Trains: React.FC<TrainsProps> = ({
   useEffect(() => {
     setPage(1);
   }, [filters]);
-  
+
 
   // ======================================================
   // 4. Пагинация

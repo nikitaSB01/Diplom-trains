@@ -7,12 +7,14 @@ import FiltersLastTickets from '../../components/SearchPageMain/FiltersLastTicke
 import Trains from '../../components/SearchPageMain/Trains/Trains';
 import { useLocation } from 'react-router-dom';
 import { FiltersState } from "../../types/filtersTypes/filtersTypes";
+import LoaderGif from "../../assets/gif/анимация-загрузки.gif"
+
 
 const Main: React.FC = () => {
 
   const location = useLocation();
   const { from, to, dateStart, dateEnd } = location.state || {};
-  
+
   const [filters, setFilters] = useState<FiltersState>({
     options: {},
     price: null,
@@ -24,29 +26,61 @@ const Main: React.FC = () => {
     backArrival: null,
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [showLoader, setShowLoader] = useState(true);
+  useEffect(() => {
+    if (isLoading) {
+      setShowLoader(true);
+    } else {
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 400); // минимальное время лоадера
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
 
   return (
     <section className={styles.main}>
-      <Steps currentStep={2} />
-      <div className={styles.container}>
-        <div className={styles.leftColumn}>
-          <Filters onChange={setFilters} />
-          <FiltersLastTickets />
+
+      {/* Лоадер на 780px поверх */}
+      {showLoader && (
+        <div className={styles.loaderOverlay}>
+          <p className={styles.loadingText}>Идёт поиск</p>
+          <img src={LoaderGif} alt="" className={styles.loaderGif} />
         </div>
-        <div className={styles.rightColumn}>
-          {from && to && (
-            <Trains
-              fromCity={from}
-              toCity={to}
-              dateStart={dateStart}
-              dateEnd={dateEnd}
-              filters={filters}
-            />
-          )}
+      )}
+
+      {/* Контейнер всегда в DOM */}
+      <div
+        className={`${styles.mainContainer} ${showLoader ? styles.loadingState : ""}`}
+      >
+        <Steps currentStep={2} />
+
+        <div className={styles.container}>
+          <div className={styles.leftColumn}>
+            <Filters onChange={setFilters} />
+            <FiltersLastTickets />
+          </div>
+
+          <div className={styles.rightColumn}>
+            {from && to && (
+              <Trains
+                fromCity={from}
+                toCity={to}
+                dateStart={dateStart}
+                dateEnd={dateEnd}
+                filters={filters}
+                onLoadingChange={setIsLoading}
+              />
+            )}
+          </div>
         </div>
       </div>
+
     </section>
   );
-};
+}
 
 export default Main;
+
+

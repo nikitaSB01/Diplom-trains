@@ -3,6 +3,7 @@
   /* padding: 40px 100px; */
   max-width: 1920px;
   margin: 0 auto;
+  position: relative;
 }
 
 .container {
@@ -27,4 +28,59 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+}
+
+/* обычное состояние */
+.mainContainer {
+  min-height: 780px;
+  overflow: visible;
+  transition: height 0.2s ease;
+}
+
+/* состояние загрузки */
+.loadingState {
+  height: 780px;
+  /* фиксируем высоту */
+  overflow: hidden;
+  /* скрываем содержимое */
+}
+
+/* лоадер */
+.loaderOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 780px;
+
+  background: #3E3C41;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 10;
+}
+
+.loadingText {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(146, 143, 148, 1);
+  margin-bottom: 50px;
+}
+
+.loadingGif {}
+
+.loaderGif {
+  width: 950px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
+
 }

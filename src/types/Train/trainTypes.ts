@@ -94,4 +94,5 @@ export interface TrainsProps {
         backDeparture: { from: number; to: number } | null;
         backArrival: { from: number; to: number } | null;
     };
+    onLoadingChange?: (val: boolean) => void;
 }
