@@ -1,5 +1,7 @@
+
 import React, { useEffect, useState } from "react";
 import styles from "./Trains.module.css";
+
 import { ReactComponent as ArrowThere } from "../../../assets/icons/Train/arrowThere.svg";
 import { ReactComponent as ArrowBack } from "../../../assets/icons/Train/arrowBack.svg";
 import { ReactComponent as Cup } from "../../../assets/icons/Train/cup.svg";
@@ -8,11 +10,10 @@ import { ReactComponent as Express } from "../../../assets/icons/Train/express.s
 import { ReactComponent as Сonditioning } from "../../../assets/icons/Train/conditioning.svg";
 import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwear.svg";
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
+
 import Pagination from "./Pagination/Pagination";
-import Tooltip from "./Tooltip/Tooltip";
 import TrainsTopFilter from "./TrainsTopFilter/TrainsTopFilter";
 
-// Типы
 import {
   Train,
   DirectionInfo,
@@ -20,25 +21,33 @@ import {
   TrainsProps,
 } from "../../../types/Train/trainTypes";
 
-// ======================= Утилиты =======================
 
-const formatDateForApi = (value: string | undefined): string | undefined => {
-  if (!value) return undefined;
+// ======================================================
+// Утилиты
+// ======================================================
+
+const formatDateForApi = (value?: string) => {
+  if (!value) return "";
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
-  const [day, month, year] = value.split("/");
-  if (!day || !month || !year) return undefined;
-  const fullYear = year.length === 2 ? `20${year}` : year;
-  return `${fullYear}-${month}-${day}`;
+
+  const [d, m, y] = value.split("/");
+  if (!d || !m || !y) return "";
+
+  return `${y.length === 2 ? "20" + y : y}-${m}-${d}`;
 };
 
 const formatDuration = (seconds?: number) => {
   if (!seconds) return "";
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  return `${hours}:${minutes.toString().padStart(2, "0")}`;
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  return `${h}:${String(m).padStart(2, "0")}`;
 };
 
-// безопасный доступ
+const toMinutes = (unix: number) => {
+  const date = new Date(unix * 1000);
+  return date.getHours() * 60 + date.getMinutes();
+};
+
 const getSeats = (dir: DirectionInfo, cls: WagonClass) =>
   dir.available_seats_info?.[cls] ?? 0;
 
@@ -48,33 +57,10 @@ const getPrice = (dir: DirectionInfo, cls: WagonClass) =>
   dir.price_info?.[cls]?.side_price ??
   dir.min_price;
 
-// Преобразование timestamp → минуты с полуночи
-const toMinutes = (unix: number) => {
-  const date = new Date(unix * 1000);
-  return date.getHours() * 60 + date.getMinutes();
-};
 
-// ======================= TOOLTIP =======================
-/*     const getTooltipInfo = (dir: DirectionInfo, cls: WagonClass) => {
-      const price = dir.price_info?.[cls];
-      const seats = dir.available_seats_info?.[cls];
-      if (!price) return null;
-
-      const info = [];
-
-      if (price.top_price)
-        info.push({ label: "верхние", price: price.top_price, count: seats });
-
-      if (price.bottom_price)
-        info.push({ label: "нижние", price: price.bottom_price, count: seats });
-
-      if (price.side_price)
-        info.push({ label: "боковые", price: price.side_price, count: seats });
-
-      return info.length > 0 ? info : null;
-    };
- */
-// ======================= Компонент =======================
+// ======================================================
+// Компонент
+// ======================================================
 
 const Trains: React.FC<TrainsProps> = ({
   fromCity,
@@ -83,392 +69,407 @@ const Trains: React.FC<TrainsProps> = ({
   dateEnd,
   filters,
 }) => {
-  const [trains, setTrains] = useState<Train[]>([]);
+
+  // загрузка
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  // Класс вагона, на который навели курсор (first, second, third, fourth)
-  const [hover, setHover] = useState<{ index: number; cls: WagonClass } | null>(null);
-  /* количество поездов на странице */
-  const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
 
-
-  // Состояния сортировки и лимита
+  // сортировка / лимит
   const [sort, setSort] = useState<"date" | "price" | "duration">("date");
   const [limit, setLimit] = useState<number>(5);
-  /* для пагинации */
-  /* const limit = 5; */
-  const totalPages = Math.ceil(total / limit);
+  const [page, setPage] = useState(1);
+
+  // инкрементальная загрузка
+  const [cache, setCache] = useState<Train[]>([]);
+  const [serverOffset, setServerOffset] = useState(0);
+  const serverLimit = 20;
+  const [isEnd, setIsEnd] = useState(false);
+
+  // hover состояния
+  const [hover, setHover] = useState<{ index: number; cls: WagonClass } | null>(null);
 
 
-  // ======================= Загрузка поездов =======================
+  // ======================================================
+  // 1. Загрузить 1-ю страницу при изменении города/даты/сортировки
+  // ======================================================
+
+  const loadServerPage = async (offset: number) => {
+    const params = new URLSearchParams({
+      from_city_id: fromCity!._id,
+      to_city_id: toCity!._id,
+      sort: sort,
+      limit: String(serverLimit),
+      offset: String(offset),
+    });
+
+    if (dateStart) params.append("date_start", formatDateForApi(dateStart));
+    if (dateEnd) params.append("date_end", formatDateForApi(dateEnd));
+
+    const response = await fetch(
+      `https://students.netoservices.ru/fe-diplom/routes?${params.toString()}`
+    );
+    if (!response.ok) throw new Error("Ошибка загрузки");
+
+    const data = await response.json();
+    return data.items || [];
+  };
 
   useEffect(() => {
     if (!fromCity || !toCity) return;
 
-    const fetchTrains = async () => {
+    const refresh = async () => {
       setLoading(true);
       setError("");
+      setPage(1);
+      setCache([]);
+      setServerOffset(0);
+      setIsEnd(false);
 
       try {
-        const params = new URLSearchParams({
-          from_city_id: fromCity._id,
-          to_city_id: toCity._id,
-        });
-        params.append("limit", limit.toString());
-        params.append("offset", ((page - 1) * limit).toString());
-        // сортировка
-        params.append("sort", sort); // "date" | "price" | "duration"
-
-        if (dateStart) {
-          const apiDateStart = formatDateForApi(dateStart);
-          if (apiDateStart) params.append("date_start", apiDateStart);
-        }
-
-        if (dateEnd) {
-          const apiDateEnd = formatDateForApi(dateEnd);
-          if (apiDateEnd) params.append("date_end", apiDateEnd);
-        }
-
-        const response = await fetch(
-          `https://students.netoservices.ru/fe-diplom/routes?${params.toString()}`
-        );
-
-        if (!response.ok) throw new Error("Ошибка при загрузке данных");
-
-        const data = await response.json();
-        setTrains(data.items || []);
-        setTotal(data.total_count || 0);
-      } catch (err: any) {
-        setError(err.message || "Не удалось загрузить поезда");
+        const first = await loadServerPage(0);
+        setCache(first);
+      } catch (e: any) {
+        setError(e.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchTrains();
-  }, [fromCity, toCity, dateStart, dateEnd, page, sort, limit]);
+    refresh();
+  }, [fromCity, toCity, dateStart, dateEnd, sort]);
 
-  // ======================= Состояния загрузки =======================
 
-  if (loading) return <div className={styles.loading}>Загрузка...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-  if (trains.length === 0)
-    return <div className={styles.empty}>Нет найденных маршрутов</div>;
 
-  // ========== ПРИМЕНЕНИЕ ФИЛЬТРОВ ==========
-  let filtered = [...trains];
+  // ======================================================
+  // 2. Фильтрация
+  // ======================================================
 
-  if (filters) {
+  const applyAllFilters = (t: Train) => {
+    if (!filters) return true;
 
-    // Фильтр опций
     if (filters.options) {
-      const opts = filters.options;
-
-      if (opts.coupe) filtered = filtered.filter(t => t.departure.have_second_class);
-      if (opts.plaz) filtered = filtered.filter(t => t.departure.have_third_class);
-      if (opts.seat) filtered = filtered.filter(t => t.departure.have_fourth_class);
-      if (opts.lux) filtered = filtered.filter(t => t.departure.have_first_class);
-      if (opts.wifi) filtered = filtered.filter(t => t.departure.have_wifi);
-      if (opts.express) filtered = filtered.filter(t => t.departure.is_express);
+      const o = filters.options;
+      if (o.coupe && !t.departure.have_second_class) return false;
+      if (o.plaz && !t.departure.have_third_class) return false;
+      if (o.seat && !t.departure.have_fourth_class) return false;
+      if (o.lux && !t.departure.have_first_class) return false;
+      if (o.wifi && !t.departure.have_wifi) return false;
+      if (o.express && !t.departure.is_express) return false;
     }
 
-    // Фильтр цены
     if (filters.price) {
       const [min, max] = filters.price;
-      filtered = filtered.filter(t => {
-        const price = t.departure.min_price;
-        return price >= min && price <= max;
-      });
+      const price = t.departure.min_price;
+      if (price < min || price > max) return false;
     }
 
-
-    // === ТУДА: ВРЕМЯ ОТБЫТИЯ ===
     if (filters.thereDeparture) {
       const min = filters.thereDeparture.from * 60;
       const max = filters.thereDeparture.to * 60;
-
-      filtered = filtered.filter(t => {
-        const dep = toMinutes(t.departure.from.datetime);
-        return dep >= min && dep <= max;
-      });
+      const dep = toMinutes(t.departure.from.datetime);
+      if (dep < min || dep > max) return false;
     }
 
-    // === ТУДА: ВРЕМЯ ПРИБЫТИЯ ===
     if (filters.thereArrival) {
       const min = filters.thereArrival.from * 60;
       const max = filters.thereArrival.to * 60;
-
-      filtered = filtered.filter(t => {
-        const arr = toMinutes(t.departure.to.datetime);
-        return arr >= min && arr <= max;
-      });
+      const arr = toMinutes(t.departure.to.datetime);
+      if (arr < min || arr > max) return false;
     }
 
-    // === ОБРАТНО: ВРЕМЯ ОТБЫТИЯ ===
-    if (filters.backDeparture) {
+    if (filters.backDeparture && t.arrival) {
       const min = filters.backDeparture.from * 60;
       const max = filters.backDeparture.to * 60;
-
-      filtered = filtered.filter(t => {
-        if (!t.arrival) return false;
-        const dep = toMinutes(t.arrival.from.datetime);
-        return dep >= min && dep <= max;
-      });
+      const dep = toMinutes(t.arrival.from.datetime);
+      if (dep < min || dep > max) return false;
     }
 
-    // === ОБРАТНО: ВРЕМЯ ПРИБЫТИЯ ===
-    if (filters.backArrival) {
+    if (filters.backArrival && t.arrival) {
       const min = filters.backArrival.from * 60;
       const max = filters.backArrival.to * 60;
-
-      filtered = filtered.filter(t => {
-        if (!t.arrival) return false;
-        const arr = toMinutes(t.arrival.to.datetime);
-        return arr >= min && arr <= max;
-      });
+      const arr = toMinutes(t.arrival.to.datetime);
+      if (arr < min || arr > max) return false;
     }
 
-    // ======================= Рендер =======================
+    return true;
+  };
 
-    return (
-      <div className={styles.trainsList}>
+  let filtered = cache.filter(applyAllFilters);
 
-        <TrainsTopFilter
-          total={total}
-          sort={
-            sort === "date"
-              ? "времени"
-              : sort === "price"
-                ? "стоимости"
-                : "длительности"
-          }
-          onSortChange={(value) => {
-            if (value === "времени") setSort("date");
-            if (value === "стоимости") setSort("price");
-            if (value === "длительности") setSort("duration");
-            setPage(1); // сброс на первую страницу
-          }}
-          limit={limit}
-          onLimitChange={(value) => {
-            setLimit(value);
-            setPage(1); // тоже сброс
-          }}
-        />
 
-        {filtered.map((train, index) => {
-          const dep = train.departure;
-          const arr = train.arrival;
 
-          return (
-            <div key={index} className={styles.trainCard}>
-              {/* Левая часть */}
-              <div className={styles.left}>
-                <div className={styles.trainIcon}></div>
-                <div className={styles.trainNumber}>{dep?.train?.name || "Без названия"}</div>
+  // ======================================================
+  // 3. Догрузка по необходимости
+  // ======================================================
 
-                {dep?.from?.city?.name?.toLowerCase() !== fromCity?.name?.toLowerCase() && (
-                  <div className={styles.routeCityStart}>
-                    {dep?.from?.city?.name}
-                    <span className={styles.routeArrowGray}></span>
+  const need = page * limit;
+
+  const loadMoreIfNeeded = async () => {
+    if (filtered.length >= need) return;
+    if (isEnd) return;
+
+    const next = serverOffset + serverLimit;
+
+    try {
+      const more = await loadServerPage(next);
+      if (more.length === 0) {
+        setIsEnd(true);
+        return;
+      }
+      setCache(prev => [...prev, ...more]);
+      setServerOffset(next);
+    } catch {
+      setIsEnd(true);
+    }
+  };
+
+  useEffect(() => {
+    loadMoreIfNeeded();
+  }, [cache, filters, page, limit]);
+
+  // ❗ Сбрасываем страницу при изменении фильтров
+  useEffect(() => {
+    setPage(1);
+  }, [filters]);
+  
+
+  // ======================================================
+  // 4. Пагинация
+  // ======================================================
+
+  const total = isEnd ? filtered.length : filtered.length + limit;
+  const totalPages = Math.ceil(total / limit);
+
+  const start = (page - 1) * limit;
+  const end = start + limit;
+  const pageItems = filtered.slice(start, end);
+
+
+  // ======================================================
+  // 5. Состояния загрузки
+  // ======================================================
+
+  if (loading) return <div className={styles.loading}>Загрузка…</div>;
+  if (error) return <div className={styles.error}>{error}</div>;
+  if (!filtered.length)
+    return <div className={styles.empty}>Нет найденных маршрутов</div>;
+
+
+  // ======================================================
+  // 6. Рендер
+  // ======================================================
+
+  return (
+    <div className={styles.trainsList}>
+
+      <TrainsTopFilter
+        total={filtered.length}
+        sort={sort === "date" ? "времени" : sort === "price" ? "стоимости" : "длительности"}
+        onSortChange={(value) => {
+          if (value === "времени") setSort("date");
+          if (value === "стоимости") setSort("price");
+          if (value === "длительности") setSort("duration");
+          setPage(1);
+        }}
+        limit={limit}
+        onLimitChange={(value) => {
+          setLimit(value);
+          setPage(1);
+        }}
+      />
+
+      {pageItems.map((train, index) => {
+        const dep = train.departure;
+        const arr = train.arrival;
+
+        return (
+          <div key={index} className={styles.trainCard}>
+
+            {/* --- твоя разметка полностью сохранена --- */}
+
+            <div className={styles.left}>
+              <div className={styles.trainIcon}></div>
+              <div className={styles.trainNumber}>{dep.train?.name}</div>
+
+              {dep.from.city.name.toLowerCase() !== fromCity!.name.toLowerCase() && (
+                <div className={styles.routeCityStart}>
+                  {dep.from.city.name}
+                  <span className={styles.routeArrowGray}></span>
+                </div>
+              )}
+
+              <div className={styles.routeMain}>
+                <div className={styles.routeLine}>
+                  <span className={styles.routeCity}>{fromCity!.name}</span>
+                  <span className={styles.routeArrowBlack}></span>
+                </div>
+                <div className={styles.routeCity}>{toCity!.name}</div>
+              </div>
+            </div>
+
+
+            <div className={styles.center}>
+              {/* Туда */}
+              <div className={styles.directionBlock}>
+                <div className={styles.direction}>
+
+                  <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
+                    <p className={styles.time}>
+                      {new Date(dep.from.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
+                    </p>
+                    <p className={styles.city}>{dep.from.city.name}</p>
+                    <p className={styles.station}>{dep.from.railway_station_name}</p>
                   </div>
-                )}
 
-                <div className={styles.routeMain}>
-                  <div className={styles.routeLine}>
-                    <span className={styles.routeCity}>{fromCity?.name}</span>
-                    <span className={styles.routeArrowBlack}></span>
+                  <div className={styles.arrowBlock}>
+                    <p className={styles.duration}>{formatDuration(dep.duration)}</p>
+                    <ArrowThere className={styles.arrowSvg} />
                   </div>
-                  <div className={styles.routeCity}>{toCity?.name}</div>
+
+                  <div className={`${styles.timeBlock} ${styles.rightBlock}`}>
+                    <p className={styles.time}>
+                      {new Date(dep.to.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
+                    </p>
+                    <p className={styles.city}>{dep.to.city.name}</p>
+                    <p className={styles.station}>{dep.to.railway_station_name}</p>
+                  </div>
+
                 </div>
               </div>
 
-              {/* Центральный блок */}
-              <div className={styles.center}>
-                {/* Туда */}
+
+              {/* Обратно */}
+              {arr && (
                 <div className={styles.directionBlock}>
                   <div className={styles.direction}>
+
                     <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
                       <p className={styles.time}>
-                        {new Date(dep?.from?.datetime * 1000).toLocaleTimeString("ru-RU", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
+                        {new Date(arr.to.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
                       </p>
-                      <p className={styles.city}>{dep?.from?.city?.name}</p>
-                      <p className={styles.station}>{dep?.from?.railway_station_name}</p>
+                      <p className={styles.city}>{arr.to.city.name}</p>
+                      <p className={styles.station}>{arr.to.railway_station_name}</p>
                     </div>
 
                     <div className={styles.arrowBlock}>
-                      <p className={styles.duration}>{formatDuration(dep?.duration)}</p>
-                      <ArrowThere className={styles.arrowSvg} />
+                      <p className={styles.duration}>{formatDuration(arr.duration)}</p>
+                      <ArrowBack className={styles.arrowSvg} />
                     </div>
 
                     <div className={`${styles.timeBlock} ${styles.rightBlock}`}>
                       <p className={styles.time}>
-                        {new Date(dep?.to?.datetime * 1000).toLocaleTimeString("ru-RU", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
+                        {new Date(arr.from.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
                       </p>
-                      <p className={styles.city}>{dep?.to?.city?.name}</p>
-                      <p className={styles.station}>{dep?.to?.railway_station_name}</p>
+                      <p className={styles.city}>{arr.from.city.name}</p>
+                      <p className={styles.station}>{arr.from.railway_station_name}</p>
                     </div>
+
                   </div>
                 </div>
+              )}
 
-                {/* Обратно */}
-                {arr && (
-                  <div className={styles.directionBlock}>
-                    <div className={styles.direction}>
-                      <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
-                        <p className={styles.time}>
-                          {arr?.to?.datetime
-                            ? new Date(arr.to.datetime * 1000).toLocaleTimeString("ru-RU", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })
-                            : "--:--"}
-                        </p>
-                        <p className={styles.city}>{arr?.to?.city?.name}</p>
-                        <p className={styles.station}>{arr?.to?.railway_station_name}</p>
-                      </div>
+            </div>
 
-                      <div className={styles.arrowBlock}>
-                        <p className={styles.duration}>{formatDuration(arr?.duration)}</p>
-                        <ArrowBack className={styles.arrowSvg} />
-                      </div>
 
-                      <div className={`${styles.timeBlock} ${styles.rightBlock}`}>
-                        <p className={styles.time}>
-                          {arr?.from?.datetime
-                            ? new Date(arr.from.datetime * 1000).toLocaleTimeString("ru-RU", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })
-                            : "--:--"}
-                        </p>
-                        <p className={styles.city}>{arr?.from?.city?.name}</p>
-                        <p className={styles.station}>{arr?.from?.railway_station_name}</p>
-                      </div>
-                    </div>
+            {/* Правая колонка */}
+            <div className={styles.right}>
+
+              <div className={styles.priceList}>
+                {dep.have_third_class && (
+                  <div
+                    className={styles.priceRow}
+                    onMouseEnter={() => setHover({ index, cls: "third" })}
+                    onMouseLeave={() => setHover(null)}
+                  >
+                    <span className={styles.priceLabel}>Плацкарт</span>
+                    <span className={styles.priceSeats}>{getSeats(dep, "third")}</span>
+                    <span className={styles.priceValue}>
+                      <span className={styles.pricePrefix}>от</span>{" "}
+                      <span className={styles.priceNumber}>
+                        {getPrice(dep, "third")?.toLocaleString("ru-RU")}
+                        <Ruble className={styles.rubleIcon} />
+                      </span>
+                    </span>
+                  </div>
+                )}
+
+                {dep.have_second_class && (
+                  <div
+                    className={styles.priceRow}
+                    onMouseEnter={() => setHover({ index, cls: "second" })}
+                    onMouseLeave={() => setHover(null)}
+                  >
+                    <span className={styles.priceLabel}>Купе</span>
+                    <span className={styles.priceSeats}>{getSeats(dep, "second")}</span>
+                    <span className={styles.priceValue}>
+                      <span className={styles.pricePrefix}>от</span>{" "}
+                      <span className={styles.priceNumber}>
+                        {getPrice(dep, "second")?.toLocaleString("ru-RU")}
+                        <Ruble className={styles.rubleIcon} />
+                      </span>
+                    </span>
+                  </div>
+                )}
+
+                {dep.have_first_class && (
+                  <div
+                    className={styles.priceRow}
+                    onMouseEnter={() => setHover({ index, cls: "first" })}
+                    onMouseLeave={() => setHover(null)}
+                  >
+                    <span className={styles.priceLabel}>Люкс</span>
+                    <span className={styles.priceSeats}>{getSeats(dep, "first")}</span>
+                    <span className={styles.priceValue}>
+                      <span className={styles.pricePrefix}>от</span>{" "}
+                      <span className={styles.priceNumber}>
+                        {getPrice(dep, "first")?.toLocaleString("ru-RU")}
+                        <Ruble className={styles.rubleIcon} />
+                      </span>
+                    </span>
+                  </div>
+                )}
+
+                {dep.have_fourth_class && (
+                  <div
+                    className={styles.priceRow}
+                    onMouseEnter={() => setHover({ index, cls: "fourth" })}
+                    onMouseLeave={() => setHover(null)}
+                  >
+                    <span className={styles.priceLabel}>Сидячий</span>
+                    <span className={styles.priceSeats}>{getSeats(dep, "fourth")}</span>
+                    <span className={styles.priceValue}>
+                      <span className={styles.pricePrefix}>от</span>{" "}
+                      <span className={styles.priceNumber}>
+                        {getPrice(dep, "fourth")?.toLocaleString("ru-RU")}
+                        <Ruble className={styles.rubleIcon} />
+                      </span>
+                    </span>
                   </div>
                 )}
               </div>
 
-              {/* Правая часть */}
-              <div className={styles.right}>
-                {/* Список типов мест */}
-                <div className={styles.priceList}>
-                  {dep?.have_third_class && (
-                    <div
-                      className={styles.priceRow}
-                      onMouseEnter={() => setHover({ index, cls: "third" })}
-                      onMouseLeave={() => setHover(null)}
-                    >
-                      <span className={styles.priceLabel}>Плацкарт</span>
-                      <span className={styles.priceSeats}>{getSeats(dep, "third")}</span>
-                      <span className={styles.priceValue}>
-                        <span className={styles.pricePrefix}>от</span>{" "}
-                        <span className={styles.priceNumber}>
-                          {getPrice(dep, "third")?.toLocaleString("ru-RU")}
-                          <Ruble className={styles.rubleIcon} />
-                        </span>{" "}
-                      </span>
-                      {/* TOOLTIP */}
-                    {/*   {hover?.index === index &&
-                        hover.cls === "third" &&
-                        getTooltipInfo(dep, "third") && (
-                          <Tooltip items={getTooltipInfo(dep, "third")!} />
-                        )} */}
-                    </div>
-                  )}
-
-                  {dep?.have_second_class && (
-                    <div
-                      className={styles.priceRow}
-                      onMouseEnter={() => setHover({ index, cls: "second" })}
-                      onMouseLeave={() => setHover(null)}
-                    >
-                      <span className={styles.priceLabel}>Купе</span>
-                      <span className={styles.priceSeats}>{getSeats(dep, "second")}</span>
-                      <span className={styles.priceValue}>
-                        <span className={styles.pricePrefix}>от</span>{" "}
-                        <span className={styles.priceNumber}>
-                          {getPrice(dep, "second")?.toLocaleString("ru-RU")}
-                          <Ruble className={styles.rubleIcon} />
-                        </span>{" "}
-                      </span>
-                      {/* TOOLTIP */}
-                    </div>
-                  )}
-
-                  {dep?.have_first_class && (
-                    <div
-                      className={styles.priceRow}
-                      onMouseEnter={() => setHover({ index, cls: "first" })}
-                      onMouseLeave={() => setHover(null)}
-                    >
-                      <span className={styles.priceLabel}>Люкс</span>
-                      <span className={styles.priceSeats}>{getSeats(dep, "first")}</span>
-                      <span className={styles.priceValue}>
-                        <span className={styles.pricePrefix}>от</span>{" "}
-                        <span className={styles.priceNumber}>
-                          {getPrice(dep, "first")?.toLocaleString("ru-RU")}
-                          <Ruble className={styles.rubleIcon} />
-                        </span>{" "}
-                      </span>
-                      {/* TOOLTIP */}
-                    </div>
-                  )}
-
-                  {dep?.have_fourth_class && (
-                    <div
-                      className={styles.priceRow}
-                      onMouseEnter={() => setHover({ index, cls: "fourth" })}
-                      onMouseLeave={() => setHover(null)}
-                    >
-                      <span className={styles.priceLabel}>Сидячий</span>
-                      <span className={styles.priceSeats}>{getSeats(dep, "fourth")}</span>
-                      <span className={styles.priceValue}>
-                        <span className={styles.pricePrefix}>от</span>{" "}
-                        <span className={styles.priceNumber}>
-                          {getPrice(dep, "fourth")?.toLocaleString("ru-RU")}
-                          <Ruble className={styles.rubleIcon} />
-                        </span>{" "}
-                      </span>
-                      {/* TOOLTIP */}
-                    </div>
-                  )}
-                </div>
-
-                {/* Услуги */}
-                <div className={styles.services}>
-                  {dep?.have_wifi && <Wifi className={styles.serviceIcon} />}
-                  {dep?.is_express && <Express className={styles.serviceIcon} />}
-                  {dep?.have_air_conditioning && <Сonditioning className={styles.serviceIcon} />}
-                  <Cup className={styles.serviceIcon} />
-                  <Underwear className={styles.serviceIcon} />
-                </div>
-
-                {/* Кнопка */}
-                <button className={styles.button}>Выбрать места</button>
+              <div className={styles.services}>
+                {dep.have_wifi && <Wifi className={styles.serviceIcon} />}
+                {dep.is_express && <Express className={styles.serviceIcon} />}
+                {dep.have_air_conditioning && <Сonditioning className={styles.serviceIcon} />}
+                <Cup className={styles.serviceIcon} />
+                <Underwear className={styles.serviceIcon} />
               </div>
+
+              <button className={styles.button}>Выбрать места</button>
             </div>
-          );
-        })}
+          </div>
+        );
+      })}
 
-        <Pagination
-          page={page}
-          totalPages={totalPages}
-          onChange={(p) => setPage(p)}
-        />
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onChange={(p) => setPage(p)}
+      />
 
-      </div>
-    );
-
-  }
-  return null;  // если filters может отсутствовать
+    </div>
+  );
 };
 
 export default Trains;
