@@ -20,7 +20,7 @@
 .leftColumn {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 90px;
 }
 
 /* Правая колонка */
