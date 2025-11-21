@@ -1,107 +1,141 @@
-/* Контейнер всех шагов */
+/* Контейнер */
 .stepsContainer {
     display: flex;
     width: 100%;
     max-width: 1920px;
     height: 98px;
-    overflow: hidden;
 }
 
 /* Один шаг */
 .step {
     display: flex;
     height: 98px;
+    position: relative;
 }
 
-/* 1 и 4 — растягиваются */
-.step1, .step4 {
-    flex: 1 1 auto;
+/* 1 и 4 — тянутся */
+.step1,
+.step4 {
+    flex: 1 1 0;
 }
 
 /* 2 и 3 — фиксированные */
-.step2, .step3 {
-    width: 320px;
+.step2,
+.step3 {
     flex: 0 0 320px;
 }
 
-/* Прямоугольная часть */
+/* ===================== */
+/*   RECTANGLE PART      */
+/* ===================== */
 .box {
-    flex: 1;
-    height: 98px;
+    height: 100%;
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 0 40px;
+    gap: 16px;
 
+    padding-left: 40px;
+    padding-right: 24px; /* фиксировано как в макете */
+    
     background: #3b3b46;
+    color: white;
+
+    flex-shrink: 0;
+    flex-grow: 1;  /* тянем прямоугольник */
+}
+
+/* ЦИРКУЛЬ — КРУГ   */
+.numberWrapper {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 1);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+.number {
+    font-family: Roboto;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 36px;
     color: white;
 }
 
 /* Текст */
-.number {
-    font-size: 22px;
-    font-weight: 600;
-}
-
 .title {
-    font-size: 22px;
-    font-weight: 500;
+    font-family: Roboto;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 30px;
+    color: white;
+
+    white-space: nowrap;
 }
 
-/* Контейнер треугольника */
+/* ===================== */
+/*      TRIANGLE PART    */
+/* ===================== */
 .containerTriangle {
     position: relative;
     width: 40px;
     height: 98px;
-    background-color: #3b3b46;
+    background: #3b3b46;
+    flex-shrink: 0;
 }
 
-/* Фон треугольника */
 .triangleBg {
     position: absolute;
     inset: 0;
     background: #3b3b46;
     clip-path: polygon(0 0, 100% 50%, 0 100%);
-    z-index: 1;
 }
 
-/* SVG линия по диагоналям */
 .line {
     position: absolute;
     inset: 0;
-
     width: 40px;
     height: 98px;
-
-    stroke: #d2d2d6;
-    /* цвет серой линии */
+    stroke: rgba(229, 229, 229, 1);
     stroke-width: 2;
     fill: none;
-
     pointer-events: none;
-    z-index: 2;
 }
 
-.active .containerTriangle {
-    background-color: #ffc846;
-}
-
-/* Активный шаг */
+/* ===================== */
+/*      ACTIVE (пройден) */
+/* ===================== */
 .active .box {
-    background: #ffc846;
+    background: #f5b335;
     color: #3b3b46;
 }
 
-.active .triangleBg {
-    background: #ffc846;
+.active > .containerTriangle {
+    background: #f5b335;
 }
 
-.active .line {
-    stroke: rgba(229, 229, 229, 1);
-    /* жёлтая линия */
+.active > .containerTriangle .triangleBg {
+    background: #f5b335;
 }
 
-/* Последний шаг — без треугольника */
+/* ===================== */
+/*     CURRENT (текущий) */
+/* ===================== */
+.current .box {
+    background: #f5b335;
+    color: #3b3b46;
+}
+
+.current > .containerTriangle .triangleBg {
+    background: #f5b335;
+}
+
+/* Последний без треугольника */
 .last .containerTriangle {
     display: none;
 }

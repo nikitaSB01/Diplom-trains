@@ -17,8 +17,10 @@ const Steps: React.FC<StepsProps> = ({ currentStep }) => {
   return (
     <div className={styles.stepsContainer}>
       {steps.map((step, index) => {
-        const isActive = step.id <= currentStep;
         const isLast = index === steps.length - 1;
+
+        const isActive = step.id < currentStep;       // прошли
+        const isCurrent = step.id === currentStep;    // текущий
 
         return (
           <div
@@ -27,21 +29,25 @@ const Steps: React.FC<StepsProps> = ({ currentStep }) => {
               styles.step,
               styles[`step${step.id}`],
               { [styles.active]: isActive },
+              { [styles.current]: isCurrent },
               { [styles.last]: isLast }
             )}
           >
-            {/* Прямоугольный блок */}
+
+            {/* Прямоугольник */}
             <div className={styles.box}>
-              <div className={styles.number}>{step.id}</div>
+              <div className={styles.numberWrapper}>
+                <div className={styles.number}>{step.id}</div>
+              </div>
+
               <div className={styles.title}>{step.title}</div>
             </div>
 
-            {/* Треугольник — кроме последнего */}
+            {/* Треугольник (кроме последнего) */}
             {!isLast && (
               <div className={styles.containerTriangle}>
                 <div className={styles.triangleBg}></div>
 
-                {/* Диагональные линии внутри треугольника */}
                 <svg
                   className={styles.line}
                   viewBox="0 0 40 98"
@@ -52,6 +58,7 @@ const Steps: React.FC<StepsProps> = ({ currentStep }) => {
                 </svg>
               </div>
             )}
+
           </div>
         );
       })}
