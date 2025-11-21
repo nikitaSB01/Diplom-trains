@@ -1,3 +1,107 @@
-.stepsContainer{
-    background-color: #cab6b6;
+/* Контейнер всех шагов */
+.stepsContainer {
+    display: flex;
+    width: 100%;
+    max-width: 1920px;
+    height: 98px;
+    overflow: hidden;
+}
+
+/* Один шаг */
+.step {
+    display: flex;
+    height: 98px;
+}
+
+/* 1 и 4 — растягиваются */
+.step1, .step4 {
+    flex: 1 1 auto;
+}
+
+/* 2 и 3 — фиксированные */
+.step2, .step3 {
+    width: 320px;
+    flex: 0 0 320px;
+}
+
+/* Прямоугольная часть */
+.box {
+    flex: 1;
+    height: 98px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 40px;
+
+    background: #3b3b46;
+    color: white;
+}
+
+/* Текст */
+.number {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+/* Контейнер треугольника */
+.containerTriangle {
+    position: relative;
+    width: 40px;
+    height: 98px;
+    background-color: #3b3b46;
+}
+
+/* Фон треугольника */
+.triangleBg {
+    position: absolute;
+    inset: 0;
+    background: #3b3b46;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    z-index: 1;
+}
+
+/* SVG линия по диагоналям */
+.line {
+    position: absolute;
+    inset: 0;
+
+    width: 40px;
+    height: 98px;
+
+    stroke: #d2d2d6;
+    /* цвет серой линии */
+    stroke-width: 2;
+    fill: none;
+
+    pointer-events: none;
+    z-index: 2;
+}
+
+.active .containerTriangle {
+    background-color: #ffc846;
+}
+
+/* Активный шаг */
+.active .box {
+    background: #ffc846;
+    color: #3b3b46;
+}
+
+.active .triangleBg {
+    background: #ffc846;
+}
+
+.active .line {
+    stroke: rgba(229, 229, 229, 1);
+    /* жёлтая линия */
+}
+
+/* Последний шаг — без треугольника */
+.last .containerTriangle {
+    display: none;
 }
