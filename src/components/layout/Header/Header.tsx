@@ -1,20 +1,28 @@
 import React from 'react';
 import styles from './Header.module.css';
 import SearchForm from '../../../modules/SearchForm/SearchForm';
+import { City } from "../../../types/City";
 
 interface HeaderProps {
   isInner?: boolean;
+  from?: City | null;
+  to?: City | null;
+  dateStart?: string;
+  dateEnd?: string;
 }
-
-const Header: React.FC<HeaderProps> = ({ isInner = false }) => {
+const Header: React.FC<HeaderProps> = ({
+  isInner = false,
+  from,
+  to,
+  dateStart,
+  dateEnd
+}) => {
   return (
     <header className={`${styles.header} ${isInner ? styles.innerHeader : ''}`}>
-      {/* Верхняя часть — логотип */}
       <div className={styles.logoBar}>
         <div className={styles.logo}>Лого</div>
       </div>
 
-      {/* Навигация */}
       <div className={styles.navBar}>
         <nav className={styles.nav}>
           <a href="#about">О нас</a>
@@ -24,10 +32,8 @@ const Header: React.FC<HeaderProps> = ({ isInner = false }) => {
         </nav>
       </div>
 
-      {/* Герой-блок */}
       <div className={styles.hero}>
         <div className={styles.heroContent}>
-          {/* Текстовый блок отображаем только на главной */}
           {!isInner && (
             <div className={styles.textBlock}>
               <h1>
@@ -37,9 +43,14 @@ const Header: React.FC<HeaderProps> = ({ isInner = false }) => {
             </div>
           )}
 
-          {/* Блок формы — SearchForm теперь умеет быть компактным */}
           <div className={styles.formBlock}>
-            <SearchForm isCompact={isInner} />
+            <SearchForm
+              isCompact={isInner}
+              from={from}
+              to={to}
+              dateStart={dateStart}
+              dateEnd={dateEnd}
+            />
           </div>
         </div>
       </div>

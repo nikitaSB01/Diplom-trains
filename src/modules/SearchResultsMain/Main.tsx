@@ -11,7 +11,6 @@ import LoaderGif from "../../assets/gif/анимация-загрузки.gif"
 
 
 const Main: React.FC = () => {
-
   const location = useLocation();
   const { from, to, dateStart, dateEnd } = location.state || {};
 
@@ -58,7 +57,8 @@ const Main: React.FC = () => {
 
         <div className={styles.container}>
           <div className={styles.leftColumn}>
-            <Filters onChange={setFilters} />
+            <Filters onChange={setFilters} dateStart={dateStart}
+              dateEnd={dateEnd} />
             <FiltersLastTickets />
           </div>
 

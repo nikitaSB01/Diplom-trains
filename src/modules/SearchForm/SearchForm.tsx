@@ -9,16 +9,24 @@ import { City } from '../../types/City';
 
 interface SearchFormProps {
   isCompact?: boolean;
+  from?: City | null;
+  to?: City | null;
+  dateStart?: string;
+  dateEnd?: string;
 }
 
-const SearchForm: React.FC<SearchFormProps> = ({ isCompact = false }) => {
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  const [fromCityObj, setFromCityObj] = useState<City | null>(null);
-  const [toCityObj, setToCityObj] = useState<City | null>(null);
-  const [dateStart, setDateStart] = useState('');
-  const [dateEnd, setDateEnd] = useState('');
+const SearchForm: React.FC<SearchFormProps> = ({ isCompact = false,
+  from: initialFrom = null,
+  to: initialTo = null,
+  dateStart: initialDateStart = "",
+  dateEnd: initialDateEnd = "" }) => {
 
+  const [from, setFrom] = useState(initialFrom?.name || "");
+  const [to, setTo] = useState(initialTo?.name || "");
+  const [fromCityObj, setFromCityObj] = useState<City | null>(initialFrom);
+  const [toCityObj, setToCityObj] = useState<City | null>(initialTo);
+  const [dateStart, setDateStart] = useState(initialDateStart);
+  const [dateEnd, setDateEnd] = useState(initialDateEnd);
   const navigate = useNavigate();
 
   const handleSwap = () => {
