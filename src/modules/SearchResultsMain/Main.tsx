@@ -53,7 +53,7 @@ const Main: React.FC = () => {
       <div
         className={`${styles.mainContainer} ${showLoader ? styles.loadingState : ""}`}
       >
-        <Steps currentStep={2} />
+        <Steps currentStep={1} />
 
         <div className={styles.container}>
           <div className={styles.leftColumn}>

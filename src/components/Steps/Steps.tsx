@@ -50,11 +50,11 @@ const Steps: React.FC<StepsProps> = ({ currentStep }) => {
 
                 <svg
                   className={styles.line}
-                  viewBox="0 0 40 98"
+                  viewBox="0 0 42 98"
                   preserveAspectRatio="none"
                 >
-                  <line x1="0" y1="0" x2="40" y2="49" />
-                  <line x1="40" y1="49" x2="0" y2="98" />
+                  <line x1="-10" y1="-10" x2="42" y2="49" strokeLinecap="square" />
+                  <line x1="42" y1="49" x2="-10" y2="108" strokeLinecap="square" />
                 </svg>
               </div>
             )}
