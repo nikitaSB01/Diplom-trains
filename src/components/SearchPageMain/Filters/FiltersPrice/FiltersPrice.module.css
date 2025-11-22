@@ -8,7 +8,6 @@
 .title {
     margin-bottom: 16px;
 
-    font-family: Roboto;
     font-weight: 400;
     font-size: 30px;
     line-height: 100%;
@@ -24,7 +23,6 @@
 }
 
 .labels span {
-    font-family: Roboto;
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;
@@ -82,7 +80,6 @@
     white-space: nowrap;
     transition: none;
 
-    font-family: Roboto;
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;

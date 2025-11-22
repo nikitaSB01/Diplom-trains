@@ -67,7 +67,6 @@
 }
 
 .number {
-    font-family: "Roboto";
     font-weight: 700;
     font-size: 36px;
     line-height: 36px;
@@ -78,7 +77,6 @@
 /*       ТЕКСТ            */
 /* ===================== */
 .title {
-    font-family: "Roboto";
     font-weight: 700;
     font-size: 30px;
     line-height: 30px;

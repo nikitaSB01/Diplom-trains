@@ -38,7 +38,6 @@
 
 /* Название поезда */
 .trainNumber {
-    font-family: "Roboto", sans-serif;
     font-weight: 700;
     font-size: 24px;
     line-height: 100%;
@@ -53,7 +52,6 @@
     align-items: center;
     justify-content: flex-start;
     gap: 6px;
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
@@ -81,7 +79,6 @@
 
 /* Названия городов */
 .routeCity {
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
@@ -167,7 +164,6 @@
 
 /* Время отправления / прибытия */
 .time {
-    font-family: "Roboto", sans-serif;
     font-weight: 700;
     font-size: 24px;
     line-height: 100%;
@@ -176,7 +172,6 @@
 
 /* Название города */
 .city {
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;
@@ -187,7 +182,6 @@
 
 /* Название вокзала */
 .station {
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;
@@ -202,7 +196,6 @@
 
 
 .duration {
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
@@ -258,7 +251,6 @@
     flex: 1;
     text-align: left;
 
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
@@ -291,7 +283,6 @@
 }
 
 .pricePrefix {
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
@@ -299,7 +290,6 @@
 }
 
 .priceNumber {
-    font-family: "Roboto", sans-serif;
     font-weight: 700;
     font-size: 24px;
     line-height: 100%;
@@ -341,7 +331,6 @@
     border-radius: 5px;
     cursor: pointer;
 
-    font-family: "Roboto";
     font-weight: 700;
     font-size: 24px;
     line-height: 100%;

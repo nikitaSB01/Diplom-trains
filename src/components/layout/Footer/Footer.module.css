@@ -20,7 +20,6 @@
 }
 
 .title {
-    font-family: Roboto, sans-serif;
     font-weight: 500;
     font-size: 30px;
     line-height: 100%;
@@ -49,7 +48,6 @@
     align-items: flex-start;
 }
 .list li p {
-    font-family: Roboto;
     font-weight: 400;
     font-size: 24px;
     line-height: 100%;
@@ -65,7 +63,6 @@
 
 .label {
     margin-bottom: 5px;
-    font-family: Roboto;
     font-weight: 400;
     font-size: 24px;
     line-height: 100%;
@@ -87,7 +84,6 @@
     border: none;
     border-radius: 3px;
     padding: 0 15px;
-    font-family: Roboto;
     font-size: 24px;
     font-weight: 400;
     color: #000;
@@ -97,7 +93,6 @@
 }
 
 .input::placeholder {
-    font-family: Roboto;
     font-weight: 400;
     font-size: 24px;
     color: rgba(229, 229, 229, 1);
@@ -114,7 +109,6 @@
     cursor: pointer;
     transition: 0.3s;
 
-    font-family: Roboto;
     font-weight: 400;
     font-size: 24px;
     line-height: 100%;
@@ -163,7 +157,6 @@
 }
 
 .logo {
-    font-family: Roboto;
     font-weight: 900;
     font-size: 36px;
     line-height: 100%;
@@ -184,7 +177,6 @@
 }
 
 .copy {
-    font-family: Roboto;
     font-weight: 300;
     font-size: 24px;
     line-height: 100%;

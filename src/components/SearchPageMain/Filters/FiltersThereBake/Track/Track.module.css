@@ -6,7 +6,6 @@
     margin-bottom: 5px;
     margin-left: 4px;
     color: #E5E5E5;
-    font-family: Roboto;
     font-weight: 400;
     font-size: 24px;
     line-height: 100%;
@@ -70,7 +69,6 @@
     color: #e5e5e5;
     transform: translateX(0);
     transition: none;
-    font-family: Roboto;
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;

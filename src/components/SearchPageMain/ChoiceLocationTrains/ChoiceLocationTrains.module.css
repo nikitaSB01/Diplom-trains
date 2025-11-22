@@ -29,7 +29,6 @@
     border-radius: 5px;
     background: white;
 
-    font-family: "Roboto";
     font-weight: 700;
     font-size: 24px;
     line-height: 100%;
@@ -91,7 +90,6 @@
 }
 
 .cities span {
-    font-family: "Roboto";
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
@@ -126,7 +124,6 @@
 }
 
 .time {
-    font-family: "Roboto";
     font-weight: 700;
     font-size: 24px;
     line-height: 100%;
@@ -137,7 +134,6 @@
 }
 
 .city {
-    font-family: "Roboto";
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;
@@ -149,7 +145,6 @@
 }
 
 .station {
-    font-family: "Roboto";
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
@@ -198,7 +193,6 @@
 
 .durationHours,
 .durationMinutes {
-    font-family: "Roboto";
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;

@@ -48,7 +48,6 @@
 
 /* Заголовки "Направление" и "Дата" */
 .label {
-    font-family: Roboto, sans-serif;
     font-weight: 300;
     font-size: 30px;
     line-height: 100%;
@@ -99,7 +98,6 @@
     background: rgba(255, 168, 0, 1);
     cursor: pointer;
 
-    font-family: Roboto, sans-serif;
     font-weight: 700;
     font-size: 24px;
     line-height: 100%;
