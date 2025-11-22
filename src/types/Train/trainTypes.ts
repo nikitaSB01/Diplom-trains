@@ -82,7 +82,7 @@ export interface City {
 export interface TrainsProps {
     fromCity: City | null;
     toCity: City | null;
-    dateStart: string;
+    dateStart?: string;
     dateEnd?: string;
     filters?: {
         options: { [key: string]: boolean };
@@ -95,4 +95,5 @@ export interface TrainsProps {
         backArrival: { from: number; to: number } | null;
     };
     onLoadingChange?: (val: boolean) => void;
+    onSelectTrain?: (train: Train) => void;
 }

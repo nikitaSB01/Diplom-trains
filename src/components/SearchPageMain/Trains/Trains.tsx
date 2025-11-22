@@ -68,7 +68,8 @@ const Trains: React.FC<TrainsProps> = ({
   dateStart,
   dateEnd,
   filters,
-  onLoadingChange
+  onLoadingChange,
+  onSelectTrain
 }) => {
 
   // загрузка
@@ -327,7 +328,7 @@ const Trains: React.FC<TrainsProps> = ({
                       {new Date(dep.from.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
                     </p>
                     <p className={styles.city}>{dep.from.city.name}</p>
-                    <p className={styles.station}>{dep.from.railway_station_name}</p>
+                    <p className={styles.station}>{dep.from.railway_station_name} вокзал</p>
                   </div>
 
                   <div className={styles.arrowBlock}>
@@ -340,7 +341,7 @@ const Trains: React.FC<TrainsProps> = ({
                       {new Date(dep.to.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
                     </p>
                     <p className={styles.city}>{dep.to.city.name}</p>
-                    <p className={styles.station}>{dep.to.railway_station_name}</p>
+                    <p className={styles.station}>{dep.to.railway_station_name} вокзал</p>
                   </div>
 
                 </div>
@@ -357,7 +358,7 @@ const Trains: React.FC<TrainsProps> = ({
                         {new Date(arr.to.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
                       </p>
                       <p className={styles.city}>{arr.to.city.name}</p>
-                      <p className={styles.station}>{arr.to.railway_station_name}</p>
+                      <p className={styles.station}>{arr.to.railway_station_name} вокзал</p>
                     </div>
 
                     <div className={styles.arrowBlock}>
@@ -370,7 +371,7 @@ const Trains: React.FC<TrainsProps> = ({
                         {new Date(arr.from.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
                       </p>
                       <p className={styles.city}>{arr.from.city.name}</p>
-                      <p className={styles.station}>{arr.from.railway_station_name}</p>
+                      <p className={styles.station}>{arr.from.railway_station_name} вокзал</p>
                     </div>
 
                   </div>
@@ -465,7 +466,11 @@ const Trains: React.FC<TrainsProps> = ({
                 <Underwear className={styles.serviceIcon} />
               </div>
 
-              <button className={styles.button}>Выбрать места</button>
+              <button
+                className={styles.button}
+                onClick={() => onSelectTrain?.(train)}>
+                Выбрать места
+              </button>
             </div>
           </div>
         );

@@ -8,11 +8,15 @@ import Trains from '../../components/SearchPageMain/Trains/Trains';
 import { useLocation } from 'react-router-dom';
 import { FiltersState } from "../../types/filtersTypes/filtersTypes";
 import LoaderGif from "../../assets/gif/анимация-загрузки.gif"
-
+import { Train } from "../../types/Train/trainTypes";
+import ChoiceLocationTrains from "../../components/SearchPageMain/ChoiceLocationTrains/ChoiceLocationTrains";
 
 const Main: React.FC = () => {
   const location = useLocation();
   const { from, to, dateStart, dateEnd } = location.state || {};
+
+  const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
+  const [isChoosingSeats, setIsChoosingSeats] = useState(false);
 
   const [filters, setFilters] = useState<FiltersState>({
     options: {},
@@ -63,16 +67,44 @@ const Main: React.FC = () => {
           </div>
 
           <div className={styles.rightColumn}>
-            {from && to && (
-              <Trains
-                fromCity={from}
-                toCity={to}
-                dateStart={dateStart}
-                dateEnd={dateEnd}
-                filters={filters}
-                onLoadingChange={setIsLoading}
-              />
-            )}
+
+            {/* Список поездов */}
+            <div
+              className={styles.listTrains}
+              style={{ display: isChoosingSeats ? "none" : "block" }}
+            >
+              {from && to && (
+                <Trains
+                  fromCity={from}
+                  toCity={to}
+                  dateStart={dateStart}
+                  dateEnd={dateEnd}
+                  filters={filters}
+                  onLoadingChange={setIsLoading}
+                  onSelectTrain={(train) => {
+                    setSelectedTrain(train);
+                    setIsChoosingSeats(true);
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Блок выбора мест */}
+            <div
+              className={styles.choiceLocationTrains}
+              style={{ display: isChoosingSeats ? "block" : "none" }}
+            >
+              {selectedTrain && (
+                <ChoiceLocationTrains
+                  train={selectedTrain}
+                  onBack={() => {
+                    setIsChoosingSeats(false);
+                    setSelectedTrain(null);
+                  }}
+                />
+              )}
+            </div>
+
           </div>
         </div>
       </div>

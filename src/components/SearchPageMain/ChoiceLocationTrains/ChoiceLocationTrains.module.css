@@ -1,0 +1,207 @@
+.wrapper {
+    max-width: 960px;
+    width: 100%;
+    background: #fff;
+}
+
+.topBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 0 24px 20px;
+}
+
+.backButton {
+    cursor: pointer;
+    transform: rotate(180deg);
+}
+
+.arrow {
+    width: 18px;
+    height: 14px;
+    background: url("../../../assets/icons/Train/arrowMinThereBlack.svg") center/contain no-repeat;
+}
+
+.changeButton {
+    width: 325px;
+    height: 60px;
+    border: 1px solid rgba(41, 41, 41, 1);
+    border-radius: 5px;
+    background: white;
+
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    cursor: pointer;
+    color: rgba(41, 41, 41, 1)
+}
+
+.changeButton:hover {
+    background: #f3f3f3;
+}
+
+/* ---------------------------- */
+/* БЛОК 2 — КАРТОЧКА ПОЕЗДА     */
+/* ---------------------------- */
+.trainInfoCard {
+    max-width: 960px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    background: rgba(247, 246, 246, 1);
+    margin-bottom: 32px;
+}
+
+/* Левая колонка */
+.trainLeft {
+    max-width: 240px;
+    width: 100%;
+    border-right: 1px solid rgba(255, 255, 255, 1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 25px;
+    padding: 15px 10px 15px 35px;
+
+}
+
+.routeArrowBlack {
+    width: 18px;
+    height: 14px;
+    background: url("../../../assets/icons/Train/arrowMinThereBlack.svg") center/contain no-repeat;
+}
+
+.trainNumber {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.cities {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #444;
+    text-transform: capitalize;
+}
+
+.cities span {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+
+.infoTrain {
+    display: flex;
+    flex-direction: column;
+}
+
+.routeLine {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Центр */
+.trainCenter {
+    max-width: 480px;
+    width: 100%;
+    color: rgba(0, 0, 0, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+}
+
+.timeBlock {
+    text-align: left;
+}
+
+.time {
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(0, 0, 0, 1);
+
+    margin-bottom: 10px;
+}
+
+.city {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(0, 0, 0, 1);
+    text-transform: capitalize;
+
+    margin-bottom: 5px;
+}
+
+.station {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(146, 143, 148, 1);
+    text-transform: capitalize;
+}
+
+.station span {
+    font-weight: 400;
+    text-transform: none;
+}
+
+
+.arrowBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transform: rotate(180deg);
+
+}
+
+.duration {
+    font-size: 14px;
+    color: #777;
+}
+
+
+/* Правая колонка */
+.trainRight {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    border-left: 1px solid rgba(255, 255, 255, 1);
+    padding-left: 35px;
+}
+
+.durationBox {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    /* маленький зазор как на макете */
+}
+
+.durationHours,
+.durationMinutes {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(0, 0, 0, 1);
+}
