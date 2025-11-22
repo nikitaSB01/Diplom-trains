@@ -199,3 +199,86 @@
     letter-spacing: 0%;
     color: rgba(0, 0, 0, 1);
 }
+
+/* ---------------------------- */
+/* БЛОК 3 — КОЛИЧЕСТВО БИЛЕТОВ */
+/* ---------------------------- */
+
+/* Блок количества билетов */
+.ticketsBlock {
+    padding: 40px 30px;
+}
+
+.blockTitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+/* Контейнер с полями */
+.ticketFields {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+/* Одна колонка (Взрослые / Детские / Детские без места) */
+.field {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Основный стиль поля */
+.ticketField {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    cursor: text;
+}
+
+/* Статичный текст */
+.labelText {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(41, 41, 41, 1);
+    pointer-events: none;
+}
+
+/* Инпут */
+
+
+.numberInput {
+    width: 40px;
+    /* критически важно */
+    text-align: right;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.numberInput::-webkit-inner-spin-button,
+.numberInput::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Активное поле (ховер из макета) */
+/* .active {
+    background: #f4f4f4;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+} */
+
+/* Хинт */
+.hint {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.3;
+    color: #444;
+}

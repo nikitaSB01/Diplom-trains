@@ -1,14 +1,11 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import styles from "./ChoiceLocationTrains.module.css";
 import { Train } from "../../../types/Train/trainTypes";
+import TypeSelector from "./TypeSelector/TypeSelector";
 
 import { ReactComponent as Arrow } from "../../../assets/icons/ChoiceLocationTrains/arrow.svg";
 import { ReactComponent as ArrowBetween } from "../../../assets/icons/ChoiceLocationTrains/arrowBetween.svg";
-import { ReactComponent as Cupe } from "../../../assets/icons/ChoiceLocationTrains/cupe.svg";
-import { ReactComponent as Plat } from "../../../assets/icons/ChoiceLocationTrains/plat.svg";
-import { ReactComponent as Lux } from "../../../assets/icons/ChoiceLocationTrains/lux.svg";
-import { ReactComponent as Sid } from "../../../assets/icons/ChoiceLocationTrains/sid.svg";
 import { ReactComponent as Time } from "../../../assets/icons/ChoiceLocationTrains/time.svg";
 import { ReactComponent as TrainSvg } from "../../../assets/icons/ChoiceLocationTrains/train.svg";
 
@@ -37,7 +34,16 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
     const hours = Math.floor(dep.duration / 3600);
     const minutes = Math.floor((dep.duration % 3600) / 60);
 
-    return (
+
+    const [activeField, setActiveField] = useState<'adults' | 'kids' | 'kidsNoSeat' | null>(null);
+
+    const inputAdultsRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (activeField === 'adults') {
+            inputAdultsRef.current?.focus();
+        }
+    }, [activeField]); return (
         <div className={styles.wrapper}>
 
             {/* БЛОК 1 — ВЕРХНЯЯ ПАНЕЛЬ */}
@@ -101,6 +107,19 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
                         <p className={styles.durationMinutes}>{minutes} минут</p>
                     </div>
                 </div>
+            </div>
+
+            {/* БЛОК 3 — КОЛИЧЕСТВО БИЛЕТОВ */}
+
+            <div className={styles.ticketsBlock}>
+                <h2 className={styles.blockTitle}>Количество билетов</h2>
+                <div className={styles.ticketFields}>
+                </div>
+            </div>
+
+            {/* БЛОК 3 — КОЛИЧЕСТВО БИЛЕТОВ */}
+            <div className={styles.typeBlock}>
+                <TypeSelector />
             </div>
         </div>
     );

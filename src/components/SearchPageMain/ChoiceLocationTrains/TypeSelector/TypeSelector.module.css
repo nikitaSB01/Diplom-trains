@@ -1,0 +1,69 @@
+.wrapper {
+    width: 100%;
+    padding: 20px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(41, 41, 41, 1);
+    margin-bottom: 20px;
+}
+
+.containerType {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 25px 140px 25px 15px;
+    gap: 24px;
+}
+
+.typeItem {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    gap: 18px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    fill: rgba(196, 196, 196, 1)
+}
+
+.label {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(146, 143, 148, 1);
+}
+
+/* АКТИВНОЕ СОСТОЯНИЕ */
+.active {
+    /*     border-color: rgba(255, 168, 0, 1);
+    background: #fff4d1; */
+}
+
+.active .icon {
+    fill: rgba(255, 168, 0, 1);
+}
+
+.active .label {
+    color: rgba(255, 168, 0, 1);
+}
+
+.appearedBlock {
+    margin-top: 20px;
+    padding: 16px;
+    background: #f1f1f1;
+    border-radius: 12px;
+}
