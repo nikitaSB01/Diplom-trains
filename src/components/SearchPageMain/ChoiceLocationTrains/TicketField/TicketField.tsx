@@ -12,13 +12,12 @@ const TicketField: React.FC<Props> = ({ label, max, hint }) => {
     const [isFocused, setIsFocused] = useState(false);
 
     const wrapperRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null); // ← ref
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (!wrapperRef.current?.contains(e.target as Node)) {
                 setIsFocused(false);
-
-                // если поле пустое — вернуть 0
                 setValue((v) => (v.trim() === "" ? "0" : v));
             }
         };
@@ -56,11 +55,15 @@ const TicketField: React.FC<Props> = ({ label, max, hint }) => {
             <button
                 type="button"
                 className={styles.field}
-                onClick={() => setIsFocused(true)}
+                onClick={() => {
+                    setIsFocused(true);
+                    inputRef.current?.focus();   // ← автофокус
+                }}
             >
                 <span className={styles.label}>{label}</span>
 
                 <input
+                    ref={inputRef}                // ← привязали input
                     className={styles.input}
                     type="text"
                     value={value}

@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./ChoiceLocationTrains.module.css";
 import { Train } from "../../../types/Train/trainTypes";
 import TypeSelector from "./TypeSelector/TypeSelector";
+import TicketField from "./TicketField/TicketField";
 
 import { ReactComponent as Arrow } from "../../../assets/icons/ChoiceLocationTrains/arrow.svg";
 import { ReactComponent as ArrowBetween } from "../../../assets/icons/ChoiceLocationTrains/arrowBetween.svg";
@@ -33,7 +34,6 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
 
     const hours = Math.floor(dep.duration / 3600);
     const minutes = Math.floor((dep.duration % 3600) / 60);
-
 
     const [activeField, setActiveField] = useState<'adults' | 'kids' | 'kidsNoSeat' | null>(null);
 
@@ -114,10 +114,27 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
             <div className={styles.ticketsBlock}>
                 <h2 className={styles.blockTitle}>Количество билетов</h2>
                 <div className={styles.ticketFields}>
+                    <TicketField
+                        label="Взрослых —"
+                        max={3}
+                        hint="Можно добавить 3 пассажиров"
+                    />
+
+                    <TicketField
+                        label="Детских —"
+                        max={3}
+                        hint="Можно добавить 3 детей до 10 лет. Свое место в вагоне, как у взрослых, но дешевле в среднем на 50–65%"
+                    />
+
+                    <TicketField
+                        label="Детских «без места» —"
+                        max={2}
+                        hint="Можно добавить 2 детей"
+                    />
                 </div>
             </div>
 
-            {/* БЛОК 3 — КОЛИЧЕСТВО БИЛЕТОВ */}
+            {/* БЛОК 4 — ТИПЫ ВАГОНОВ */}
             <div className={styles.typeBlock}>
                 <TypeSelector />
             </div>

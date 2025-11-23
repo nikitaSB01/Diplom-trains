@@ -53,7 +53,7 @@
     flex-direction: row;
 
     background: rgba(247, 246, 246, 1);
-    margin-bottom: 32px;
+    margin-bottom: 40px;
 }
 
 /* Левая колонка */
@@ -206,20 +206,29 @@
 
 /* Блок количества билетов */
 .ticketsBlock {
-    padding: 40px 30px;
+    min-height: 340px;
+    border-bottom: 1px solid rgba(196, 196, 196, 1);
+    border-image: repeating-linear-gradient(to right,
+            rgba(196, 196, 196, 1) 0,
+            rgba(196, 196, 196, 1) 1px,
+            transparent 1px,
+            transparent 3px) 1;
 }
 
 .blockTitle {
-    font-size: 28px;
     font-weight: 700;
-    margin-bottom: 24px;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(41, 41, 41, 1);
+    margin: 0 0 10px 20px;
 }
 
 /* Контейнер с полями */
 .ticketFields {
     display: flex;
     flex-direction: row;
-    gap: 24px;
+
 }
 
 /* Одна колонка (Взрослые / Детские / Детские без места) */
