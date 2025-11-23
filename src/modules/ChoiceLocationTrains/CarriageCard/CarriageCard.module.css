@@ -18,6 +18,8 @@
 }
 
 .right {
+    display: flex;
+    flex-direction: row;
     padding: 30px 40px 0 85px;
 }
 
@@ -47,11 +49,81 @@
     margin-bottom: 25px;
 }
 
+.topRow {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 /* Колонки */
 .col {
+    width: 200px;
     display: flex;
     flex-direction: column;
     min-width: 160px;
+    padding: 10px;
+}
+
+.placeRow {
+    display: flex;
+    align-items: baseline;
+    /* чтобы цифры стояли ровно по линии текста */
+    gap: 6px;
+    /* расстояние между “Места” и числом */
+}
+
+.subInfo, .containerPrice {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+}
+
+.subTitle {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(0, 0, 0, 1);
+}
+
+.rubleIcon {
+    width: 14px;
+    height: 17px;
+}
+
+.titleGrayInline, .titleGray {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(146, 143, 148, 1);
+    margin-bottom: 20px;
+}
+
+.valueBigInline {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(0, 0, 0, 1);
+
+}
+
+.costRow {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: baseline;
+}
+
+.costValue {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(0, 0, 0, 1);
+
 }
 
 .colTitle {
