@@ -43,7 +43,16 @@ const TypeSelector: React.FC<Props> = ({ onSelectType }) => {
 
             {activeType && (
                 <div className={styles.appearedBlock}>
-                    <p>Вы выбрали: {activeType}</p>
+                    <div className={styles.container}>
+                        <div className={styles.carNumbering}>
+                            <div className={styles.dataCar}>
+                                <div className={styles.carriageInfo}>
+                                </div>
+                                <div className={styles.places}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
