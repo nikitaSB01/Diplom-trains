@@ -64,7 +64,7 @@
 
 /* Левая колонка */
 .trainLeft {
-    max-width: 240px;
+    max-width: 260px;
     width: 100%;
     border-right: 1px solid rgba(255, 255, 255, 1);
     display: flex;
