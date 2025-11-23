@@ -111,15 +111,14 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType }) 
 
                 <div className={styles.ticketFields}>
                     <TicketField label="Взрослых —" max={3} hint="Можно добавить 3 пассажиров" />
-                    <TicketField label="Детских —" max={3} hint="Можно добавить 3 детей до 10 лет" />
+                    <TicketField label="Детских —" max={3} hint="Можно добавить еще 3 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%" />
                     <TicketField label="Детских «без места» —" max={2} hint="Можно добавить 2 детей" />
                 </div>
             </div>
 
             {/* БЛОК 4 — ТИПЫ ВАГОНОВ */}
             <div className={styles.typeBlock}>
-                <TypeSelector onSelectType={onSelectType} />
-            </div>
+                <TypeSelector onSelectType={onSelectType} routeId={dep._id} />            </div>
         </div >
     );
 };
