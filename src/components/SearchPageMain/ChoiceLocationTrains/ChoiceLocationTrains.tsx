@@ -10,13 +10,13 @@ import { ReactComponent as ArrowBetween } from "../../../assets/icons/ChoiceLoca
 import { ReactComponent as Time } from "../../../assets/icons/ChoiceLocationTrains/time.svg";
 import { ReactComponent as TrainSvg } from "../../../assets/icons/ChoiceLocationTrains/train.svg";
 
-
 interface Props {
     train: Train;
     onBack: () => void;
+    onSelectType: (type: string) => void;
 }
 
-const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
+const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType }) => {
 
     const dep = train.departure;
 
@@ -31,22 +31,23 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
         const m = Math.floor((dep.duration % 3600) / 60);
         return `${h} часов ${m} минут`;
     })();
-
     const hours = Math.floor(dep.duration / 3600);
     const minutes = Math.floor((dep.duration % 3600) / 60);
 
-    const [activeField, setActiveField] = useState<'adults' | 'kids' | 'kidsNoSeat' | null>(null);
+    const [activeField, setActiveField] = useState<"adults" | "kids" | "kidsNoSeat" | null>(null);
 
     const inputAdultsRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (activeField === 'adults') {
+        if (activeField === "adults") {
             inputAdultsRef.current?.focus();
         }
-    }, [activeField]); return (
+    }, [activeField]);
+
+    return (
         <div className={styles.wrapper}>
 
-            {/* БЛОК 1 — ВЕРХНЯЯ ПАНЕЛЬ */}
+            {/* БЛОК 1 --- ВЕРХНЯЯ ПАНЕЛЬ */}
             <div className={styles.topBar}>
                 <button className={styles.backButton} onClick={onBack}>
                     <Arrow className={styles.arrowSvg} />
@@ -56,9 +57,8 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
                 </button>
             </div>
 
-            {/* БЛОК 2 — ИНФОРМАЦИЯ О ПОЕЗДЕ */}
+            {/* БЛОК 2 --- ИНФОРМАЦИЯ О ПОЕЗДЕ */}
             <div className={styles.trainInfoCard}>
-                {/* ЛЕВАЯ ЧАСТЬ: номер поезда + маршрут */}
                 <div className={styles.trainLeft}>
                     <div className={styles.trainIcon}>
                         <TrainSvg className={styles.trainSvg} />
@@ -75,10 +75,9 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                {/* ЦЕНТР: время туда */}
+                {/* Время */}
                 <div className={styles.trainCenter}>
                     <div className={styles.timeBlock}>
                         <p className={styles.time}>{formatTime(dep.from.datetime)}</p>
@@ -97,11 +96,8 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
                     </div>
                 </div>
 
-                {/* ПРАВАЯ ЧАСТЬ: часы */}
                 <div className={styles.trainRight}>
-                    <div className={styles.clockIcon}>
-                        <Time className={styles.timeIconSvg} />
-                    </div>
+                    <Time className={styles.timeIconSvg} />
                     <div className={styles.durationBox}>
                         <p className={styles.durationHours}>{hours} часов</p>
                         <p className={styles.durationMinutes}>{minutes} минут</p>
@@ -110,35 +106,21 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack }) => {
             </div>
 
             {/* БЛОК 3 — КОЛИЧЕСТВО БИЛЕТОВ */}
-
             <div className={styles.ticketsBlock}>
                 <h2 className={styles.blockTitle}>Количество билетов</h2>
+
                 <div className={styles.ticketFields}>
-                    <TicketField
-                        label="Взрослых —"
-                        max={3}
-                        hint="Можно добавить 3 пассажиров"
-                    />
-
-                    <TicketField
-                        label="Детских —"
-                        max={3}
-                        hint="Можно добавить 3 детей до 10 лет. Свое место в вагоне, как у взрослых, но дешевле в среднем на 50–65%"
-                    />
-
-                    <TicketField
-                        label="Детских «без места» —"
-                        max={2}
-                        hint="Можно добавить 2 детей"
-                    />
+                    <TicketField label="Взрослых —" max={3} hint="Можно добавить 3 пассажиров" />
+                    <TicketField label="Детских —" max={3} hint="Можно добавить 3 детей до 10 лет" />
+                    <TicketField label="Детских «без места» —" max={2} hint="Можно добавить 2 детей" />
                 </div>
             </div>
 
             {/* БЛОК 4 — ТИПЫ ВАГОНОВ */}
             <div className={styles.typeBlock}>
-                <TypeSelector />
+                <TypeSelector onSelectType={onSelectType} />
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -83,3 +83,8 @@
   object-position: center;
 
 }
+
+.secondTrainBlock {
+  margin-top: 40px;
+  /* можешь сделать 50 или по макету */
+}

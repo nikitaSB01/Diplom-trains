@@ -18,26 +18,25 @@ const Main: React.FC = () => {
   const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
   const [isChoosingSeats, setIsChoosingSeats] = useState(false);
 
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+
   const [filters, setFilters] = useState<FiltersState>({
     options: {},
     price: null,
-
     thereDeparture: null,
     thereArrival: null,
-
     backDeparture: null,
     backArrival: null,
   });
 
   const [isLoading, setIsLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
+
   useEffect(() => {
     if (isLoading) {
       setShowLoader(true);
     } else {
-      const timer = setTimeout(() => {
-        setShowLoader(false);
-      }, 400); // минимальное время лоадера
+      const timer = setTimeout(() => setShowLoader(false), 400);
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
@@ -45,7 +44,6 @@ const Main: React.FC = () => {
   return (
     <section className={styles.main}>
 
-      {/* Лоадер на 780px поверх */}
       {showLoader && (
         <div className={styles.loaderOverlay}>
           <p className={styles.loadingText}>Идёт поиск</p>
@@ -53,22 +51,18 @@ const Main: React.FC = () => {
         </div>
       )}
 
-      {/* Контейнер всегда в DOM */}
-      <div
-        className={`${styles.mainContainer} ${showLoader ? styles.loadingState : ""}`}
-      >
+      <div className={`${styles.mainContainer} ${showLoader ? styles.loadingState : ""}`}>
         <Steps currentStep={1} />
 
         <div className={styles.container}>
           <div className={styles.leftColumn}>
-            <Filters onChange={setFilters} dateStart={dateStart}
-              dateEnd={dateEnd} />
+            <Filters onChange={setFilters} dateStart={dateStart} dateEnd={dateEnd} />
             <FiltersLastTickets />
           </div>
 
           <div className={styles.rightColumn}>
 
-            {/* Список поездов */}
+            {/* список поездов */}
             <div
               className={styles.listTrains}
               style={{ display: isChoosingSeats ? "none" : "block" }}
@@ -89,19 +83,41 @@ const Main: React.FC = () => {
               )}
             </div>
 
-            {/* Блок выбора мест */}
+            {/* выбор мест */}
             <div
               className={styles.choiceLocationTrains}
               style={{ display: isChoosingSeats ? "block" : "none" }}
             >
+              {/* Первый блок */}
               {selectedTrain && (
                 <ChoiceLocationTrains
                   train={selectedTrain}
                   onBack={() => {
                     setIsChoosingSeats(false);
                     setSelectedTrain(null);
+                    setSelectedType(null);
+                  }}
+                  onSelectType={(type) => {
+                    setSelectedType(type);
                   }}
                 />
+              )}
+
+              {/* Второй блок — выводим КОГДА выбран тип */}
+              {selectedType && selectedTrain && (
+                <div className={styles.secondTrainBlock}>
+                  <ChoiceLocationTrains
+                    train={selectedTrain}
+                    onBack={() => {
+                      setIsChoosingSeats(false);
+                      setSelectedTrain(null);
+                      setSelectedType(null);
+                    }}
+                    onSelectType={(type) => {
+                      setSelectedType(type);
+                    }}
+                  />
+                </div>
               )}
             </div>
 
@@ -114,5 +130,3 @@ const Main: React.FC = () => {
 }
 
 export default Main;
-
-

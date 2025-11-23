@@ -5,6 +5,7 @@ import { ReactComponent as Cupe } from "../../../../assets/icons/ChoiceLocationT
 import { ReactComponent as Plat } from "../../../../assets/icons/ChoiceLocationTrains/plat.svg";
 import { ReactComponent as Lux } from "../../../../assets/icons/ChoiceLocationTrains/lux.svg";
 import { ReactComponent as Sid } from "../../../../assets/icons/ChoiceLocationTrains/sid.svg";
+
 const TYPES = [
     { id: "сидячий", label: "Сидячий", Icon: Sid },
     { id: "плацкарт", label: "Плацкарт", Icon: Plat },
@@ -12,21 +13,26 @@ const TYPES = [
     { id: "люкс", label: "Люкс", Icon: Lux },
 ];
 
-const TypeSelector: React.FC = () => {
+interface Props {
+    onSelectType: (type: string) => void;
+}
+
+const TypeSelector: React.FC<Props> = ({ onSelectType }) => {
     const [activeType, setActiveType] = useState<string | null>(null);
 
     return (
         <div className={styles.wrapper}>
-            {/* TITLE */}
             <h2 className={styles.title}>Тип вагона</h2>
 
-            {/* КОНТЕЙНЕР С ТИПАМИ */}
             <div className={styles.containerType}>
                 {TYPES.map(({ id, label, Icon }) => (
                     <button
                         key={id}
                         className={`${styles.typeItem} ${activeType === id ? styles.active : ""}`}
-                        onClick={() => setActiveType(id)}
+                        onClick={() => {
+                            setActiveType(id);
+                            onSelectType(id);
+                        }}
                         type="button"
                     >
                         <Icon className={styles.icon} />
@@ -35,7 +41,6 @@ const TypeSelector: React.FC = () => {
                 ))}
             </div>
 
-            {/* ПОЯВЛЯЮЩИЙСЯ БЛОК */}
             {activeType && (
                 <div className={styles.appearedBlock}>
                     <p>Вы выбрали: {activeType}</p>
