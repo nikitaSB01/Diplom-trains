@@ -2,61 +2,76 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./TicketField.module.css";
 
 interface Props {
-    label: string;        // "Детских —"
-    max: number;          // лимит, например 3
+    label: string;
+    max: number;
+    hint: string;
 }
 
-const TicketField: React.FC<Props> = ({ label, max }) => {
+const TicketField: React.FC<Props> = ({ label, max, hint }) => {
     const [value, setValue] = useState("0");
     const [isFocused, setIsFocused] = useState(false);
 
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    // Убираем желтую границу при клике вне, НО подсказку НЕ скрываем
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (!wrapperRef.current?.contains(e.target as Node)) {
                 setIsFocused(false);
+
+                // если поле пустое — вернуть 0
+                setValue((v) => (v.trim() === "" ? "0" : v));
             }
         };
-        document.addEventListener("mousedown", handleClickOutside);
 
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const num = e.target.value.replace(/\D/g, "");
-        if (num === "") return setValue("0");
+    const handleInputFocus = () => {
+        setIsFocused(true);
+        if (value === "0") setValue("");
+    };
 
-        const parsed = Math.min(Number(num), max);
-        setValue(String(parsed));
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+        const raw = (e.target as HTMLInputElement).value;
+        const digit = raw.replace(/\D/g, "");
+
+        if (digit === "") {
+            setValue("");
+            return;
+        }
+
+        const last = digit[digit.length - 1];
+        const num = Math.min(Number(last), max);
+
+        setValue(String(num));
     };
 
     return (
         <div
-            className={`${styles.wrapper} ${isFocused ? styles.active : ""}`}
             ref={wrapperRef}
+            className={`${styles.wrapper} ${isFocused ? styles.active : ""}`}
         >
             <button
                 type="button"
                 className={styles.field}
                 onClick={() => setIsFocused(true)}
-            ><span className={styles.label}>{label}</span>
+            >
+                <span className={styles.label}>{label}</span>
+
                 <input
                     className={styles.input}
                     type="text"
                     value={value}
-                    onChange={handleChange}
-                    onFocus={() => setIsFocused(true)}
+                    onInput={handleInput}
+                    onFocus={handleInputFocus}
                 />
             </button>
 
-            {/* Подсказка: показывается при фокусе И после ввода */}
-            <div className={styles.hint}>
-                Можно добавить 3 детей до 10 лет.
-                Свое место в вагоне, как у взрослых, но дешевле
-                в среднем на 50–65%
-            </div>
+            {(isFocused || value !== "0") && (
+                <div className={styles.hint}>{hint}</div>
+            )}
         </div>
     );
 };
