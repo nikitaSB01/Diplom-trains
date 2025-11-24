@@ -2,6 +2,13 @@ import React from "react";
 import styles from "./SeatMapPlatzkart.module.css";
 import Seat from "../Seat/Seat";
 
+import { ReactComponent as ToiletIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/wc.svg";
+import { ReactComponent as WaterIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/water.svg";
+import { ReactComponent as AttendantIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/conductor.svg";
+import { ReactComponent as TrashIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/garbage.svg";
+import { ReactComponent as NoSmokingIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/noSmoking.svg";
+
+
 interface SeatItem {
     index: number;
     available: boolean;
@@ -22,56 +29,103 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats }) => {
     return (
         <div className={styles.container}>
             <div className={styles.leftService}>
-                <div className={styles.toilet}></div>
-                <div className={styles.attendant}></div>
+
+                {/* WC в верхнем левом углу */}
+                <ToiletIcon className={styles.leftToilet} />
+
+                {/* Проводник — по центру */}
+                <AttendantIcon className={styles.leftAttendant} />
+
+                {/* Вода — снизу слева */}
+                <WaterIcon className={styles.leftWater} />
+
+                {/* Диагональная перегородка */}
+                <div className={styles.leftDiagonal}></div>
             </div>
 
             <div className={styles.mainArea}>
 
-                {/* Верхние полки */}
-                <div className={styles.upperRow}>
-                    {upperMain.map(seat => (
-                        <Seat
-                            key={seat.index}
-                            number={seat.index}
-                            available={seat.available}
-                            reserved={seat.reserved}
-                        />
-                    ))}
-                </div>
+                <div className={styles.containerTop}>
+                    {/* <div className={styles.topGray} /> */}
+                    {/* Верхние полки */}
+                    <div className={styles.upperRow}>
+                        {upperMain.map((seat, i) => (
+                            <React.Fragment key={seat.index}>
+                                <Seat
+                                    number={seat.index}
+                                    available={seat.available}
+                                    reserved={seat.reserved}
+                                    type="upper"
+                                />
 
-                {/* Нижние полки */}
-                <div className={styles.lowerRow}>
-                    {lowerMain.map(seat => (
-                        <Seat
-                            key={seat.index}
-                            number={seat.index}
-                            available={seat.available}
-                            reserved={seat.reserved}
-                        />
-                    ))}
-                </div>
-
-                {/* Боковые полки */}
-                {/* Боковые полки (правильный порядок 33 → 48) */}
-                <div className={styles.sideRow}>
-                    {seats
-                        .filter(s => s.index >= 33 && s.index <= 48) // только боковые
-                        .sort((a, b) => a.index - b.index)          // сортируем строго 33..48
-                        .map(seat => (
-                            <Seat
-                                key={seat.index}
-                                number={seat.index}
-                                available={seat.available}
-                                reserved={seat.reserved}
-                            />
+                                {/* Перегородка после каждых 4 мест */}
+                                {((i + 1) % 2 === 0 && i !== upperMain.length - 1) && (
+                                    <div className={styles.compartmentLine} />
+                                )}
+                            </React.Fragment>
                         ))}
-                </div>
-            </div>
+                    </div>
+                    {/* Нижние полки */}
+                    <div className={styles.lowerRow}>
+                        {lowerMain.map((seat, i) => (
+                            <React.Fragment key={seat.index}>
+                                <Seat
+                                    number={seat.index}
+                                    available={seat.available}
+                                    reserved={seat.reserved}
+                                    type="lower"
+                                />
 
+                                {/* Перегородка после каждых 4 мест */}
+                                {((i + 1) % 2 === 0 && i !== lowerMain.length - 1) && (
+                                    <div className={styles.compartmentLine} />
+                                )}
+                            </React.Fragment>
+                        ))}
+                    </div>
+                </div>
+
+                <div className={styles.bottomGray} />
+
+                <div className={styles.containerBottom}>
+                    <div className={styles.sideRow}>
+                        {seats
+                            .filter(s => s.index >= 33 && s.index <= 48)
+                            .sort((a, b) => a.index - b.index)
+                            .map((seat, i, arr) => (
+                                <React.Fragment key={seat.index}>
+                                    <Seat
+                                        number={seat.index}
+                                        available={seat.available}
+                                        reserved={seat.reserved}
+                                        type="side"
+                                    />
+
+                                    {/* Перегородка через каждые 2 места */}
+                                    {((i + 1) % 2 === 0 && i !== arr.length - 1) && (
+                                        <div className={styles.compartmentLineSide} />
+                                    )}
+                                </React.Fragment>
+                            ))}
+                    </div>
+
+                </div>
+
+
+            </div>
             <div className={styles.rightService}>
-                <div className={styles.toilet}></div>
-                <div className={styles.trash}></div>
+
+                {/* WC */}
+                <ToiletIcon className={styles.rightToilet} />
+
+                {/* Мусорка */}
+                <TrashIcon className={styles.rightTrash} />
+
+                {/* No smoking */}
+                <NoSmokingIcon className={styles.rightNoSmoke} />
+
+                {/* Диагональная перегородка */}
+                <div className={styles.rightDiagonal}></div>
             </div>
         </div>
     );

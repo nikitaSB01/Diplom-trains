@@ -1,24 +1,16 @@
 .container {
-    width: 921px;
+    width: 920px;
     height: 145px;
     background: #ffffff;
-    border: 1px solid #d9d9d9;
+    /*  border: 1px solid #d9d9d9; */
     display: flex;
+    justify-content: center;
     box-sizing: border-box;
     position: relative;
     border-radius: 4px;
     overflow: hidden;
 }
 
-/* ЛЕВЫЙ СЕРВИСНЫЙ БЛОК */
-.leftService {
-    width: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 8px 4px;
-    background: #f5f5f5;
-}
 
 .toilet {
     width: 22px;
@@ -36,15 +28,6 @@
     margin: 4px auto;
 }
 
-/* ПРАВЫЙ СЕРВИСНЫЙ БЛОК */
-.rightService {
-    width: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 8px 4px;
-    background: #f5f5f5;
-}
 
 .trash {
     width: 20px;
@@ -56,36 +39,213 @@
 
 /* ЦЕНТРАЛЬНАЯ ОБЛАСТЬ */
 .mainArea {
+    height: 145px;
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 6px 0;
+    justify-content: space-between;
+    /*  border-bottom: 4px solid rgb(95, 93, 93); */
+}
+
+.containerTop {
+    border-top: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    padding-top: 5px;
+}
+
+.containerBottom {
+    border-bottom: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    padding-bottom: 5px;
+    padding-top: 5px;
+
+}
+
+.containerTop,
+.containerBottom {
     position: relative;
+    z-index: 2;
+    background: white;
 }
 
-/* ВЕРХНИЙ РЯД */
-.upperRow {
-    height: 40px;
+
+.upperRow, .lowerRow, .sideRow {
+    height: 30px;
     display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 0 10px;
+    gap: 6px;
+    padding-left: 22px;
 }
 
-/* НИЖНИЙ РЯД */
-.lowerRow {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 0 10px;
-}
-
-/* БОКОВЫЕ МЕСТА */
+.upperRow,
+.lowerRow,
 .sideRow {
-    height: 40px;
+    margin: 0;
+}
+
+
+
+/* Верхняя серая полоса */
+.topGray {
+    height: 10px;
+    background: #f5f5f5;
+    margin-bottom: 6px;
+
+}
+
+/* Нижняя серая полоса */
+.bottomGray {
+    height: 100%;
+    background: #f5f5f5;
+    width: 100%;
+}
+
+
+.leftTopBlock,
+.leftMiddleBlock,
+.leftBottomBlock,
+.rightTopBlock,
+.rightMiddleBlock,
+.rightBottomBlock {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 4px;
-    padding: 0 10px;
+    height: 30px;
+    /* регулируется под макет */
+}
+
+.serviceIcon {
+    width: 22px;
+    height: 22px;
+    opacity: 0.9;
+}
+
+/* =================== =============================*/
+.leftService {
+    width: 95px;
+    background: #f5f5f5;
+    position: relative;
+
+    /* Скругления по макету */
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+    /* Серые границы только там, где они нужны */
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    /* ВАЖНО — убираем правую границу */
+    border-right: none;
+}
+
+/* WC */
+.leftToilet {
+    position: absolute;
+    top: 12px;
+    left: 18px;
+    width: 22px;
+    height: 22px;
+}
+
+/* Проводник */
+.leftAttendant {
+    position: absolute;
+    top: 60px;
+    left: 28px;
+    width: 26px;
+    height: 26px;
+}
+
+/* Вода */
+.leftWater {
+    position: absolute;
+    bottom: 18px;
+    left: 20px;
+    width: 26px;
+    height: 26px;
+}
+
+/* Диагональная перегородка */
+.leftDiagonal {
+    position: absolute;
+    top: 35px;
+    left: -2px;
+    width: 140px;
+    height: 2px;
+    background: transparent;
+    border-top: 2px solid #cfcfcf;
+    transform: rotate(-32deg);
+    transform-origin: left center;
+}
+
+
+.rightService {
+    width: 95px;
+    background: #f5f5f5;
+    position: relative;
+
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    /* ВАЖНО — убираем правую границу */
+    border-left: none;
+}
+
+
+/* WC */
+.rightToilet {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    width: 22px;
+    height: 22px;
+}
+
+/* Мусорка — снизу слева */
+.rightTrash {
+    position: absolute;
+    bottom: 14px;
+    left: 20px;
+    width: 26px;
+    height: 26px;
+}
+
+/* No Smoking — справа в центре */
+.rightNoSmoke {
+    position: absolute;
+    top: 70px;
+    right: 12px;
+    width: 26px;
+    height: 26px;
+}
+
+/* Диагональная перегородка */
+.rightDiagonal {
+    position: absolute;
+    top: 50px;
+    right: -30px;
+    width: 150px;
+    height: 2px;
+    background: transparent;
+    border-top: 2px solid #cfcfcf;
+    transform: rotate(32deg);
+    transform-origin: right center;
+}
+
+
+.compartmentLine,
+.compartmentLineSide {
+    width: 2px;
+    height: 30px;
+    /* ← одинаковая высота */
+    background: #d0d0d0;
+    margin: 0 8px;
+    border-radius: 2px;
+    align-self: center;
 }
