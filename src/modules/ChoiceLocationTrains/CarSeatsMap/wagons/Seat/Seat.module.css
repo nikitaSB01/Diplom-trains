@@ -1,40 +1,45 @@
 .seat {
-    width: 26px;
-    height: 26px;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 11px;
     border-radius: 4px;
-    cursor: pointer;
-    user-select: none;
+    font-size: 12px;
     border: 1px solid #dcdcdc;
-    background: #ededed;
+    cursor: pointer;
 }
 
+/* СВОБОДНО/ЗАНЯТО/ЗАБРОНИРОВАНО */
 .free {
-    background: #ffffff;
+    background: #fff;
 }
 
 .taken {
     background: #d4d4d4;
-    color: #555;
 }
 
 .reserved {
-    background: #3e8ef7; /* синий */
-    color: white;
-    border-color: #2f6fd6;
+    background: #3e8ef7 !important;
+    color: white !important;
+    border-color: #2f6fd6 !important;
+    cursor:default ;
 }
 
+/* ======== КУПЕ ======== */
 .upperSeat {
-    box-shadow: inset 0 3px 0 rgba(0,0,0,0.15);
+    background: #ececec;
 }
 
 .lowerSeat {
-    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15);
+    background: #ffffff;
 }
 
-.sideSeat {
-    box-shadow: inset 3px 0 0 rgba(0,0,0,0.15);
+/* ======== БОКОВЫЕ ======== */
+.sideUpperSeat {
+    background: #ececec;
+}
+
+.sideLowerSeat {
+    background: #ffffff;
 }
