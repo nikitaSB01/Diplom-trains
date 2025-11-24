@@ -134,6 +134,8 @@ const CarriageCard = ({ carriage }: any) => {
                             disabled={included.wifi || !purchasable.wifi}   // отключаем если включено или недоступно
                         >
                             <Wifi />
+                            <div className={styles.tooltipService}>WI-FI</div>
+
                         </button>
 
                         {/* === Бельё === */}
@@ -152,6 +154,8 @@ const CarriageCard = ({ carriage }: any) => {
                             disabled={included.linens || !purchasable.linens}
                         >
                             <Linens />
+                            <div className={styles.tooltipService}>белье</div>
+
                         </button>
 
                         {/* === Кондиционер === */}
@@ -165,6 +169,8 @@ const CarriageCard = ({ carriage }: any) => {
                             disabled
                         >
                             <AC />
+                            <div className={styles.tooltipService}>кондиционер</div>
+
                         </button>
                     </div>
                 </div>

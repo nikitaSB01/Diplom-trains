@@ -60,6 +60,7 @@
     flex-direction: row;
     gap: 13px;
 
+
 }
 
 /* Колонки */
@@ -199,6 +200,7 @@
 /* ===============  ДОП УСЛУГИ — ЕДИНЫЕ СТИЛИ КНОПОК  ================= */
 /* === КНОПКИ ДОП УСЛУГ — общее === */
 .contsinerServices button {
+    position: relative;
     width: 36px;
     height: 36px;
     border-radius: 8px;
@@ -264,4 +266,38 @@
 .contsinerServices button.iconAvailable:hover svg,
 .contsinerServices button.iconActive:hover svg {
     fill: rgba(41, 41, 41, 1);
+}
+
+/* ==== ВСПЛЫВАЮЩИЕ ПОДСКАЗКИ ДЛЯ ДОП УСЛУГ ==== */
+
+.tooltipService {
+    height: 34px;
+    position: absolute;
+    top: 48px;
+    /* расстояние вниз от кнопки */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+
+    background: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: rgba(41, 41, 41, 1);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+/* показываем при наведении */
+.contsinerServices button:hover .tooltipService {
+    opacity: 1;
 }
