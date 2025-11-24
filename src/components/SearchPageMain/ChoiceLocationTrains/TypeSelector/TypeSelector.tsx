@@ -115,7 +115,7 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId }) => {
                         {/* --- Блок "Вагоны" как в макете --- */}
                         <div className={styles.wagonsHeader}>
                             <div className={styles.left}>
-                                <span className={styles.wagonsTitle}>Вагоны</span>
+                                <span className={styles.wagonsTitle}>Вагон</span>
                                 <div className={styles.wagonButtons}>
                                     {filtered.map((car) => (
                                         <button

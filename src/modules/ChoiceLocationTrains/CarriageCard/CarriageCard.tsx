@@ -10,6 +10,12 @@ import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 import CarSeatsMap from "../CarSeatsMap/CarSeatsMap";
 
 const CarriageCard = ({ carriage }: any) => {
+
+    const [extras, setExtras] = React.useState({
+        wifi: false,
+        linens: false,
+    });
+
     const coach = carriage.coach;
     const seats = carriage.seats;
 
@@ -22,6 +28,24 @@ const CarriageCard = ({ carriage }: any) => {
 
     const upperPrice = isCoupeOrPlatz ? coach.top_price : null;
     const lowerPrice = isCoupeOrPlatz ? coach.bottom_price : coach.top_price;
+
+    const included = {
+        // входит в стоимость
+        ac: coach.have_air_conditioning,
+        wifi: coach.have_wifi,
+        linens: coach.is_linens_included,
+    };
+
+    const purchasable = {
+        // можно докупить
+        wifi: !coach.have_wifi && coach.wifi_price > 0,
+        linens: !coach.is_linens_included && coach.linens_price > 0,
+    };
+
+    const toggleExtra = (key: "wifi" | "linens") => {
+        if (!purchasable[key]) return; // если нельзя купить — не кликаем
+        setExtras(prev => ({ ...prev, [key]: !prev[key] }));
+    };
 
     return (
         <div className={styles.card}>
@@ -92,25 +116,56 @@ const CarriageCard = ({ carriage }: any) => {
                         </div>
 
                     </div>
+                    <div className={styles.contsinerServices}>
+                        {/* === ОБСЛУЖИВАНИЕ === */}
+                        {/* === WiFi === */}
+                        <button
+                            type="button"
+                            className={
+                                included.wifi
+                                    ? styles.iconIncluded              // входит в стоимость
+                                    : extras.wifi
+                                        ? styles.iconActive                // пользователь купил
+                                        : purchasable.wifi
+                                            ? styles.iconAvailable             // можно купить
+                                            : styles.iconDisabled              // нет услуги
+                            }
+                            onClick={() => toggleExtra("wifi")}
+                            disabled={included.wifi || !purchasable.wifi}   // отключаем если включено или недоступно
+                        >
+                            <Wifi />
+                        </button>
 
-                    {/* === ОБСЛУЖИВАНИЕ === */}
-                    <div className={styles.col}>
-                        <div className={styles.titleGray}>Обслуживание</div>
+                        {/* === Бельё === */}
+                        <button
+                            type="button"
+                            className={
+                                included.linens
+                                    ? styles.iconIncluded
+                                    : extras.linens
+                                        ? styles.iconActive
+                                        : purchasable.linens
+                                            ? styles.iconAvailable
+                                            : styles.iconDisabled
+                            }
+                            onClick={() => toggleExtra("linens")}
+                            disabled={included.linens || !purchasable.linens}
+                        >
+                            <Linens />
+                        </button>
 
-                        <div className={styles.serviceIcons}>
-                            {coach.have_air_conditioning && (
-                                <div className={styles.iconWrap}><AC /></div>
-                            )}
-                            {coach.have_wifi && (
-                                <div className={styles.iconWrap}><Wifi /></div>
-                            )}
-                            {!coach.is_linens_included && coach.linens_price > 0 && (
-                                <div className={styles.iconWrap}><Linens /></div>
-                            )}
-                            {coach.have_express && (
-                                <div className={styles.iconWrap}><Food /></div>
-                            )}
-                        </div>
+                        {/* === Кондиционер === */}
+                        <button
+                            type="button"
+                            className={
+                                coach.have_air_conditioning
+                                    ? styles.iconIncluded
+                                    : styles.iconDisabled
+                            }
+                            disabled
+                        >
+                            <AC />
+                        </button>
                     </div>
                 </div>
             </div>

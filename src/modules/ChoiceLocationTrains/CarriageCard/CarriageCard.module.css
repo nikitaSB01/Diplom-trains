@@ -55,6 +55,13 @@
     gap: 10px;
 }
 
+.contsinerServices {
+    display: flex;
+    flex-direction: row;
+    gap: 13px;
+
+}
+
 /* Колонки */
 .col {
     width: 200px;
@@ -187,4 +194,74 @@
 /* Карта мест */
 .seatMap {
     margin-top: 20px;
+}
+
+/* ===============  ДОП УСЛУГИ — ЕДИНЫЕ СТИЛИ КНОПОК  ================= */
+/* === КНОПКИ ДОП УСЛУГ — общее === */
+.contsinerServices button {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+    /* базовое */
+    padding: 0;
+}
+
+/* svg внутри */
+.contsinerServices button svg {
+    width: 22px;
+    height: 22px;
+    fill: rgba(41, 41, 41, 1);
+}
+
+/* === ДОСТУПНО ДЛЯ ПОКУПКИ === */
+.contsinerServices button.iconAvailable {
+    background: #fff;
+    border: 1px solid rgba(41, 41, 41, 1);
+}
+
+.contsinerServices button.iconAvailable svg {
+    fill: rgba(41, 41, 41, 1);
+}
+
+/* === АКТИВНО (пользователь выбрал) === */
+.contsinerServices button.iconActive {
+    background: rgba(253, 185, 53, 1);
+    border: none;
+}
+
+.contsinerServices button.iconActive svg {
+    fill: rgba(244, 242, 246, 1);
+}
+
+/* === ВХОДИТ В СТОИМОСТЬ (некликабельно) === */
+.contsinerServices button.iconIncluded {
+    background: rgba(252, 220, 157, 1);
+    border: none;
+    cursor: default;
+}
+
+.contsinerServices button.iconIncluded svg {
+    fill: rgba(146, 143, 148, 1);
+}
+
+/* === НЕДОСТУПНО — ПОЛНОСТЬЮ СКРЫТО === */
+.contsinerServices button.iconDisabled {
+    display: none !important;
+}
+
+/* === ХОВЕРЫ ДЛЯ доступных или активных === */
+.contsinerServices button.iconAvailable:hover,
+.contsinerServices button.iconActive:hover {
+    background: rgba(255, 168, 0, 1);
+    border: 1px solid rgba(41, 41, 41, 1);
+}
+
+.contsinerServices button.iconAvailable:hover svg,
+.contsinerServices button.iconActive:hover svg {
+    fill: rgba(41, 41, 41, 1);
 }
