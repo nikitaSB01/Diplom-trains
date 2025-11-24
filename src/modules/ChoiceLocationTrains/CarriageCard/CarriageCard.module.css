@@ -1,7 +1,7 @@
 .card {
     display: flex;
     flex-direction: column;
-    background: #f4f4f4;
+    background: none;
     overflow: hidden;
 }
 
@@ -195,6 +195,7 @@
 /* Карта мест */
 .seatMap {
     margin-top: 20px;
+    margin-bottom: 70px;
 }
 
 /* ===============  ДОП УСЛУГИ — ЕДИНЫЕ СТИЛИ КНОПОК  ================= */
