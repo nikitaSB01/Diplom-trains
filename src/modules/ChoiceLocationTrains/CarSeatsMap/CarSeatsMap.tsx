@@ -4,23 +4,61 @@ import styles from "./CarSeatsMap.module.css";
 import SeatMapPlatzkart from "./wagons/SeatMapPlatzkart/SeatMapPlatzkart";
 import SeatMapCoupe from "./wagons/SeatMapCoupe/SeatMapCoupe";
 import SeatMapLux from "./wagons/SeatMapLux/SeatMapLux";
-import SeatMapSitting from "./wagons/SeatMapSitting";
+import SeatMapSitting from "./wagons/SeatMapSitting/SeatMapSitting";
+
+interface SeatFromAPI {
+    index: number;
+    available: boolean;
+    reserved?: boolean;
+}
+
+type WagonType = "first" | "second" | "third" | "fourth";
 
 interface Props {
-    seats: { index: number; available: boolean }[];
-    type: "first" | "second" | "third" | "fourth";
+    seats: SeatFromAPI[];
+    type: WagonType;
+}
+
+const WAGON_CAPACITY: Record<WagonType, number> = {
+    first: 18,
+    second: 32,
+    third: 48,
+    fourth: 62,
+};
+
+function normalizeSeats(seats: SeatFromAPI[], type: WagonType): SeatFromAPI[] {
+    const total = WAGON_CAPACITY[type];
+    const seatMap = new Map<number, SeatFromAPI>();
+
+    // Пришедшие с API места
+    seats.forEach((s) => seatMap.set(s.index, s));
+
+    // Недостающие — инвалидные
+    for (let i = 1; i <= total; i++) {
+        if (!seatMap.has(i)) {
+            seatMap.set(i, {
+                index: i,
+                available: false,
+                reserved: true,
+            });
+        }
+    }
+
+    return Array.from(seatMap.values()).sort((a, b) => a.index - b.index);
 }
 
 const CarSeatsMap: React.FC<Props> = ({ seats, type }) => {
+    const fullSeats = normalizeSeats(seats, type);
+
     switch (type) {
         case "third":
-            return <SeatMapPlatzkart seats={seats} />; // Плацкарт
+            return <SeatMapPlatzkart seats={fullSeats} />;
         case "second":
-            return <SeatMapCoupe seats={seats} />;      // Купе
+            return <SeatMapCoupe seats={fullSeats} />;
         case "first":
-            return <SeatMapLux seats={seats} />;        // Люкс
+            return <SeatMapLux seats={fullSeats} />;
         case "fourth":
-            return <SeatMapSitting seats={seats} />;    // Сидячий
+            return <SeatMapSitting seats={fullSeats} />;
         default:
             return <div className={styles.empty}>Нет схемы для этого типа</div>;
     }
