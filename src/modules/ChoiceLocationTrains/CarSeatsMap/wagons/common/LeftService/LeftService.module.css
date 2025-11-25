@@ -127,3 +127,17 @@
     width: 28px;
     height: 35px;
 }
+
+.wagonNumber {
+    background-color: black;
+    padding: 0 4px;
+    position: absolute;
+    top: -20px;
+    /* над правым блоком */
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}

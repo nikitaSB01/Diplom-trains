@@ -1,0 +1,39 @@
+/* КУПЕ РЯДЫ */
+
+.coupeBlock {
+    display: flex;
+    flex-direction: column;
+    border-top: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+}
+
+.coupeBlock .row {
+    height: 40px;
+}
+
+.coupeBlock .row .section {
+    height: 40px;
+}
+
+
+.row {
+    display: flex;
+}
+
+.section {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    /* пробел между местами внутри секции */
+    flex: 1;
+    /* секции равной ширины */
+}
+
+
+/* ВЕРТИКАЛЬНЫЕ ПЕРЕГОРОДКИ */
+.vertDivider {
+    width: 4px;
+    background: black;
+    margin: 0 3px;
+}

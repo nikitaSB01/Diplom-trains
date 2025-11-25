@@ -4,6 +4,7 @@ import Seat from "../Seat/Seat";
 
 import { LeftService } from "../common/LeftService/LeftService";
 import { RightService } from "../common/RightService/RightService";
+import CompartmentBlock from "../common/CompartmentBlock/CompartmentBlock";
 
 import { ReactComponent as ToiletIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/wc.svg";
 import { ReactComponent as WaterIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/water.svg";
@@ -44,68 +45,18 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, s
         <div className={styles.container}>
             <LeftService wagonNumber={wagonNumber} />
             <div className={styles.mainArea}>
-
                 {/* ВЕРХНИЙ БЛОК КУПЕ */}
-                <div className={styles.coupeBlock}>
-
-                    <div className={styles.row}>
-                        {groupUpper.map((pair, i) => (
-                            <React.Fragment key={i}>
-                                <div className={styles.section}>
-                                    {pair.map(n => {
-                                        const seat = findSeat(n);
-                                        return seat ? (
-                                            <Seat
-                                                key={n}
-                                                number={n}
-                                                available={seat.available}
-                                                reserved={seat.reserved}
-                                                type="upper"
-                                                selected={selectedSeats.includes(n)}
-                                                onClick={() => onSeatSelect(n, upperPrice)}
-                                            />
-                                        ) : null;
-                                    })}
-                                </div>
-
-                                {i !== groupUpper.length - 1 && (
-                                    <div className={styles.vertDivider}></div>
-                                )}
-                            </React.Fragment>
-                        ))}
-                    </div>
-
-                    <div className={styles.row}>
-                        {groupLower.map((pair, i) => (
-                            <React.Fragment key={i}>
-                                <div className={styles.section}>
-                                    {pair.map(n => {
-                                        const seat = findSeat(n);
-                                        return seat ? (
-                                            <Seat
-                                                key={n}
-                                                number={n}
-                                                available={seat.available}
-                                                reserved={seat.reserved}
-                                                type="lower"
-                                                selected={selectedSeats.includes(n)}
-                                                onClick={() => onSeatSelect(n, lowerPrice)} />
-                                        ) : null;
-                                    })}
-                                </div>
-
-                                {i !== groupLower.length - 1 && (
-                                    <div className={styles.vertDivider}></div>
-                                )}
-                            </React.Fragment>
-                        ))}
-                    </div>
-
-                </div>
-
+                <CompartmentBlock
+                    groupUpper={groupUpper}
+                    groupLower={groupLower}
+                    findSeat={findSeat}
+                    selectedSeats={selectedSeats}
+                    onSeatSelect={onSeatSelect}
+                    upperPrice={upperPrice}
+                    lowerPrice={lowerPrice}
+                />
                 {/* ГОРИЗОНТАЛЬНЫЙ РАЗДЕЛИТЕЛЬ */}
                 <div className={styles.horDivider}></div>
-
                 {/* БОКОВЫЕ МЕСТА */}
                 <div className={styles.sideBlock}>
                     {groupSide.map((pair, i) => (
@@ -134,12 +85,8 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, s
                         </React.Fragment>
                     ))}
                 </div>
-
             </div>
             <RightService wagonNumber={wagonNumber} />
-
-
-
         </div>
     );
 };
