@@ -44,6 +44,10 @@ interface Props {
 }
 
 const TypeSelector: React.FC<Props> = ({ onSelectType, routeId }) => {
+
+    /* для хорошей отрисовки данных по вагону */
+    const [loading, setLoading] = useState(false);
+
     const [activeType, setActiveType] = useState<string | null>(null);
 
     const [carriages, setCarriages] = useState<Carriage[]>([]);
@@ -62,20 +66,22 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId }) => {
     useEffect(() => {
         if (!activeType) return;
 
+        setLoading(true);
+
         fetch(`https://students.netoservices.ru/fe-diplom/routes/${routeId}/seats`)
             .then((r) => r.json())
             .then((data: Carriage[]) => {
                 setCarriages(data);
-                setSelectedCars([]); // сброс выбранных вагонов
-            });
+            })
+            .finally(() => setLoading(false));
     }, [activeType, routeId]);
 
     /* === При смене типа сразу открываем первый вагон === */
     useEffect(() => {
-        if (filtered.length > 0) {
-            setSelectedCars([filtered[0].coach._id]);
+        if (filtered.length > 0 && selectedCars.length === 0) {
+            setSelectedCars([filtered[0].coach._id]);   // открыть первый вагон
         }
-    }, [filtered.length]);
+    }, [filtered, selectedCars.length]);
 
     /* === Переключение вагона === */
     const toggleCar = (id: string) => {
@@ -97,7 +103,11 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId }) => {
                         className={`${styles.typeItem} ${activeType === id ? styles.active : ""
                             }`}
                         onClick={() => {
+                            if (activeType === id) return;
+
+                            setLoading(true);
                             setActiveType(id);
+                            setSelectedCars([]);
                             onSelectType(id);
                         }}
                         type="button"
@@ -108,7 +118,7 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId }) => {
                 ))}
             </div>
 
-            {activeType && (
+            {activeType && !loading && filtered.length > 0 && (
                 <div className={styles.appearedBlock}>
                     <div className={styles.container}>
                         {/* === Кнопки вагонов === */}
@@ -121,8 +131,8 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId }) => {
                                         <button
                                             key={car.coach._id}
                                             className={`${styles.wagonBtn} ${selectedCars.includes(car.coach._id)
-                                                    ? styles.activeWagon
-                                                    : ""
+                                                ? styles.activeWagon
+                                                : ""
                                                 }`}
                                             onClick={() => toggleCar(car.coach._id)}
                                         >
