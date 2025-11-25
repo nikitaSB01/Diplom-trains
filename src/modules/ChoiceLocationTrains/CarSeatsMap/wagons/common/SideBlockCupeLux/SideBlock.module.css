@@ -8,7 +8,7 @@
 }
 
 .sideBlock {
-    height: 36px;
+    min-height: 36px;
     display: flex;
     align-items: end;
     border-bottom: 4px solid black;

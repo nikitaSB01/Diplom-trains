@@ -5,8 +5,6 @@ import { LeftService } from "../common/LeftService/LeftService";
 import { RightService } from "../common/RightService/RightService";
 import { SideBlock } from "../common/SideBlockCupeLux/SideBlock";
 import { SideBlockStick } from "../common/SideBlockCupeLux/SideBlockStick";
-
-
 import CompartmentBlock from "../common/CompartmentBlock/CompartmentBlock";
 
 interface SeatItem {

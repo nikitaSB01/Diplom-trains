@@ -1,0 +1,23 @@
+.row {
+    display: flex;
+    height: 100%;
+    /* вся высота центрального блока */
+    border-top: 4px solid black;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+}
+
+.compartment {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    /* нижние места по центру вертикали */
+}
+
+.vertDivider {
+    width: 4px;
+    background: black;
+    margin: 0 3px;
+}
