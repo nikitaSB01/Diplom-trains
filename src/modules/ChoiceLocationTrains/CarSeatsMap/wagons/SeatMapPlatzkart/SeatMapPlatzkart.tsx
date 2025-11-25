@@ -148,9 +148,22 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats }) => {
             </div>
 
             <div className={styles.rightService}>
-                <ToiletIcon className={styles.rightToilet} />
-                <TrashIcon className={styles.rightTrash} />
-                <NoSmokingIcon className={styles.rightNoSmoke} />
+                <div className={styles.colOne}>
+                    <div className={styles.colOneTop}>
+                        <ToiletIcon className={styles.rightToilet} />
+                    </div>
+                    <div className={styles.colOneCenter}></div>
+                    <div className={styles.colOneBottom}>
+                        <TrashIcon className={styles.rightTrash} />
+                    </div>
+                </div>
+                <div className={styles.colTwo}>
+                    <div className={styles.colTwoTop}></div>
+                    <div className={styles.colTwoCenter}>
+                        <NoSmokingIcon className={styles.rightNoSmoke} />
+                    </div>
+                    <div className={styles.colTwoBottom}></div>
+                </div>
             </div>
 
         </div>
