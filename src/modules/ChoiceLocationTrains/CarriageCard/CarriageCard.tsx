@@ -178,7 +178,8 @@ const CarriageCard = ({ carriage }: any) => {
 
             {/* КАРТА МЕСТ */}
             <div className={styles.seatMap}>
-                <CarSeatsMap seats={seats} type={coach.class_type} />
+                <CarSeatsMap seats={seats} type={coach.class_type} wagonNumber={wagonNumber}
+                />
             </div>
         </div>
     );

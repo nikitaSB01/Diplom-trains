@@ -16,9 +16,11 @@ interface SeatItem {
 
 interface Props {
     seats: SeatItem[];
+    wagonNumber: string;
+
 }
 
-const SeatMapPlatzkart: React.FC<Props> = ({ seats }) => {
+const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber }) => {
 
     const groupUpper = [
         [2, 4], [6, 8], [10, 12], [14, 16], [18, 20], [22, 24], [26, 28], [30, 32]
@@ -44,6 +46,7 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats }) => {
                     </div>
                 </div>
                 <div className={styles.rightCol}>
+                    <div className={styles.wagonNumber}>{wagonNumber}</div>
                     <div className={styles.roomContainer}>
                         <div className={styles.roomToilet}>
                             <ToiletIcon className={styles.leftToilet} />

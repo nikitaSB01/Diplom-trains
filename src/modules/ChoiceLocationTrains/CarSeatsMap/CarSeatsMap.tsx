@@ -17,6 +17,8 @@ type WagonType = "first" | "second" | "third" | "fourth";
 interface Props {
     seats: SeatFromAPI[];
     type: WagonType;
+    wagonNumber: string;
+
 }
 
 const WAGON_CAPACITY: Record<WagonType, number> = {
@@ -47,18 +49,18 @@ function normalizeSeats(seats: SeatFromAPI[], type: WagonType): SeatFromAPI[] {
     return Array.from(seatMap.values()).sort((a, b) => a.index - b.index);
 }
 
-const CarSeatsMap: React.FC<Props> = ({ seats, type }) => {
+const CarSeatsMap: React.FC<Props> = ({ seats, type, wagonNumber }) => {
     const fullSeats = normalizeSeats(seats, type);
 
     switch (type) {
         case "third":
-            return <SeatMapPlatzkart seats={fullSeats} />;
+            return <SeatMapPlatzkart seats={fullSeats} wagonNumber={wagonNumber} />;
         case "second":
-            return <SeatMapCoupe seats={fullSeats} />;
+            return <SeatMapCoupe seats={fullSeats} wagonNumber={wagonNumber} />;
         case "first":
-            return <SeatMapLux seats={fullSeats} />;
+            return <SeatMapLux seats={fullSeats} wagonNumber={wagonNumber} />;
         case "fourth":
-            return <SeatMapSitting seats={fullSeats} />;
+            return <SeatMapSitting seats={fullSeats} wagonNumber={wagonNumber} />;
         default:
             return <div className={styles.empty}>Нет схемы для этого типа</div>;
     }

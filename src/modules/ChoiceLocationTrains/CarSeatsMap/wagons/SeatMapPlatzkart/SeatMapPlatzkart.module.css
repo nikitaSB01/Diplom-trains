@@ -4,7 +4,6 @@
     display: flex;
     background: #fff;
     border-radius: 4px;
-    overflow: hidden;
 }
 
 /* ========================== */
@@ -31,6 +30,36 @@
     flex: 1;
     display: flex;
     flex-direction: row;
+    position: relative;
+}
+
+/* квадрат сверху */
+.leftCol::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    /* выступает наружу */
+    left: 55%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 10px;
+    background: rgb(146, 146, 146);
+    border-radius: 2px;
+    /* если хочешь – можно убрать */
+}
+
+/* квадрат снизу */
+.leftCol::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    /* выступает наружу */
+    left: 55%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 10px;
+    background: rgb(146, 146, 146);
+    border-radius: 2px;
 }
 
 .exit {
@@ -177,7 +206,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    overflow: hidden;
 }
 
 /* КУПЕ РЯДЫ */
@@ -241,4 +270,18 @@
     width: 100%;
     height: 28px;
     background: #f5f5f5;
+}
+
+.wagonNumber {
+    background-color: black;
+    padding: 0 4px;
+    position: absolute;
+    top: -20px;
+    /* над правым блоком */
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
 }

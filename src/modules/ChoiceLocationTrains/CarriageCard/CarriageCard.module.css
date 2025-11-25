@@ -3,6 +3,7 @@
     flex-direction: column;
     background: none;
     overflow: hidden;
+    gap: 60px;
 }
 
 /* ЛЕВАЯ ЖЁЛТАЯ КОЛОНКА */
