@@ -17,10 +17,13 @@ interface SeatItem {
 interface Props {
     seats: SeatItem[];
     wagonNumber: string;
-
+    onSeatSelect: (seatIndex: number, price: number) => void;
+    selectedSeats: number[];
+    upperPrice: number;
+    lowerPrice: number;
 }
 
-const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber }) => {
+const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, selectedSeats, upperPrice, lowerPrice }) => {
 
     const groupUpper = [
         [2, 4], [6, 8], [10, 12], [14, 16], [18, 20], [22, 24], [26, 28], [30, 32]
@@ -80,6 +83,8 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber }) => {
                                                 available={seat.available}
                                                 reserved={seat.reserved}
                                                 type="upper"
+                                                selected={selectedSeats.includes(n)}
+                                                onClick={() => onSeatSelect(n, upperPrice)}
                                             />
                                         ) : null;
                                     })}
@@ -105,7 +110,8 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber }) => {
                                                 available={seat.available}
                                                 reserved={seat.reserved}
                                                 type="lower"
-                                            />
+                                                selected={selectedSeats.includes(n)}
+                                                onClick={() => onSeatSelect(n, lowerPrice)} />
                                         ) : null;
                                     })}
                                 </div>
@@ -136,7 +142,10 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber }) => {
                                             available={seat.available}
                                             reserved={seat.reserved}
                                             type={n % 2 === 0 ? "side-upper" : "side-lower"}
-                                        />
+                                            selected={selectedSeats.includes(n)}
+                                            onClick={() =>
+                                                onSeatSelect(n, n % 2 === 0 ? upperPrice : lowerPrice)
+                                            } />
                                     ) : null;
                                 })}
                             </div>

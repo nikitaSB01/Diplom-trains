@@ -18,7 +18,9 @@ interface Props {
     seats: SeatFromAPI[];
     type: WagonType;
     wagonNumber: string;
-
+    selectedSeats: number[];
+    onSeatSelect: (seatIndex: number, price: number) => void; upperPrice: number;
+    lowerPrice: number;
 }
 
 const WAGON_CAPACITY: Record<WagonType, number> = {
@@ -49,12 +51,17 @@ function normalizeSeats(seats: SeatFromAPI[], type: WagonType): SeatFromAPI[] {
     return Array.from(seatMap.values()).sort((a, b) => a.index - b.index);
 }
 
-const CarSeatsMap: React.FC<Props> = ({ seats, type, wagonNumber }) => {
+const CarSeatsMap: React.FC<Props> = ({ seats, type, wagonNumber, selectedSeats, onSeatSelect, upperPrice, lowerPrice }) => {
     const fullSeats = normalizeSeats(seats, type);
 
     switch (type) {
         case "third":
-            return <SeatMapPlatzkart seats={fullSeats} wagonNumber={wagonNumber} />;
+            return <SeatMapPlatzkart seats={fullSeats}
+                wagonNumber={wagonNumber}
+                selectedSeats={selectedSeats}
+                onSeatSelect={onSeatSelect}
+                upperPrice={upperPrice}
+                lowerPrice={lowerPrice} />;
         case "second":
             return <SeatMapCoupe seats={fullSeats} wagonNumber={wagonNumber} />;
         case "first":

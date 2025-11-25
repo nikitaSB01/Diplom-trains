@@ -212,7 +212,8 @@
 
 /* Блок количества билетов */
 .ticketsBlock {
-    min-height: 280px;
+    min-height: 130px; /*  ?  возможно лучше 240 */
+    padding-bottom: 50px;
     border-bottom: 1px solid rgba(196, 196, 196, 1);
     border-image: repeating-linear-gradient(to right,
             rgba(196, 196, 196, 1) 0,

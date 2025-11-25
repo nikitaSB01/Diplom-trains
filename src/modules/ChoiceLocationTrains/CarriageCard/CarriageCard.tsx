@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./CarriageCard.module.css";
 
 import { ReactComponent as AC } from "../../../assets/icons/Train/conditioning.svg";
@@ -10,6 +10,25 @@ import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 import CarSeatsMap from "../CarSeatsMap/CarSeatsMap";
 
 const CarriageCard = ({ carriage }: any) => {
+
+    interface SelectedSeat {
+        index: number;
+        price: number;
+    }
+    const [selectedSeats, setSelectedSeats] = useState<SelectedSeat[]>([]);
+    const toggleSeat = (seatIndex: number, price: number) => {
+        setSelectedSeats(prev => {
+            const exists = prev.find(s => s.index === seatIndex);
+
+            if (exists) {
+                return prev.filter(s => s.index !== seatIndex);
+            }
+
+            return [...prev, { index: seatIndex, price }];
+        });
+    };
+
+
 
     const [extras, setExtras] = React.useState({
         wifi: false,
@@ -46,6 +65,17 @@ const CarriageCard = ({ carriage }: any) => {
         if (!purchasable[key]) return; // если нельзя купить — не кликаем
         setExtras(prev => ({ ...prev, [key]: !prev[key] }));
     };
+
+    // === СУММА БИЛЕТОВ ===
+    const ticketsTotal = selectedSeats.reduce((sum, s) => sum + s.price, 0);
+
+    // === СУММА УСЛУГ ===
+    const servicesTotal =
+        (extras.wifi ? coach.wifi_price : 0) +
+        (extras.linens ? coach.linens_price : 0);
+
+    // === ОБЩАЯ СУММА ===
+    const total = ticketsTotal + servicesTotal;
 
     return (
         <div className={styles.card}>
@@ -178,9 +208,35 @@ const CarriageCard = ({ carriage }: any) => {
 
             {/* КАРТА МЕСТ */}
             <div className={styles.seatMap}>
-                <CarSeatsMap seats={seats} type={coach.class_type} wagonNumber={wagonNumber}
+                <CarSeatsMap
+                    seats={seats}
+                    type={coach.class_type}
+                    wagonNumber={wagonNumber}
+                    selectedSeats={selectedSeats.map(s => s.index)}
+                    onSeatSelect={toggleSeat}
+                    upperPrice={upperPrice!}
+                    lowerPrice={lowerPrice!}
                 />
             </div>
+
+            {total > 0 && (
+                <div className={styles.totalBox}>
+                    <div className={styles.rowLine}>
+                        <span>Билеты:</span>
+                        <span>{ticketsTotal.toLocaleString("ru-RU")} ₽</span>
+                    </div>
+
+                    <div className={styles.rowLine}>
+                        <span>Доп. услуги:</span>
+                        <span>{servicesTotal.toLocaleString("ru-RU")} ₽</span>
+                    </div>
+
+                    <div className={styles.totalAmount}>
+                        <div>{total.toLocaleString("ru-RU")}</div>
+                        <Ruble className={styles.rubleIcon} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
