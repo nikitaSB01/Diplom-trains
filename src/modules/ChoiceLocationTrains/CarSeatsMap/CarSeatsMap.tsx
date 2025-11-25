@@ -63,7 +63,14 @@ const CarSeatsMap: React.FC<Props> = ({ seats, type, wagonNumber, selectedSeats,
                 upperPrice={upperPrice}
                 lowerPrice={lowerPrice} />;
         case "second":
-            return <SeatMapCoupe seats={fullSeats} wagonNumber={wagonNumber} />;
+            return <SeatMapCoupe
+                seats={fullSeats}
+                wagonNumber={wagonNumber}
+                selectedSeats={selectedSeats}
+                onSeatSelect={onSeatSelect}
+                upperPrice={upperPrice}
+                lowerPrice={lowerPrice}
+            />
         case "first":
             return <SeatMapLux seats={fullSeats} wagonNumber={wagonNumber} />;
         case "fourth":

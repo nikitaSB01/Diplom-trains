@@ -6,11 +6,6 @@ import { LeftService } from "../common/LeftService/LeftService";
 import { RightService } from "../common/RightService/RightService";
 import CompartmentBlock from "../common/CompartmentBlock/CompartmentBlock";
 
-import { ReactComponent as ToiletIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/wc.svg";
-import { ReactComponent as WaterIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/water.svg";
-import { ReactComponent as AttendantIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/conductor.svg";
-import { ReactComponent as TrashIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/garbage.svg";
-import { ReactComponent as NoSmokingIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/noSmoking.svg";
 
 interface SeatItem {
     index: number;

@@ -78,6 +78,7 @@ const CompartmentBlock: React.FC<Props> = ({
                     </React.Fragment>
                 ))}
             </div>
+        
         </div>
     );
 };
