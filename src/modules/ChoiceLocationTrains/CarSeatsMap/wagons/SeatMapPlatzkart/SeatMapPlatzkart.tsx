@@ -36,10 +36,27 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats }) => {
         <div className={styles.container}>
 
             <div className={styles.leftService}>
-                <ToiletIcon className={styles.leftToilet} />
-                <AttendantIcon className={styles.leftAttendant} />
-                <WaterIcon className={styles.leftWater} />
-                <div className={styles.leftDiagonal}></div>
+                <div className={styles.leftCol}>
+                    <div className={styles.exit}>
+                        <div className={styles.exitTop}></div>
+                        <div className={styles.exitCenter}></div>
+                        <div className={styles.exitBottom}></div>
+                    </div>
+                </div>
+                <div className={styles.rightCol}>
+                    <div className={styles.roomContainer}>
+                        <div className={styles.roomToilet}>
+                            <ToiletIcon className={styles.leftToilet} />
+                        </div>
+                        <div className={styles.roomAttendant}>
+                            <AttendantIcon className={styles.leftAttendant} />
+                        </div>
+                    </div>
+                    <div className={styles.roomCenter}></div>
+                    <div className={styles.roomWater}>
+                        <WaterIcon className={styles.leftWater} />
+                    </div>
+                </div>
             </div>
 
             <div className={styles.mainArea}>
@@ -134,7 +151,6 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats }) => {
                 <ToiletIcon className={styles.rightToilet} />
                 <TrashIcon className={styles.rightTrash} />
                 <NoSmokingIcon className={styles.rightNoSmoke} />
-                <div className={styles.rightDiagonal}></div>
             </div>
 
         </div>

@@ -20,6 +20,84 @@
 .leftService {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
+    border-top: 1px solid rgb(213, 212, 212);
+    border-bottom: 1px solid rgb(213, 212, 212);
+    border-left: 1px solid rgb(213, 212, 212);
+    display: flex;
+    flex-direction: row;
+}
+
+.leftCol {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.exit {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.exitTop, .exitCenter, .exitBottom {
+    display: flex;
+    flex: 1;
+}
+
+/* .exitTop, */
+.exitBottom {
+    border-right: 1px solid rgb(213, 212, 212);
+}
+
+.exitCenter {
+    /*   border-left: 4px solid rgb(213, 212, 212);
+    border-right: 4px solid rgb(213, 212, 212); */
+
+}
+
+.roomAttendant, .roomToilet {
+    flex: 1;
+}
+
+.roomAttendant, .roomToilet, .roomWater {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(255, 255, 255);
+}
+
+.roomAttendant {
+    align-items: start;
+    padding: 2px;
+}
+
+.roomToilet {
+    border-right: 1px solid rgb(213, 212, 212);
+    border-left: 1px solid rgb(213, 212, 212);
+
+}
+
+.roomWater {
+    height: 30px;
+    border-top: 1px solid rgb(213, 212, 212);
+}
+
+.rightCol {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.roomContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(213, 212, 212);
+
+}
+
+.roomContainer, .roomCenter {
+    flex: 1;
 }
 
 .rightService {
@@ -28,72 +106,16 @@
 }
 
 /* Иконки */
-.leftToilet, .rightToilet {
-    position: absolute;
-    top: 12px;
+.leftToilet, .rightToilet, .leftWater, .rightTrash, .rightNoSmoke {
     width: 22px;
     height: 22px;
 }
 
-.leftToilet {
-    left: 18px;
-}
-
-.rightToilet {
-    right: 20px;
-}
-
 .leftAttendant {
-    position: absolute;
-    top: 60px;
-    left: 28px;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 35px;
 }
 
-.leftWater {
-    position: absolute;
-    bottom: 18px;
-    left: 20px;
-    width: 26px;
-    height: 26px;
-}
-
-.rightTrash {
-    position: absolute;
-    bottom: 14px;
-    left: 20px;
-    width: 26px;
-    height: 26px;
-}
-
-.rightNoSmoke {
-    position: absolute;
-    top: 70px;
-    right: 12px;
-    width: 26px;
-    height: 26px;
-}
-
-/* Диагонали */
-.leftDiagonal, .rightDiagonal {
-    position: absolute;
-    width: 140px;
-    height: 2px;
-    border-top: 2px solid #cfcfcf;
-}
-
-.leftDiagonal {
-    top: 35px;
-    left: -2px;
-    transform: rotate(-32deg);
-}
-
-.rightDiagonal {
-    top: 50px;
-    right: -30px;
-    transform: rotate(32deg);
-}
 
 /* ========================== */
 /* ОСНОВНАЯ ОБЛАСТЬ           */
