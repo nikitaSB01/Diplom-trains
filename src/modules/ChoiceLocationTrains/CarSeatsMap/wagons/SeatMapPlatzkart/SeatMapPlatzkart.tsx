@@ -2,6 +2,9 @@ import React from "react";
 import styles from "./SeatMapPlatzkart.module.css";
 import Seat from "../Seat/Seat";
 
+import { LeftService } from "../common/LeftService/LeftService";
+import { RightService } from "../common/RightService/RightService";
+
 import { ReactComponent as ToiletIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/wc.svg";
 import { ReactComponent as WaterIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/water.svg";
 import { ReactComponent as AttendantIcon } from "../../../../../assets/icons/ChoiceLocationTrains/CarSeatsMap/conductor.svg";
@@ -39,32 +42,7 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, s
 
     return (
         <div className={styles.container}>
-
-            <div className={styles.leftService}>
-                <div className={styles.leftCol}>
-                    <div className={styles.exit}>
-                        <div className={styles.exitTop}></div>
-                        <div className={styles.exitCenter}></div>
-                        <div className={styles.exitBottom}></div>
-                    </div>
-                </div>
-                <div className={styles.rightCol}>
-                    <div className={styles.wagonNumber}>{wagonNumber}</div>
-                    <div className={styles.roomContainer}>
-                        <div className={styles.roomToilet}>
-                            <ToiletIcon className={styles.leftToilet} />
-                        </div>
-                        <div className={styles.roomAttendant}>
-                            <AttendantIcon className={styles.leftAttendant} />
-                        </div>
-                    </div>
-                    <div className={styles.roomCenter}></div>
-                    <div className={styles.roomWater}>
-                        <WaterIcon className={styles.leftWater} />
-                    </div>
-                </div>
-            </div>
-
+            <LeftService wagonNumber={wagonNumber} />
             <div className={styles.mainArea}>
 
                 {/* ВЕРХНИЙ БЛОК КУПЕ */}
@@ -158,25 +136,9 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, s
                 </div>
 
             </div>
+            <RightService wagonNumber={wagonNumber} />
 
-            <div className={styles.rightService}>
-                <div className={styles.colOne}>
-                    <div className={styles.colOneTop}>
-                        <ToiletIcon className={styles.rightToilet} />
-                    </div>
-                    <div className={styles.colOneCenter}></div>
-                    <div className={styles.colOneBottom}>
-                        <TrashIcon className={styles.rightTrash} />
-                    </div>
-                </div>
-                <div className={styles.colTwo}>
-                    <div className={styles.colTwoTop}></div>
-                    <div className={styles.colTwoCenter}>
-                        <NoSmokingIcon className={styles.rightNoSmoke} />
-                    </div>
-                    <div className={styles.colTwoBottom}></div>
-                </div>
-            </div>
+
 
         </div>
     );

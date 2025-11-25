@@ -1,0 +1,72 @@
+.leftService, .rightService {
+    width: 95px;
+    background: #f5f5f5;
+    position: relative;
+}
+
+.rightService {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top: 1px solid rgb(213, 212, 212);
+    border-bottom: 1px solid rgb(213, 212, 212);
+    border-right: 1px solid rgb(213, 212, 212);
+    display: flex;
+    flex-direction: row;
+}
+
+.colOne {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.colOneTop, .colOneCenter, .colOneBottom {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.colOneTop {
+    align-items: center;
+    border-right: 1px solid rgb(213, 212, 212);
+    border-bottom: 1px solid rgb(213, 212, 212);
+
+}
+
+.colOneBottom {
+    align-items: end;
+}
+
+
+.colTwo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.colTwoTop, .colTwoCenter, .colTwoBottom {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.colTwoCenter {
+    align-items: center;
+}
+
+.colTwoBottom {
+    border-left: 1px solid rgb(213, 212, 212);
+}
+
+/* Иконки */
+.leftToilet, .rightToilet, .leftWater, .rightTrash, .rightNoSmoke {
+    width: 22px;
+    height: 22px;
+}
+
+.leftAttendant {
+    width: 28px;
+    height: 35px;
+}
