@@ -41,9 +41,11 @@ const TYPES = [
 interface Props {
     onSelectType: (type: string) => void;
     routeId: string;
+    disabledType?: string | null;
 }
 
-const TypeSelector: React.FC<Props> = ({ onSelectType, routeId }) => {
+
+const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType }) => {
 
     /* для хорошей отрисовки данных по вагону */
     const [loading, setLoading] = useState(false);
@@ -97,25 +99,34 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId }) => {
             <h2 className={styles.title}>Тип вагона</h2>
 
             <div className={styles.containerType}>
-                {TYPES.map(({ id, label, Icon }) => (
-                    <button
-                        key={id}
-                        className={`${styles.typeItem} ${activeType === id ? styles.active : ""
-                            }`}
-                        onClick={() => {
-                            if (activeType === id) return;
+                {TYPES.map(({ id, label, Icon }) => {
+                    const isDisabled = disabledType === id; // ← вот этого у тебя НЕ было
 
-                            setLoading(true);
-                            setActiveType(id);
-                            setSelectedCars([]);
-                            onSelectType(id);
-                        }}
-                        type="button"
-                    >
-                        <Icon className={styles.icon} />
-                        <span className={styles.label}>{label}</span>
-                    </button>
-                ))}
+                    return (
+                        <button
+                            key={id}
+                            disabled={isDisabled}
+                            className={`
+                ${styles.typeItem}
+                ${activeType === id ? styles.active : ""}
+                ${isDisabled ? styles.disabledType : ""}
+            `}
+                            onClick={() => {
+                                if (isDisabled) return;       // ← не даём кликнуть
+                                if (activeType === id) return;
+
+                                setLoading(true);
+                                setActiveType(id);
+                                setSelectedCars([]);
+                                onSelectType(id);
+                            }}
+                            type="button"
+                        >
+                            <Icon className={styles.icon} />
+                            <span className={styles.label}>{label}</span>
+                        </button>
+                    );
+                })}
             </div>
 
             {activeType && !loading && filtered.length > 0 && (

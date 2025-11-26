@@ -131,3 +131,9 @@
     color: rgba(41, 41, 41, 1);
     white-space: nowrap;
 }
+
+/* деактивация повторного типа вагона */
+.disabledType {
+    opacity: 0.4;
+    cursor: default;
+}

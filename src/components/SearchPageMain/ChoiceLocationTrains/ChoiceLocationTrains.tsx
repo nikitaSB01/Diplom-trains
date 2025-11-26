@@ -14,9 +14,10 @@ interface Props {
     train: Train;
     onBack: () => void;
     onSelectType: (type: string) => void;
+    selectedType?: string | null;
 }
 
-const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType }) => {
+const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, selectedType }) => {
 
     const dep = train.departure;
 
@@ -118,7 +119,7 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType }) 
 
             {/* БЛОК 4 — ТИПЫ ВАГОНОВ */}
             <div className={styles.typeBlock}>
-                <TypeSelector onSelectType={onSelectType} routeId={dep._id} />            </div>
+                <TypeSelector onSelectType={onSelectType} routeId={dep._id} disabledType={selectedType} /> </div>
         </div >
     );
 };

@@ -12,13 +12,17 @@ import { Train } from "../../types/Train/trainTypes";
 import ChoiceLocationTrains from "../../components/SearchPageMain/ChoiceLocationTrains/ChoiceLocationTrains";
 
 const Main: React.FC = () => {
+
+  /* данные по хранению активного типа вагона */
+  const [firstType, setFirstType] = useState<string | null>(null);
+  const [secondType, setSecondType] = useState<string | null>(null);
+
   const location = useLocation();
   const { from, to, dateStart, dateEnd } = location.state || {};
 
   const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
   const [isChoosingSeats, setIsChoosingSeats] = useState(false);
 
-  const [selectedType, setSelectedType] = useState<string | null>(null);
 
   const [filters, setFilters] = useState<FiltersState>({
     options: {},
@@ -92,29 +96,33 @@ const Main: React.FC = () => {
               {selectedTrain && (
                 <ChoiceLocationTrains
                   train={selectedTrain}
+                  selectedType={secondType}
                   onBack={() => {
                     setIsChoosingSeats(false);
                     setSelectedTrain(null);
-                    setSelectedType(null);
+                    setFirstType(null);
+                    setSecondType(null);
                   }}
                   onSelectType={(type) => {
-                    setSelectedType(type);
+                    setFirstType(type);
                   }}
                 />
               )}
 
               {/* Второй блок — выводим КОГДА выбран тип */}
-              {selectedType && selectedTrain && (
+              {firstType && selectedTrain && (
                 <div className={styles.secondTrainBlock}>
                   <ChoiceLocationTrains
                     train={selectedTrain}
+                    selectedType={firstType}
                     onBack={() => {
                       setIsChoosingSeats(false);
                       setSelectedTrain(null);
-                      setSelectedType(null);
+                      setFirstType(null);
+                      setSecondType(null);
                     }}
                     onSelectType={(type) => {
-                      setSelectedType(type);
+                      setSecondType(type);
                     }}
                   />
                 </div>
