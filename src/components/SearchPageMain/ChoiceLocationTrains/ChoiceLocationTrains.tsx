@@ -15,9 +15,11 @@ interface Props {
     onBack: () => void;
     onSelectType: (type: string) => void;
     selectedType?: string | null;
+    isSecond?: boolean;
+
 }
 
-const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, selectedType }) => {
+const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, selectedType, isSecond }) => {
 
     const dep = train.departure;
 
@@ -49,7 +51,11 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
         <div className={styles.wrapper}>
 
             {/* БЛОК 1 --- ВЕРХНЯЯ ПАНЕЛЬ */}
-            <div className={styles.topBar}>
+            <div
+                className={
+                    `${styles.topBar} ${isSecond ? styles.topBarSecond : ""}`
+                }
+            >
                 <button className={styles.backButton} onClick={onBack}>
                     <Arrow className={styles.arrowSvg} />
                 </button>

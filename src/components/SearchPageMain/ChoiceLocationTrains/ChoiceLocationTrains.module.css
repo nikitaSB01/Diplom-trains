@@ -14,13 +14,31 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 24px 0 24px 20px;
+    padding: 24px 20px 24px 20px;
+}
+
+.topBarSecond {
+    justify-content: end;
+}
+
+.topBarSecond .backButton {
+    transform: none;
 }
 
 .backButton {
     cursor: pointer;
     transform: rotate(180deg);
+    width: 76px;
+    height: 60px;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+
 
 .arrow {
     width: 18px;
@@ -44,7 +62,7 @@
     color: rgba(41, 41, 41, 1)
 }
 
-.changeButton:hover {
+.changeButton:hover, .backButton:hover {
     background: #f3f3f3;
 }
 
@@ -212,7 +230,8 @@
 
 /* Блок количества билетов */
 .ticketsBlock {
-    min-height: 130px; /*  ?  возможно лучше 240 */
+    min-height: 130px;
+    /*  ?  возможно лучше 240 */
     padding-bottom: 50px;
     border-bottom: 1px solid rgba(196, 196, 196, 1);
     border-image: repeating-linear-gradient(to right,

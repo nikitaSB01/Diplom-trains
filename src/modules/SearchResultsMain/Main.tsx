@@ -95,6 +95,7 @@ const Main: React.FC = () => {
               {/* Первый блок */}
               {selectedTrain && (
                 <ChoiceLocationTrains
+                    isSecond={false}
                   train={selectedTrain}
                   selectedType={secondType}
                   onBack={() => {
@@ -113,6 +114,7 @@ const Main: React.FC = () => {
               {firstType && selectedTrain && (
                 <div className={styles.secondTrainBlock}>
                   <ChoiceLocationTrains
+                    isSecond={true}
                     train={selectedTrain}
                     selectedType={firstType}
                     onBack={() => {
