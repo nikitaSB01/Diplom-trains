@@ -80,7 +80,13 @@ const CarSeatsMap: React.FC<Props> = ({ seats, type, wagonNumber, selectedSeats,
                 lowerPrice={lowerPrice}
             />
         case "fourth":
-            return <SeatMapSitting seats={fullSeats} wagonNumber={wagonNumber} />;
+            return <SeatMapSitting
+                seats={fullSeats}
+                wagonNumber={wagonNumber}
+                selectedSeats={selectedSeats}
+                onSeatSelect={onSeatSelect}
+                lowerPrice={lowerPrice}
+            />;
         default:
             return <div className={styles.empty}>Нет схемы для этого типа</div>;
     }

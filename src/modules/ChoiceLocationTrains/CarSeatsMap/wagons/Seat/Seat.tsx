@@ -5,7 +5,7 @@ interface Props {
     number: number;
     available: boolean;
     reserved?: boolean;
-    type: "upper" | "lower" | "side-upper" | "side-lower";
+    type: "upper" | "lower" | "side-upper" | "side-lower" | "sitting";
     selected?: boolean;
     onClick?: () => void;
 }
@@ -42,6 +42,7 @@ const Seat: React.FC<Props> = ({
                 ${type === "lower" ? styles.lowerSeat : ""}
                 ${type === "side-upper" ? styles.sideUpperSeat : ""}
                 ${type === "side-lower" ? styles.sideLowerSeat : ""}
+                ${type === "sitting" ? styles.sittingSeat : ""}
             `}
         >
             {number}

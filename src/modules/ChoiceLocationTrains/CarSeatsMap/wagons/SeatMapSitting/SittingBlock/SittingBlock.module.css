@@ -1,0 +1,45 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* border: 1px solid black; */
+}
+
+.row{
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+
+}
+
+.row.top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 4px 0;
+}
+
+.row.top:first-child {
+    border-top: 4px solid black;
+}
+
+.row.bottom:last-child {
+    border-bottom: 4px solid black;
+}
+
+
+.row.bottom {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 16px;
+    justify-content: start;
+    padding: 4px 20px;
+}
+
+
+/* Горизонтальный разделитель */
+.divider {
+    width: 100%;
+    height: 30px;
+    background: #f5f5f5;
+}

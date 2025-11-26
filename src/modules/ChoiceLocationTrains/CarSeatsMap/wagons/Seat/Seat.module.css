@@ -56,3 +56,8 @@
     border: 2px solid #ffc846 !important;
     box-shadow: 0 0 4px rgba(255, 200, 70, 0.7);
 }
+
+.sittingSeat {
+    background-color: #e6f0ff;
+    /* или любое другое оформление */
+}
