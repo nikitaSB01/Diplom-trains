@@ -13,21 +13,3 @@
     gap: 80px;
     align-items: start;
 }
-
-/* Левая колонка */
-.leftColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 90px;
-}
-
-.containerInfo {
-    background: black;
-}
-
-/* Правая колонка */
-.rightColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}

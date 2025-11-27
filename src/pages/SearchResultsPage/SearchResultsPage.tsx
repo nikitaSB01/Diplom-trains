@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 import Header from '../../components/layout/Header/Header';
 import Footer from '../../components/layout/Footer/Footer';
-import SearchResultsMain from '../../modules/SearchResultsMain/Main'; // создадим новый модуль для этой страницы
+import SearchResultsMain from '../../modules/SearchResultsMain/Main';
 import styles from './SearchResultsPage.module.css';
 
 const SearchResultsPage: React.FC = () => {

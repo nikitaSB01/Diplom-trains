@@ -1,10 +1,12 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
+import styles from "./PassengersPage.module.css";
+
 import Header from "../../components/layout/Header/Header";
 import Footer from "../../components/layout/Footer/Footer";
+import PassengersPageMain from '../../modules/PassengersPageMain/Main';
 
-import styles from "./PassengersPage.module.css";
 
 const PassengersPage = () => {
     const location = useLocation();
@@ -13,17 +15,11 @@ const PassengersPage = () => {
     console.log("Пришедшие данные:", orderData);
 
     return (
-        <div className={styles.page}>
+        <div className={styles.PassengersPage}>
             <Header isInner />
-
             <main className={styles.main}>
-                <h1>Страница пассажиров</h1>
-
-{/*                 <pre style={{ whiteSpace: "pre-wrap", marginTop: 20 }}>
-                    {JSON.stringify(orderData, null, 2)}
-                </pre> */}
+                <PassengersPageMain />
             </main>
-
             <Footer />
         </div>
     );
