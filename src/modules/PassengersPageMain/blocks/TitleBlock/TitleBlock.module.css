@@ -1,8 +1,14 @@
 .title {
-    background: #3B3B46;
-    padding: 18px 20px;
-    font-size: 20px;
-    font-weight: 700;
-    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(229, 229, 229, 1);
+
+    height: 100px;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
     text-transform: uppercase;
+    color: rgba(229, 229, 229, 1);
 }

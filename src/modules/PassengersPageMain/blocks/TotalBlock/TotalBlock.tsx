@@ -1,5 +1,6 @@
 import { OrderData } from "../../../../types/orderData";
 import styles from "./TotalBlock.module.css";
+import { ReactComponent as Ruble } from "../../../../assets/icons/Train/ruble.svg";
 
 interface Props {
     orderData: OrderData;
@@ -11,7 +12,9 @@ const TotalBlock: React.FC<Props> = ({ orderData }) => {
     return (
         <div className={styles.total}>
             <span>итог</span>
-            <strong>{price} ₽</strong>
+            <strong>{price}
+                <Ruble className={styles.rubleIcon} />
+            </strong>
         </div>
     );
 };
