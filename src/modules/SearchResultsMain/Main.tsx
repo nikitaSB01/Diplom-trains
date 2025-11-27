@@ -12,13 +12,23 @@ import LoaderGif from "../../assets/gif/анимация-загрузки.gif"
 import { Train } from "../../types/Train/trainTypes";
 import ChoiceLocationTrains from "../../components/SearchPageMain/ChoiceLocationTrains/ChoiceLocationTrains";
 
+
+
 const Main: React.FC = () => {
-  /* данные поезда */
-  const [ticketsInfo, setTicketsInfo] = useState({
+
+  const [ticketsBlock1, setTicketsBlock1] = useState({
     adults: 0,
     kids: 0,
     kidsNoSeat: 0,
   });
+
+  const [ticketsBlock2, setTicketsBlock2] = useState({
+    adults: 0,
+    kids: 0,
+    kidsNoSeat: 0,
+  });
+
+
   const [selectedSeatsData, setSelectedSeatsData] = useState({
     first: null as any,
     second: null as any
@@ -56,32 +66,44 @@ const Main: React.FC = () => {
     }
   }, [isLoading]);
 
-  const hasTickets =
-    ticketsInfo.adults > 0 ||
-    ticketsInfo.kids > 0 ||
-    ticketsInfo.kidsNoSeat > 0;
+  const block1HasTickets =
+    ticketsBlock1.adults > 0 ||
+    ticketsBlock1.kids > 0 ||
+    ticketsBlock1.kidsNoSeat > 0;
 
-  const firstDone =
+  const block2HasTickets =
+    ticketsBlock2.adults > 0 ||
+    ticketsBlock2.kids > 0 ||
+    ticketsBlock2.kidsNoSeat > 0;
+
+  const block1Ready =
+    block1HasTickets &&
     firstType &&
     selectedSeatsData.first?.seats?.length > 0;
 
-  const secondDone =
+  const block2Ready =
+    block2HasTickets &&
     secondType &&
     selectedSeatsData.second?.seats?.length > 0;
 
-  const showNext = hasTickets && (firstDone || secondDone);
+  const showNext = block1Ready || block2Ready;
+
   const navigate = useNavigate();
   const handleNext = () => {
     navigate("/passengers", {
       state: {
         train: selectedTrain,
         types: { firstType, secondType },
-        tickets: ticketsInfo,
-        seats: selectedSeatsData,
+        tickets: {
+          first: ticketsBlock1,
+          second: ticketsBlock2
+        }, seats: selectedSeatsData,
         filters,
       },
     });
   };
+
+
   return (
     <section className={styles.main}>
 
@@ -144,9 +166,7 @@ const Main: React.FC = () => {
                   onSelectType={(type) => {
                     setFirstType(type);
                   }}
-                  onUpdateTickets={(data) =>
-                    setTicketsInfo(prev => ({ ...prev, ...data }))
-                  }
+                  onUpdateTickets={setTicketsBlock1}
                   onUpdateSeats={(data) =>
                     setSelectedSeatsData(prev => ({ ...prev, first: data }))
                   }
@@ -169,9 +189,7 @@ const Main: React.FC = () => {
                     onSelectType={(type) => {
                       setSecondType(type);
                     }}
-                    onUpdateTickets={(data) =>
-                      setTicketsInfo(prev => ({ ...prev, ...data }))
-                    }
+                    onUpdateTickets={setTicketsBlock2}
                     onUpdateSeats={(data) =>
                       setSelectedSeatsData(prev => ({ ...prev, second: data }))
                     }

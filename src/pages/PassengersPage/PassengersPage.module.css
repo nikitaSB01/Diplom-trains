@@ -1,0 +1,33 @@
+.main {
+    background-color: rgba(246, 244, 248);
+    max-width: 1920px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.container {
+    padding: 95px 250px 190px;
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    /* Левая колонка — фильтры, правая — поезда */
+    gap: 80px;
+    align-items: start;
+}
+
+/* Левая колонка */
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+}
+
+.containerInfo {
+    background: black;
+}
+
+/* Правая колонка */
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}

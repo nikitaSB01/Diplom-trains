@@ -1,14 +1,30 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-const PassengersPage = () => {
-    const { state } = useLocation();
+import Header from "../../components/layout/Header/Header";
+import Footer from "../../components/layout/Footer/Footer";
 
-    console.log("Полученные данные:", state);
+import styles from "./PassengersPage.module.css";
+
+const PassengersPage = () => {
+    const location = useLocation();
+    const orderData = location.state;
+
+    console.log("Пришедшие данные:", orderData);
 
     return (
-        <div>
-            <h1>Страница пассажиров</h1>
+        <div className={styles.page}>
+            <Header isInner />
+
+            <main className={styles.main}>
+                <h1>Страница пассажиров</h1>
+
+{/*                 <pre style={{ whiteSpace: "pre-wrap", marginTop: 20 }}>
+                    {JSON.stringify(orderData, null, 2)}
+                </pre> */}
+            </main>
+
+            <Footer />
         </div>
     );
 };
