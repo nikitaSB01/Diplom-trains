@@ -6,11 +6,23 @@ import { ReactComponent as Wifi } from "../../../assets/icons/Train/wifi.svg";
 import { ReactComponent as Food } from "../../../assets/icons/Train/cup.svg";
 import { ReactComponent as Linens } from "../../../assets/icons/Train/Underwear.svg";
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
-
 import CarSeatsMap from "../CarSeatsMap/CarSeatsMap";
 
-const CarriageCard = ({ carriage }: any) => {
+interface CarriageCardProps {
+    carriage: any;
 
+    onUpdateSeats?: (data: {
+        type: string;
+        wagonId: string;
+        seats: number[];
+        services: { wifi: boolean; linens: boolean };
+    }) => void;
+}
+
+const CarriageCard: React.FC<CarriageCardProps> = ({
+    carriage,
+    onUpdateSeats
+}) => {
     interface SelectedSeat {
         index: number;
         price: number;
@@ -76,6 +88,17 @@ const CarriageCard = ({ carriage }: any) => {
 
     // === ОБЩАЯ СУММА ===
     const total = ticketsTotal + servicesTotal;
+
+
+    useEffect(() => {
+        onUpdateSeats?.({
+            type: coach.class_type,
+            wagonId: coach._id,
+            seats: selectedSeats.map(s => s.index),
+            services: extras
+        });
+    }, [selectedSeats, extras]);
+
 
     return (
         <div className={styles.card}>

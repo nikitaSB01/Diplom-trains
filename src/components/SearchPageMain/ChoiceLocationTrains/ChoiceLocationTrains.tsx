@@ -17,9 +17,23 @@ interface Props {
     selectedType?: string | null;
     isSecond?: boolean;
 
+    onUpdateTickets?: (data: {
+        adults: number;
+        kids: number;
+        kidsNoSeat: number;
+    }) => void;
+
+    onUpdateSeats?: (data: {
+        type: string;
+        wagonId: string;
+        seats: number[];
+        services: { wifi: boolean; linens: boolean };
+    }) => void;
+
 }
 
-const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, selectedType, isSecond }) => {
+const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, selectedType, isSecond, onUpdateTickets,
+    onUpdateSeats }) => {
 
     const dep = train.departure;
 
@@ -117,15 +131,33 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
                 <h2 className={styles.blockTitle}>Количество билетов</h2>
 
                 <div className={styles.ticketFields}>
-                    <TicketField label="Взрослых —" max={3} hint="Можно добавить 3 пассажиров" />
-                    <TicketField label="Детских —" max={3} hint="Можно добавить еще 3 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%" />
-                    <TicketField label="Детских «без места» —" max={2} hint="Можно добавить 2 детей" />
+                    <TicketField
+                        label="Взрослых —"
+                        max={3}
+                        hint="Можно добавить 3 пассажиров"
+                        onUpdateTickets={onUpdateTickets}
+                    />
+
+                    <TicketField
+                        label="Детских —"
+                        max={3}
+                        hint="Можно добавить еще 3 детей до 10 лет..."
+                        onUpdateTickets={onUpdateTickets}
+                    />
+
+                    <TicketField
+                        label="Детских «без места» —"
+                        max={2}
+                        hint="Можно добавить 2 детей"
+                        onUpdateTickets={onUpdateTickets}
+                    />
                 </div>
             </div>
 
             {/* БЛОК 4 — ТИПЫ ВАГОНОВ */}
             <div className={styles.typeBlock}>
-                <TypeSelector onSelectType={onSelectType} routeId={dep._id} disabledType={selectedType} /> </div>
+                <TypeSelector onSelectType={onSelectType} routeId={dep._id} disabledType={selectedType} onUpdateSeats={onUpdateSeats}
+                /> </div>
         </div >
     );
 };

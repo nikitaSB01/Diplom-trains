@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from './Main.module.css';
 import Steps from '../../components/Steps/Steps';
@@ -12,6 +13,16 @@ import { Train } from "../../types/Train/trainTypes";
 import ChoiceLocationTrains from "../../components/SearchPageMain/ChoiceLocationTrains/ChoiceLocationTrains";
 
 const Main: React.FC = () => {
+  /* данные поезда */
+  const [ticketsInfo, setTicketsInfo] = useState({
+    adults: 0,
+    kids: 0,
+    kidsNoSeat: 0,
+  });
+  const [selectedSeatsData, setSelectedSeatsData] = useState({
+    first: null as any,
+    second: null as any
+  });
 
   /* данные по хранению активного типа вагона */
   const [firstType, setFirstType] = useState<string | null>(null);
@@ -45,6 +56,32 @@ const Main: React.FC = () => {
     }
   }, [isLoading]);
 
+  const hasTickets =
+    ticketsInfo.adults > 0 ||
+    ticketsInfo.kids > 0 ||
+    ticketsInfo.kidsNoSeat > 0;
+
+  const firstDone =
+    firstType &&
+    selectedSeatsData.first?.seats?.length > 0;
+
+  const secondDone =
+    secondType &&
+    selectedSeatsData.second?.seats?.length > 0;
+
+  const showNext = hasTickets && (firstDone || secondDone);
+  const navigate = useNavigate();
+  const handleNext = () => {
+    navigate("/passengers", {
+      state: {
+        train: selectedTrain,
+        types: { firstType, secondType },
+        tickets: ticketsInfo,
+        seats: selectedSeatsData,
+        filters,
+      },
+    });
+  };
   return (
     <section className={styles.main}>
 
@@ -95,7 +132,7 @@ const Main: React.FC = () => {
               {/* Первый блок */}
               {selectedTrain && (
                 <ChoiceLocationTrains
-                    isSecond={false}
+                  isSecond={false}
                   train={selectedTrain}
                   selectedType={secondType}
                   onBack={() => {
@@ -107,6 +144,12 @@ const Main: React.FC = () => {
                   onSelectType={(type) => {
                     setFirstType(type);
                   }}
+                  onUpdateTickets={(data) =>
+                    setTicketsInfo(prev => ({ ...prev, ...data }))
+                  }
+                  onUpdateSeats={(data) =>
+                    setSelectedSeatsData(prev => ({ ...prev, first: data }))
+                  }
                 />
               )}
 
@@ -126,10 +169,25 @@ const Main: React.FC = () => {
                     onSelectType={(type) => {
                       setSecondType(type);
                     }}
+                    onUpdateTickets={(data) =>
+                      setTicketsInfo(prev => ({ ...prev, ...data }))
+                    }
+                    onUpdateSeats={(data) =>
+                      setSelectedSeatsData(prev => ({ ...prev, second: data }))
+                    }
                   />
                 </div>
               )}
             </div>
+
+            {isChoosingSeats && showNext && (
+              <button
+                className={styles.nextButton}
+                onClick={handleNext}
+              >
+                Далее
+              </button>
+            )}
 
           </div>
         </div>

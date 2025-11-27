@@ -88,3 +88,34 @@
   margin-top: 40px;
   /* можешь сделать 50 или по макету */
 }
+
+.nextButton {
+  width: 100%;
+  height: 64px;
+  background-color: #FFA800;
+  /* фирменный желтый */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 22px;
+  font-weight: 500;
+
+  cursor: pointer;
+  margin-top: 32px;
+
+  transition: background 0.2s ease;
+}
+
+.nextButton:hover {
+  background-color: #FF9900;
+}
+
+.nextButton:active {
+  background-color: #E08A00;
+}
+
+.nextButton:disabled {
+  background-color: #D0D0D0;
+  cursor: not-allowed;
+}

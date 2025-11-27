@@ -31,6 +31,19 @@ interface Carriage {
     seats: { index: number; available: boolean }[];
 }
 
+interface Props {
+    onSelectType: (type: string) => void;
+    routeId: string;
+    disabledType?: string | null;
+    onUpdateSeats?: (data: {
+        type: string;
+        wagonId: string;
+        seats: number[];
+        services: { wifi: boolean; linens: boolean };
+    }) => void;
+}
+
+
 const TYPES = [
     { id: "сидячий", label: "Сидячий", Icon: Sid, className: "fourth" },
     { id: "плацкарт", label: "Плацкарт", Icon: Plat, className: "third" },
@@ -38,14 +51,7 @@ const TYPES = [
     { id: "люкс", label: "Люкс", Icon: Lux, className: "first" },
 ];
 
-interface Props {
-    onSelectType: (type: string) => void;
-    routeId: string;
-    disabledType?: string | null;
-}
-
-
-const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType }) => {
+const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, onUpdateSeats }) => {
 
     /* для хорошей отрисовки данных по вагону */
     const [loading, setLoading] = useState(false);
@@ -166,6 +172,7 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType }) 
                                     <CarriageCard
                                         key={c.coach._id}
                                         carriage={c}
+                                        onUpdateSeats={onUpdateSeats}
                                     />
                                 ))
                         )}
