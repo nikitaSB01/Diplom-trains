@@ -16,11 +16,14 @@ const Main: React.FC = () => {
     return (
         <section className={styles.main}>
 
-            <Steps currentStep={1} />
+            <Steps currentStep={2} />
 
             <div className={styles.container}>
                 <div className={styles.leftColumn}>
                     <div className={styles.containerInfo}>
+                        <div className={styles.titleBlock}>
+                            <p>ДЕТАЛИ ПОЕЗДКИ</p>
+                        </div>
                         {/* Фильтр времени → ТУДА */}
                         <FiltersThereBack
                             title="Туда"
