@@ -71,14 +71,21 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
 
       {/* --- режим PASSENGER MODE --- */}
       {passengerMode && trainData && isOpen && (
-        <div className={styles.passengerInfo}>
-          <p className={styles.trainNumber}>{trainData.train.name}</p>
+        <div className={styles.tripContent}>
+          <div className={styles.row}>
+            <p className={styles.label}>№ Поезда</p>
+            <p className={styles.value}>{trainData.train.name}</p>
+          </div>
 
-          <p className={styles.route}>
-            {trainData.from.city.name} — {trainData.to.city.name}
-          </p>
+          <div className={styles.row}>
+            <p className={styles.label}>Название</p>
+            <div className={styles.direction}>
+              <p>{trainData.from.city.name}</p>
+              <p>{trainData.to.city.name}</p>
+            </div>
+          </div>
 
-          <div className={styles.timeBlock}>
+          <div className={styles.timesWrapper}>
             <div className={styles.col}>
               <p className={styles.time}>{formatTime(trainData.from.datetime)}</p>
               <p className={styles.date}>{formatDate(trainData.from.datetime)}</p>
@@ -87,8 +94,10 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
             </div>
 
             <div className={styles.center}>
-              <ArrowThereIcon />
               <p className={styles.duration}>{formatDuration(trainData.duration)}</p>
+              <div className={styles.icon}>
+                {title === "Туда" ? <ArrowThereIcon /> : <ArrowBackIcon />}
+              </div>
             </div>
 
             <div className={styles.col}>

@@ -1,0 +1,44 @@
+.container {
+    background: #3B3B46;
+    padding: 16px 20px;
+    color: #fff;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.left p {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.icon {
+    font-size: 18px;
+    color: #9f9f9f;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.row strong {
+    font-size: 16px;
+}

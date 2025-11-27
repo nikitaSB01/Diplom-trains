@@ -66,3 +66,85 @@
     flex-direction: column;
     gap: 46px;
 }
+
+
+/* стили для отображения на странице PASSENGER */
+/* ===== TRIP BLOCK (PASSENGER MODE) ===== */
+
+.tripContent {
+    padding: 16px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    color: #fff;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.label {
+    font-size: 14px;
+    color: #9f9f9f;
+}
+
+.value {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.direction p {
+    text-align: right;
+    font-size: 15px;
+    line-height: 16px;
+}
+
+.timesWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.time {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.date {
+    color: #9f9f9f;
+    font-size: 14px;
+}
+
+.city {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.station {
+    font-size: 14px;
+    color: #9f9f9f;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.duration {
+    font-size: 14px;
+    color: #9f9f9f;
+}
+
+.icon svg {
+    width: 24px;
+    height: 24px;
+}
