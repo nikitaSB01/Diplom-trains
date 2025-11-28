@@ -66,25 +66,32 @@ const Main: React.FC = () => {
     }
   }, [isLoading]);
 
+
   const block1HasTickets =
     ticketsBlock1.adults > 0 ||
-    ticketsBlock1.kids > 0 ||
-    ticketsBlock1.kidsNoSeat > 0;
+    ticketsBlock1.kids > 0;
 
   const block2HasTickets =
     ticketsBlock2.adults > 0 ||
-    ticketsBlock2.kids > 0 ||
-    ticketsBlock2.kidsNoSeat > 0;
+    ticketsBlock2.kids > 0;
+
+  const totalTicketsBlock1 =
+    ticketsBlock1.adults + ticketsBlock1.kids;
+
+  const totalTicketsBlock2 =
+    ticketsBlock2.adults + ticketsBlock2.kids;
 
   const block1Ready =
-    block1HasTickets &&
+    (ticketsBlock1.adults + ticketsBlock1.kids) > 0 &&
     firstType &&
-    selectedSeatsData.first?.seats?.length > 0;
+    selectedSeatsData.first?.seats?.length ===
+    (ticketsBlock1.adults + ticketsBlock1.kids);
 
   const block2Ready =
-    block2HasTickets &&
+    (ticketsBlock2.adults + ticketsBlock2.kids) > 0 &&
     secondType &&
-    selectedSeatsData.second?.seats?.length > 0;
+    selectedSeatsData.second?.seats?.length ===
+    (ticketsBlock2.adults + ticketsBlock2.kids);
 
   const showNext = block1Ready || block2Ready;
 
@@ -156,7 +163,7 @@ const Main: React.FC = () => {
                 <ChoiceLocationTrains
                   isSecond={false}
                   train={selectedTrain}
-                  selectedType={secondType}
+                  selectedType={firstType}
                   onBack={() => {
                     setIsChoosingSeats(false);
                     setSelectedTrain(null);
@@ -166,8 +173,13 @@ const Main: React.FC = () => {
                   onSelectType={(type) => {
                     setFirstType(type);
                   }}
-                  onUpdateTickets={setTicketsBlock1}
-                  onUpdateSeats={(data) =>
+                  onUpdateTickets={(data) =>
+                    setTicketsBlock1(prev => ({
+                      adults: data.adults !== 0 ? data.adults : prev.adults,
+                      kids: data.kids !== 0 ? data.kids : prev.kids,
+                      kidsNoSeat: data.kidsNoSeat !== 0 ? data.kidsNoSeat : prev.kidsNoSeat,
+                    }))
+                  } onUpdateSeats={(data) =>
                     setSelectedSeatsData(prev => ({ ...prev, first: data }))
                   }
                 />
@@ -179,7 +191,7 @@ const Main: React.FC = () => {
                   <ChoiceLocationTrains
                     isSecond={true}
                     train={selectedTrain}
-                    selectedType={firstType}
+                    selectedType={secondType}
                     onBack={() => {
                       setIsChoosingSeats(false);
                       setSelectedTrain(null);
@@ -189,8 +201,13 @@ const Main: React.FC = () => {
                     onSelectType={(type) => {
                       setSecondType(type);
                     }}
-                    onUpdateTickets={setTicketsBlock2}
-                    onUpdateSeats={(data) =>
+                    onUpdateTickets={(data) =>
+                      setTicketsBlock2(prev => ({
+                        adults: data.adults !== 0 ? data.adults : prev.adults,
+                        kids: data.kids !== 0 ? data.kids : prev.kids,
+                        kidsNoSeat: data.kidsNoSeat !== 0 ? data.kidsNoSeat : prev.kidsNoSeat,
+                      }))
+                    } onUpdateSeats={(data) =>
                       setSelectedSeatsData(prev => ({ ...prev, second: data }))
                     }
                   />
