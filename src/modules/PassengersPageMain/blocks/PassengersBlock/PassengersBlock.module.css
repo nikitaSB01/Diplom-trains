@@ -1,5 +1,4 @@
 .container {
-    background: #3B3B46;
     padding: 16px 20px;
     color: #fff;
 }
@@ -39,6 +38,23 @@
     font-size: 16px;
 }
 
+.rowPrice {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.rubleIcon {
+    width: 14px;
+    height: 17px;
+}
+
 .row strong {
-    font-size: 16px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: right;
+    color: rgba(255, 255, 255, 1);
 }

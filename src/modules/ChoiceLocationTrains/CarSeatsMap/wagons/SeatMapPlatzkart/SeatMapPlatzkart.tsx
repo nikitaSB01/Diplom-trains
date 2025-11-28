@@ -20,9 +20,11 @@ interface Props {
     selectedSeats: number[];
     upperPrice: number;
     lowerPrice: number;
+    sidePrice?: number;
+
 }
 
-const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, selectedSeats, upperPrice, lowerPrice }) => {
+const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, selectedSeats, upperPrice, lowerPrice, sidePrice }) => {
 
     const groupUpper = [
         [2, 4], [6, 8], [10, 12], [14, 16], [18, 20], [22, 24], [26, 28], [30, 32]
@@ -49,6 +51,7 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, s
                     onSeatSelect={onSeatSelect}
                     upperPrice={upperPrice}
                     lowerPrice={lowerPrice}
+
                 />
                 {/* ГОРИЗОНТАЛЬНЫЙ РАЗДЕЛИТЕЛЬ */}
                 <div className={styles.horDivider}></div>
@@ -67,9 +70,8 @@ const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, s
                                             reserved={seat.reserved}
                                             type={n % 2 === 0 ? "side-upper" : "side-lower"}
                                             selected={selectedSeats.includes(n)}
-                                            onClick={() =>
-                                                onSeatSelect(n, n % 2 === 0 ? upperPrice : lowerPrice)
-                                            } />
+                                            onClick={() => onSeatSelect(n, sidePrice!)}
+                                        />
                                     ) : null;
                                 })}
                             </div>

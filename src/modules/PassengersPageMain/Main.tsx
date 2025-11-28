@@ -176,6 +176,7 @@ const Main: React.FC = () => {
                             passengers={orderData.tickets.first}
                             adultsPrice={adultsPrice}
                             kidsPrice={kidsPrice}
+                            services={orderData.seats.first?.services ?? null}
                         />
 
                         <TotalBlock totalPrice={totalPrice} />

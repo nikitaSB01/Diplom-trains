@@ -64,6 +64,7 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
 
     const upperPrice = isCoupeOrPlatz ? coach.top_price : null;
     const lowerPrice = isCoupeOrPlatz ? coach.bottom_price : coach.top_price;
+    const sidePrice = isCoupeOrPlatz ? coach.side_price : null;
 
     const included = {
         // входит в стоимость
@@ -140,6 +141,9 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                                     <div className={styles.subRow}>
                                         <span className={styles.subTitle}>Нижние</span>
                                     </div>
+                                    <div className={styles.subRow}>
+                                        <span className={styles.subTitle}>Боковые</span>
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -150,20 +154,31 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
 
                             {isCoupeOrPlatz && (
                                 <div className={styles.containerPrice}>
+                                    {/* верхние */}
                                     <div className={styles.costRow}>
                                         <span className={styles.costValue}>
                                             {upperPrice.toLocaleString("ru-RU")}
                                         </span>
                                         <Ruble className={styles.rubleIcon} />
-
                                     </div>
+
+                                    {/* нижние */}
                                     <div className={styles.costRow}>
                                         <span className={styles.costValue}>
                                             {lowerPrice.toLocaleString("ru-RU")}
                                         </span>
                                         <Ruble className={styles.rubleIcon} />
-
                                     </div>
+
+                                    {/* БОКОВЫЕ — только для плацкарта */}
+                                    {type === "third" && (
+                                        <div className={styles.costRow}>
+                                            <span className={styles.costValue}>
+                                                {sidePrice!.toLocaleString("ru-RU")}
+                                            </span>
+                                            <Ruble className={styles.rubleIcon} />
+                                        </div>
+                                    )}
                                 </div>
                             )}
 
@@ -249,6 +264,7 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                     onSeatSelect={toggleSeat}
                     upperPrice={upperPrice!}
                     lowerPrice={lowerPrice!}
+                    sidePrice={sidePrice!}
                 />
             </div>
 
