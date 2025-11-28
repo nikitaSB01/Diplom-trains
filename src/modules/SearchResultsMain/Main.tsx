@@ -184,6 +184,7 @@ const Main: React.FC = () => {
                   isSecond={false}
                   train={selectedTrain}
                   selectedType={firstType}
+                  disabledType={secondType}   // ← ВАЖНО
                   onBack={() => {
                     setIsChoosingSeats(false);
                     setSelectedTrain(null);
@@ -211,6 +212,7 @@ const Main: React.FC = () => {
                     isSecond={true}
                     train={selectedTrain}
                     selectedType={secondType}
+                    disabledType={firstType}    // ← ВАЖНО
                     onBack={() => {
                       setIsChoosingSeats(false);
                       setSelectedTrain(null);
