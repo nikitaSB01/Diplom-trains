@@ -15,7 +15,12 @@ interface CarriageCardProps {
         type: string;
         wagonId: string;
         seats: number[];
-        services: { wifi: boolean; linens: boolean };
+        services: {
+            wifi: boolean;
+            linens: boolean;
+            wifi_price: number;
+            linens_price: number;
+        };
     }) => void;
 }
 
@@ -95,7 +100,12 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
             type: coach.class_type,
             wagonId: coach._id,
             seats: selectedSeats.map(s => s.index),
-            services: extras
+            services: {
+                wifi: extras.wifi,
+                linens: extras.linens,
+                wifi_price: coach.wifi_price,
+                linens_price: coach.linens_price
+            }
         });
     }, [selectedSeats, extras]);
 

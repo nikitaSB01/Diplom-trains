@@ -8,9 +8,11 @@ interface Props {
         kids: number;
         kidsNoSeat: number;
     };
+    adultsPrice: number;
+    kidsPrice: number;
 }
 
-const PassengersBlock: React.FC<Props> = ({ passengers }) => {
+const PassengersBlock: React.FC<Props> = ({ passengers, adultsPrice, kidsPrice }) => {
     const { adults, kids } = passengers;
 
     return (
@@ -28,14 +30,14 @@ const PassengersBlock: React.FC<Props> = ({ passengers }) => {
                 {adults > 0 && (
                     <div className={styles.row}>
                         <span>{adults} Взрослый</span>
-                        <strong>{5840 * adults} ₽</strong>
+                        <strong>{adultsPrice} ₽</strong>
                     </div>
                 )}
 
                 {kids > 0 && (
                     <div className={styles.row}>
                         <span>{kids} Ребёнок</span>
-                        <strong>{1920 * kids} ₽</strong>
+                        <strong>{kidsPrice} ₽</strong>
                     </div>
                 )}
             </div>

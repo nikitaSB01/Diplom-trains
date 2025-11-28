@@ -28,7 +28,12 @@ interface Props {
         type: string;
         wagonId: string;
         seats: number[];
-        services: { wifi: boolean; linens: boolean };
+        services: {
+            wifi: boolean;
+            linens: boolean;
+            wifi_price: number;
+            linens_price: number;
+        };
     }) => void;
 
 }
@@ -142,7 +147,7 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
                     <TicketField
                         label="Детских —"
                         max={3}
-                        hint="Можно добавить еще 3 детей до 10 лет..."
+                        hint="Можно добавить 3 детей до 10 лет. Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%"
                         onUpdateTickets={onUpdateTickets}
                     />
 

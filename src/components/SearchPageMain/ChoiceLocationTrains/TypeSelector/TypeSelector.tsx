@@ -39,7 +39,12 @@ interface Props {
         type: string;
         wagonId: string;
         seats: number[];
-        services: { wifi: boolean; linens: boolean };
+        services: {
+            wifi: boolean;
+            linens: boolean;
+            wifi_price: number;
+            linens_price: number;
+        };
     }) => void;
 }
 
