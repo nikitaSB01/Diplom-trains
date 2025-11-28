@@ -67,6 +67,25 @@ const Main: React.FC = () => {
   }, [isLoading]);
 
 
+
+  const isBlockIncorrect = (
+    tickets: { adults: number; kids: number; kidsNoSeat: number },
+    seatsData: any,
+    type: string | null
+  ) => {
+    const needSeats = tickets.adults + tickets.kids;
+    const selectedSeats = seatsData?.seats?.length || 0;
+
+    if (needSeats === 0) return selectedSeats > 0;
+
+    if (!type) return true;
+
+    return needSeats !== selectedSeats;
+  };
+
+  const block1Incorrect = isBlockIncorrect(ticketsBlock1, selectedSeatsData.first, firstType);
+  const block2Incorrect = isBlockIncorrect(ticketsBlock2, selectedSeatsData.second, secondType);
+
   const block1HasTickets =
     ticketsBlock1.adults > 0 ||
     ticketsBlock1.kids > 0;
@@ -80,20 +99,21 @@ const Main: React.FC = () => {
 
   const totalTicketsBlock2 =
     ticketsBlock2.adults + ticketsBlock2.kids;
-
   const block1Ready =
-    (ticketsBlock1.adults + ticketsBlock1.kids) > 0 &&
     firstType &&
-    selectedSeatsData.first?.seats?.length ===
-    (ticketsBlock1.adults + ticketsBlock1.kids);
+    totalTicketsBlock1 > 0 &&
+    selectedSeatsData.first?.seats?.length === totalTicketsBlock1;
 
   const block2Ready =
-    (ticketsBlock2.adults + ticketsBlock2.kids) > 0 &&
     secondType &&
-    selectedSeatsData.second?.seats?.length ===
-    (ticketsBlock2.adults + ticketsBlock2.kids);
+    totalTicketsBlock2 > 0 &&
+    selectedSeatsData.second?.seats?.length === totalTicketsBlock2;
 
-  const showNext = block1Ready || block2Ready;
+
+  const showNext =
+    (block1Ready && !block2Incorrect) ||
+    (block2Ready && !block1Incorrect);
+
 
   const navigate = useNavigate();
   const handleNext = () => {
@@ -175,9 +195,8 @@ const Main: React.FC = () => {
                   }}
                   onUpdateTickets={(data) =>
                     setTicketsBlock1(prev => ({
-                      adults: data.adults !== 0 ? data.adults : prev.adults,
-                      kids: data.kids !== 0 ? data.kids : prev.kids,
-                      kidsNoSeat: data.kidsNoSeat !== 0 ? data.kidsNoSeat : prev.kidsNoSeat,
+                      ...prev,
+                      ...data,
                     }))
                   } onUpdateSeats={(data) =>
                     setSelectedSeatsData(prev => ({ ...prev, first: data }))
@@ -203,9 +222,8 @@ const Main: React.FC = () => {
                     }}
                     onUpdateTickets={(data) =>
                       setTicketsBlock2(prev => ({
-                        adults: data.adults !== 0 ? data.adults : prev.adults,
-                        kids: data.kids !== 0 ? data.kids : prev.kids,
-                        kidsNoSeat: data.kidsNoSeat !== 0 ? data.kidsNoSeat : prev.kidsNoSeat,
+                        ...prev,
+                        ...data,
                       }))
                     } onUpdateSeats={(data) =>
                       setSelectedSeatsData(prev => ({ ...prev, second: data }))

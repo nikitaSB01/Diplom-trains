@@ -37,12 +37,10 @@ const TicketField: React.FC<Props> = ({ label, max, hint, onUpdateTickets }) => 
         if (!onUpdateTickets) return;
 
         onUpdateTickets({
-            adults: type === "adults" ? num : 0,
-            kids: type === "kids" ? num : 0,
-            kidsNoSeat: type === "kidsNoSeat" ? num : 0,
-        });
+            [type]: num
+        } as any);
     };
-
+    
     // ============================
     // ВНЕШНИЙ КЛИК
     // ============================
