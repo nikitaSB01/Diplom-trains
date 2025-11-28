@@ -3,6 +3,11 @@ import styles from "./FiltersThereBack.module.css";
 
 import { ReactComponent as ArrowThereIcon } from "../../../../assets/icons/Filters/FiltersThereBack/arrowThere.svg";
 import { ReactComponent as ArrowBackIcon } from "../../../../assets/icons/Filters/FiltersThereBack/arrowBack.svg";
+import { ReactComponent as ArrowBetween } from "../../../../assets/icons/ChoiceLocationTrains/arrowBetween.svg";
+import { ReactComponent as ArrowBetweenBack } from "../../../../assets/icons/ChoiceLocationTrains/arrowBetweenBack.svg";
+
+
+
 import { ReactComponent as ToggleIconPlus } from "../../../../assets/icons/Filters/FiltersThereBack/plus.svg";
 import { ReactComponent as ToggleIconMinus } from "../../../../assets/icons/Filters/FiltersThereBack/minus.svg";
 import Track from "./Track/Track";
@@ -48,24 +53,43 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
     return d.toLocaleDateString("ru-RU");
   };
 
-  // формат времени в пути
+  // формат времени в пути для страницу с пассажирами
   const formatDuration = (sec: number) => {
     const h = Math.floor(sec / 3600);
     const m = Math.floor((sec % 3600) / 60);
-    return `${h} ч ${m} мин`;
+    return `${h}:${m.toString().padStart(2, "0")}`;
   };
 
+  /* Авто-открытие на странице PassengersPage */
+  useEffect(() => {
+    if (passengerMode && trainData) {
+      setIsOpen(true);
+    }
+  }, [passengerMode, trainData]);
+
+  
   return (
-    <div className={styles.container}>
-      <button className={styles.header} onClick={() => setIsOpen(!isOpen)} type="button">
+    <div
+      className={
+        passengerMode
+          ? `${styles.container} ${styles.containerPassenger}`
+          : styles.container
+      }
+    ><button className={styles.header} onClick={() => setIsOpen(!isOpen)} type="button">
         <div className={styles.headerLeft}>
           <div className={styles.iconWrapper}>
             {title === "Туда" ? <ArrowThereIcon /> : <ArrowBackIcon />}
           </div>
           <p className={styles.title}>{title}</p>
+          {/* ---- ДОБАВЛЯЕМ ДАТУ ТОЛЬКО В PASSENGER MODE ---- */}
+          {passengerMode && trainData && (
+            <p className={styles.dateHeader}>
+              {formatDate(trainData.from.datetime)}
+            </p>
+          )}
         </div>
         <div className={styles.toggle}>
-          {isOpen ? <ToggleIconMinus /> : <ToggleIconPlus />}
+          {isOpen ? <ToggleIconMinus /> : <ToggleIconPlus className={styles.togglePlus} />}
         </div>
       </button>
 
@@ -86,25 +110,30 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
           </div>
 
           <div className={styles.timesWrapper}>
-            <div className={styles.col}>
+            {/* Левая колонка */}
+            <div className={`${styles.col} ${styles.colLeft}`}>
               <p className={styles.time}>{formatTime(trainData.from.datetime)}</p>
               <p className={styles.date}>{formatDate(trainData.from.datetime)}</p>
               <p className={styles.city}>{trainData.from.city.name}</p>
-              <p className={styles.station}>{trainData.from.railway_station_name}</p>
+              <p className={styles.station}>{trainData.from.railway_station_name}<br />вокзал</p>
             </div>
 
+            {/* Центральная колонка (стрелка + время в пути) */}
             <div className={styles.center}>
               <p className={styles.duration}>{formatDuration(trainData.duration)}</p>
               <div className={styles.icon}>
-                {title === "Туда" ? <ArrowThereIcon /> : <ArrowBackIcon />}
+                {title === "Туда"
+                  ? <ArrowBetween className={styles.rotate180} />
+                  : <ArrowBetween />}
               </div>
             </div>
 
-            <div className={styles.col}>
+            {/* Правая колонка */}
+            <div className={`${styles.col} ${styles.colRight}`}>
               <p className={styles.time}>{formatTime(trainData.to.datetime)}</p>
               <p className={styles.date}>{formatDate(trainData.to.datetime)}</p>
               <p className={styles.city}>{trainData.to.city.name}</p>
-              <p className={styles.station}>{trainData.to.railway_station_name}</p>
+              <p className={styles.station}>{trainData.to.railway_station_name}<br />вокзал</p>
             </div>
           </div>
         </div>

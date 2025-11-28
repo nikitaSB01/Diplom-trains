@@ -49,15 +49,14 @@
     align-items: center;
 }
 
-.container:hover :global(.tooglePlus) path {
-    fill: rgba(252, 220, 157, 1);
-    stroke: rgba(252, 220, 157, 1);
+.container:hover .togglePlus path {
+    fill: #FCDC9D;
+    stroke: #FCDC9D;
 }
 
-.container:hover :global(.tooglePlus) rect {
-    stroke: rgba(252, 220, 157, 1);
+.container:hover .togglePlus rect {
+    stroke: #FCDC9D;
 }
-
 
 
 .body {
@@ -69,15 +68,34 @@
 
 
 /* стили для отображения на странице PASSENGER */
-/* ===== TRIP BLOCK (PASSENGER MODE) ===== */
+
+.containerPassenger {
+    padding: 15px 27px 40px 27px;
+}
+
+.containerPassenger .header {
+    align-items: baseline;
+}
+
+.containerPassenger .header .headerLeft {
+    align-items: baseline;
+    gap: 10px;
+}
+
+.containerPassenger .header .headerLeft .iconWrapper {
+    padding: 0;
+}
+
 
 .tripContent {
-    padding: 16px 20px 20px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 22px;
+    padding-top: 50px;
     color: #fff;
+    cursor: default;
 }
+
 
 .row {
     display: flex;
@@ -85,66 +103,130 @@
 }
 
 .label {
-    font-size: 14px;
-    color: #9f9f9f;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(229, 229, 229, 1);
 }
 
-.value {
-    font-size: 18px;
+.value, .time {
     font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: right;
+    color: rgba(255, 255, 255, 1);
 }
+
+
 
 .direction p {
     text-align: right;
-    font-size: 15px;
-    line-height: 16px;
+
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: rigrgba(255, 255, 255, 1);
+    text-transform: capitalize;
 }
 
 .timesWrapper {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    margin-top: 70px;
+    position: relative;
 }
 
-.col {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.time {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.date {
-    color: #9f9f9f;
-    font-size: 14px;
-}
-
-.city {
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.station {
-    font-size: 14px;
-    color: #9f9f9f;
-}
-
+/* Центрируем над сеткой */
 .center {
+    position: absolute;
+    top: -28px;
+    /* регулируешь под макет */
+    left: 50%;
+    transform: translateX(-50%);
+
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
 }
 
+/* Сдвигаем время над стрелкой */
 .duration {
-    font-size: 14px;
-    color: #9f9f9f;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(229, 229, 229, 1);
 }
 
+/* Колонки */
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.colLeft {
+    text-align: left;
+}
+
+.colLeft .time {
+    text-align: left;
+}
+
+.colRight {
+    text-align: right;
+}
+
+/* Стрелка */
 .icon svg {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
+}
+
+.date {
+    margin-bottom: 20px;
+
+    color: rgba(146, 143, 148, 1);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.city {
+    color: rgba(255, 255, 255, 1);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-transform: capitalize;
+
+}
+
+.station {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(146, 143, 148, 1);
+}
+
+
+.rotate180 {
+    transform: rotate(180deg);
+}
+
+.dateHeader {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+    color: rgba(255, 255, 255, 1);
+    /* как в макете */
 }
