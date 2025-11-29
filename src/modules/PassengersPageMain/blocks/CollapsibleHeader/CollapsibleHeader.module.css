@@ -1,0 +1,50 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.iconLeft {
+    width: 26px;
+    height: 26px;
+}
+
+.iconLeft svg path {
+    transition: 0.2s ease;
+}
+
+.header .togglePlus path {
+    fill: rgba(255, 255, 255, 1);
+}
+
+.header .togglePlus rect {
+    stroke: rgba(255, 255, 255, 1);
+}
+
+.header:hover .togglePlus path {
+    fill: #FCDC9D;
+}
+
+.header:hover .togglePlus rect {
+    stroke: #FCDC9D;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.right {
+    font-size: 28px;
+}

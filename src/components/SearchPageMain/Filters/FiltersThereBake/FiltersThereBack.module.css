@@ -51,7 +51,6 @@
 
 .container:hover .togglePlus path {
     fill: #FCDC9D;
-    stroke: #FCDC9D;
 }
 
 .container:hover .togglePlus rect {

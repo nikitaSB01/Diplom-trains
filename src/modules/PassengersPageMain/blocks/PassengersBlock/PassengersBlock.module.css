@@ -32,13 +32,21 @@
 .list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 }
 
 .row {
     display: flex;
     justify-content: space-between;
     font-size: 16px;
+}
+
+.row span {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(229, 229, 229, 1);
 }
 
 .rowPrice {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import styles from "./Main.module.css";
@@ -8,6 +8,9 @@ import FiltersThereBack from "../../components/SearchPageMain/Filters/FiltersThe
 import PassengersBlock from "./blocks/PassengersBlock/PassengersBlock";
 import TotalBlock from "./blocks/TotalBlock/TotalBlock";
 import TitleBlock from "./blocks/TitleBlock/TitleBlock";
+import CollapsibleHeader from "./blocks/CollapsibleHeader/CollapsibleHeader";
+
+import { ReactComponent as UserIcon } from "../../assets/icons/PassengersPage/PassengersBlock/passenger.svg";
 
 // ---------- типы ----------
 interface Tickets {
@@ -107,6 +110,8 @@ const Main: React.FC = () => {
 
     const totalPrice = (block1?.total ?? 0) + (block2?.total ?? 0);
 
+    const [openPassengers, setOpenPassengers] = useState(true);
+
     return (
         <section className={styles.main}>
             <Steps currentStep={2} />
@@ -128,32 +133,39 @@ const Main: React.FC = () => {
                             trainData={orderData.train.arrival}
                         />
 
-                        {/* ПЕРВЫЙ БЛОК */}
-                        {block1 && (
-                            <PassengersBlock
-                                passengers={block1.passengers}
-                                adultsPrice={block1.adultsPrice}
-                                kidsPrice={block1.kidsPrice}
-                                servicesTotal={block1.servicesTotal}
-                                servicesList={block1.servicesList}   // ← добавили
-                                hideHeader={false}   // ← явное указание
+                        <div className={styles.containerPassengers}>
+                            <CollapsibleHeader
+                                iconLeft={<UserIcon />}
+                                title="Пассажиры"
+                                isOpen={openPassengers}
+                                onToggle={() => setOpenPassengers(!openPassengers)}
+                                className={styles.passengersHeader}
                             />
-                        )}
+                            {openPassengers && (
+                                <div className={styles.passengersList}>
+                                    {block1 && (
+                                        <PassengersBlock
+                                            passengers={block1.passengers}
+                                            adultsPrice={block1.adultsPrice}
+                                            kidsPrice={block1.kidsPrice}
+                                            servicesList={block1.servicesList}
+                                        />
+                                    )}
 
-                        {/* ВТОРОЙ БЛОК */}
-                        {block2 && (
-                            <>
-                                <div className={styles.sectionDivider}>Обратно</div>  {/* ← разделение */}
-                                <PassengersBlock
-                                    passengers={block2.passengers}
-                                    adultsPrice={block2.adultsPrice}
-                                    kidsPrice={block2.kidsPrice}
-                                    servicesTotal={block2.servicesTotal}
-                                    servicesList={block2.servicesList}   // ← добавили
-                                    hideHeader={true}    // ← Скрываем дублирующий заголовок
-                                />
-                            </>
-                        )}
+                                    {block2 && (
+                                        <>
+                                            <div className={styles.sectionDivider}>Обратно</div>
+                                            <PassengersBlock
+                                                passengers={block2.passengers}
+                                                adultsPrice={block2.adultsPrice}
+                                                kidsPrice={block2.kidsPrice}
+                                                servicesList={block2.servicesList}
+                                            />
+                                        </>
+                                    )}
+                                </div>
+                            )}
+                        </div>
 
                         {/* ИТОГ */}
                         <TotalBlock totalPrice={totalPrice} />

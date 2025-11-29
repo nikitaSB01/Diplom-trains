@@ -5,9 +5,6 @@ import { ReactComponent as ArrowThereIcon } from "../../../../assets/icons/Filte
 import { ReactComponent as ArrowBackIcon } from "../../../../assets/icons/Filters/FiltersThereBack/arrowBack.svg";
 import { ReactComponent as ArrowBetween } from "../../../../assets/icons/ChoiceLocationTrains/arrowBetween.svg";
 import { ReactComponent as ArrowBetweenBack } from "../../../../assets/icons/ChoiceLocationTrains/arrowBetweenBack.svg";
-
-
-
 import { ReactComponent as ToggleIconPlus } from "../../../../assets/icons/Filters/FiltersThereBack/plus.svg";
 import { ReactComponent as ToggleIconMinus } from "../../../../assets/icons/Filters/FiltersThereBack/minus.svg";
 import Track from "./Track/Track";

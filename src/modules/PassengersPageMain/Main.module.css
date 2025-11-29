@@ -29,9 +29,19 @@
 }
 
 .sectionDivider {
-    margin: 20px 0 10px;
     font-size: 18px;
     font-weight: 600;
     color: #d9a441;
-    /* желтый из макета */
+}
+
+.containerPassengers {
+    padding: 15px 27px 40px 27px;
+    border-bottom: 1px solid rgba(229, 229, 229, 1);
+}
+
+.passengersList {
+    display: flex;
+    flex-direction: column;
+    gap: 33px;
+    margin-top: 30px;
 }
