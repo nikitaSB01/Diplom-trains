@@ -94,10 +94,13 @@ const Main: React.FC = () => {
     const selectedSeats =
       seatsArr.reduce((sum, wagon) => sum + wagon.seats.length, 0);
 
-    if (!type && needSeats > 0) return true;
+    // ==== 1) Если мест НЕ НУЖНО → блок всегда корректен ====
+    if (needSeats === 0) return false;
 
-    if (needSeats === 0) return selectedSeats > 0;
+    // ==== 2) Если мест НУЖНО, но тип не выбран → некорректен ====
+    if (!type) return true;
 
+    // ==== 3) Если мест НУЖНО, но количество не совпадает → некорректен ====
     return needSeats !== selectedSeats;
   };
 
@@ -124,8 +127,12 @@ const Main: React.FC = () => {
     secondType
   );
 
-  const showNext = !block1Incorrect && !block2Incorrect;
+  const anyTicketsNeeded =
+    ticketsBlock1.adults + ticketsBlock1.kids +
+    ticketsBlock2.adults + ticketsBlock2.kids > 0;
 
+  const showNext = anyTicketsNeeded && !block1Incorrect && !block2Incorrect;
+  
   const navigate = useNavigate();
   const handleNext = () => {
     navigate("/passengers", {
