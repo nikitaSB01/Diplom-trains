@@ -18,7 +18,7 @@ const PassengersBlock: React.FC<Props> = ({
     passengers,
     adultsPrice,
     kidsPrice,
-    servicesTotal
+    servicesTotal,
 }) => {
     const { adults, kids } = passengers;
 
@@ -29,6 +29,7 @@ const PassengersBlock: React.FC<Props> = ({
                     <UserIcon />
                     <p>Пассажиры</p>
                 </div>
+
                 <div className={styles.icon}>≡</div>
             </div>
 

@@ -9,7 +9,6 @@ import PassengersBlock from "./blocks/PassengersBlock/PassengersBlock";
 import TotalBlock from "./blocks/TotalBlock/TotalBlock";
 import TitleBlock from "./blocks/TitleBlock/TitleBlock";
 
-
 // ---------- типы ----------
 interface Tickets {
     adults: number;
@@ -31,53 +30,28 @@ interface SeatData {
     };
 }
 
-
-// ---------- утилита цены одного места ----------
-const getSeatPrice = (
-    seatNumber: number,
-    seatType: string,
-    priceInfo: any,
-    fallback: number
-): number => {
-    if (!priceInfo) return fallback;
-
-    // Плацкарт / сидячий
-    if (seatType === "third" || seatType === "fourth") {
-        if (seatNumber >= 37) {
-            return priceInfo.side_price ?? fallback;
-        }
-        const isLower = seatNumber % 2 === 1;
-        return isLower ? priceInfo.bottom_price ?? fallback : priceInfo.top_price ?? fallback;
-    }
-
-    // Купе / люкс
-    if (seatType === "first" || seatType === "second") {
-        const isLower = seatNumber % 2 === 1;
-        return isLower ? priceInfo.bottom_price ?? fallback : priceInfo.top_price ?? fallback;
-    }
-
-    return priceInfo.price ?? fallback;
-};
-
-
-// ---------- функция сборки данных по одному блоку ----------
+// ---------- функция сборки данных по ОДНОМУ БЛОКУ (first / second) ----------
 const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
     if (!seatDataArr || seatDataArr.length === 0) return null;
 
     const { adults, kids, kidsNoSeat } = tickets;
 
-    // собираем ВСЕ цены со всех вагонов
+    // собираем ВСЕ цены со всех вагонов блока
     const allSeatPrices: number[] = seatDataArr
-        .flatMap(wagon => wagon.seats.map(s => s.price))
-        .sort((a, b) => b - a);
+        .flatMap((wagon) => wagon.seats.map((s) => s.price))
+        .sort((a, b) => b - a); // взрослым — самые дорогие
 
     let adultsPrice = 0;
     let kidsPrice = 0;
 
     for (let i = 0; i < allSeatPrices.length; i++) {
         const price = allSeatPrices[i];
-        if (i < adults) adultsPrice += price;
-        else if (i < adults + kids) kidsPrice += price * 0.5;
+
+        if (i < adults) {
+            adultsPrice += price;
+        } else if (i < adults + kids) {
+            kidsPrice += price * 0.5;
+        }
     }
 
     // сумма доп. услуг по всем вагонам
@@ -91,29 +65,27 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
         adultsPrice,
         kidsPrice,
         servicesTotal,
-        total: adultsPrice + kidsPrice + servicesTotal
+        total: adultsPrice + kidsPrice + servicesTotal,
     };
 };
 
-
-
 const Main: React.FC = () => {
     const location = useLocation();
-    const orderData = location.state;
+    const orderData: any = location.state; // можешь типизировать своим OrderData, если он есть
 
     const dep = orderData.train.departure;
 
+    // seats.first / seats.second — теперь массивы вагонов
+    const seatsFirst: SeatData[] = orderData.seats.first || [];
+    const seatsSecond: SeatData[] = orderData.seats.second || [];
+
     // ---------- собираем блок 1 ----------
-    const block1 = buildPassengerBlock(
-        orderData.tickets.first,
-        orderData.seats.first // массив!
-    );
+    const block1 = buildPassengerBlock(orderData.tickets.first, seatsFirst);
 
-    const block2 = buildPassengerBlock(
-        orderData.tickets.second,
-        orderData.seats.second
-    );
+    // ---------- собираем блок 2 ----------
+    const block2 = buildPassengerBlock(orderData.tickets.second, seatsSecond);
 
+    const totalPrice = (block1?.total ?? 0) + (block2?.total ?? 0);
 
     return (
         <section className={styles.main}>
@@ -146,6 +118,7 @@ const Main: React.FC = () => {
                             />
                         )}
 
+                        {/* ВТОРОЙ БЛОК */}
                         {block2 && (
                             <PassengersBlock
                                 passengers={block2.passengers}
@@ -156,7 +129,7 @@ const Main: React.FC = () => {
                         )}
 
                         {/* ИТОГ */}
-                        <TotalBlock totalPrice={(block1?.total ?? 0) + (block2?.total ?? 0)} />
+                        <TotalBlock totalPrice={totalPrice} />
                     </div>
                 </div>
 
