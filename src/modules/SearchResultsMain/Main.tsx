@@ -91,16 +91,21 @@ const Main: React.FC = () => {
     type: string | null
   ) => {
     const needSeats = tickets.adults + tickets.kids;
-    const selectedSeats =
-      seatsArr.reduce((sum, wagon) => sum + wagon.seats.length, 0);
+    const selectedSeats = seatsArr.reduce((s, w) => s + w.seats.length, 0);
 
-    // ==== 1) Если мест НЕ НУЖНО → блок всегда корректен ====
-    if (needSeats === 0) return false;
+    // 1) Если мест выбрано больше, чем билетов — ошибка
+    if (selectedSeats > needSeats) return true;
 
-    // ==== 2) Если мест НУЖНО, но тип не выбран → некорректен ====
+    // 2) Если выбраны места, но билеты = 0 — ошибка
+    if (needSeats === 0 && selectedSeats > 0) return true;
+
+    // 3) Если ни билетов, ни мест — ок
+    if (needSeats === 0 && selectedSeats === 0) return false;
+
+    // 4) Тип вагона обязателен
     if (!type) return true;
 
-    // ==== 3) Если мест НУЖНО, но количество не совпадает → некорректен ====
+    // 5) Количество мест не совпадает с количеством билетов
     return needSeats !== selectedSeats;
   };
 
