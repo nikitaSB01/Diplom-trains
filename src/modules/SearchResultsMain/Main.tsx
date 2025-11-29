@@ -15,6 +15,7 @@ import ChoiceLocationTrains from "../../components/SearchPageMain/ChoiceLocation
 
 
 interface SeatsBlockData {
+
   blockId: "first" | "second";
   type: string;
   wagonId: string;
@@ -171,6 +172,9 @@ const Main: React.FC = () => {
     return [...existing, incoming];
   }
 
+  /* флаг для вычисления обратного маршрута */
+  const hasReturnDirection = !!selectedTrain?.arrival;
+
   return (
     <section className={styles.main}>
 
@@ -224,8 +228,8 @@ const Main: React.FC = () => {
                   blockId="first"
                   isSecond={false}
                   train={selectedTrain}
-                  selectedType={firstType}
-                  disabledType={secondType}   // ← ВАЖНО
+                  direction={selectedTrain.departure}
+                  disabledType={null}
                   onBack={() => {
                     setIsChoosingSeats(false);
                     setSelectedTrain(null);
@@ -256,14 +260,15 @@ const Main: React.FC = () => {
               )}
 
               {/* Второй блок — выводим КОГДА выбран тип */}
-              {firstType && selectedTrain && (
+              {hasReturnDirection && selectedTrain && (
                 <div className={styles.secondTrainBlock}>
                   <ChoiceLocationTrains
                     blockId="second"
                     isSecond={true}
                     train={selectedTrain}
+                    direction={selectedTrain.arrival || null}
                     selectedType={secondType}
-                    disabledType={firstType}    // ← ВАЖНО
+                    disabledType={null}    // ← ВАЖНО
                     onBack={() => {
                       setIsChoosingSeats(false);
                       setSelectedTrain(null);

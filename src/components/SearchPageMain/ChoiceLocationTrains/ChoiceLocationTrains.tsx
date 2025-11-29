@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { SeatWithPrice } from "../../../types/seat";
+import { DirectionInfo } from "../../../types/Train/trainTypes";
 
 import styles from "./ChoiceLocationTrains.module.css";
 import { Train } from "../../../types/Train/trainTypes";
@@ -13,6 +14,7 @@ import { ReactComponent as TrainSvg } from "../../../assets/icons/ChoiceLocation
 
 interface Props {
     train: Train;
+    direction: DirectionInfo | null;
     onBack: () => void;
     onSelectType: (type: string) => void;
     disabledType?: string | null;   // ← добавляем
@@ -42,26 +44,22 @@ interface Props {
 
 }
 
-const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, selectedType, isSecond, onUpdateTickets,
-    onUpdateSeats, disabledType, blockId }) => {
+const ChoiceLocationTrains: React.FC<Props> = ({
+    train,
+    onBack,
+    onSelectType,
+    selectedType,
+    isSecond,
+    onUpdateTickets,
+    onUpdateSeats,
+    disabledType,
+    blockId,
+    direction
+}) => {
 
-    const dep = train.departure;
-
-    const formatTime = (unix: number) =>
-        new Date(unix * 1000).toLocaleTimeString("ru-RU", {
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-
-    const duration = (() => {
-        const h = Math.floor(dep.duration / 3600);
-        const m = Math.floor((dep.duration % 3600) / 60);
-        return `${h} часов ${m} минут`;
-    })();
-    const hours = Math.floor(dep.duration / 3600);
-    const minutes = Math.floor((dep.duration % 3600) / 60);
-
-    const [activeField, setActiveField] = useState<"adults" | "kids" | "kidsNoSeat" | null>(null);
+    // ❗ Хуки ВСЕГДА ДОЛЖНЫ ИДТИ ПЕРВЫМИ
+    const [activeField, setActiveField] =
+        useState<"adults" | "kids" | "kidsNoSeat" | null>(null);
 
     const inputAdultsRef = useRef<HTMLInputElement>(null);
 
@@ -71,14 +69,24 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
         }
     }, [activeField]);
 
+    // ❗ Только после хуков можно проверять direction
+    if (!direction) return null;
+
+    const dep = direction;
+
+    const formatTime = (unix: number) =>
+        new Date(unix * 1000).toLocaleTimeString("ru-RU", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+
+    const hours = Math.floor(dep.duration / 3600);
+    const minutes = Math.floor((dep.duration % 3600) / 60);
+
     return (
         <div className={styles.wrapper}>
-
-            {/* БЛОК 1 --- ВЕРХНЯЯ ПАНЕЛЬ */}
             <div
-                className={
-                    `${styles.topBar} ${isSecond ? styles.topBarSecond : ""}`
-                }
+                className={`${styles.topBar} ${isSecond ? styles.topBarSecond : ""}`}
             >
                 <button className={styles.backButton} onClick={onBack}>
                     <Arrow className={styles.arrowSvg} />
@@ -113,7 +121,9 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
                     <div className={styles.timeBlock}>
                         <p className={styles.time}>{formatTime(dep.from.datetime)}</p>
                         <p className={styles.city}>{dep.from.city.name}</p>
-                        <p className={styles.station}>{dep.from.railway_station_name} <span>вокзал</span></p>
+                        <p className={styles.station}>
+                            {dep.from.railway_station_name} <span>вокзал</span>
+                        </p>
                     </div>
 
                     <div className={styles.arrowBlock}>
@@ -123,7 +133,9 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
                     <div className={styles.timeBlock}>
                         <p className={styles.time}>{formatTime(dep.to.datetime)}</p>
                         <p className={styles.city}>{dep.to.city.name}</p>
-                        <p className={styles.station}>{dep.to.railway_station_name} <span>вокзал</span></p>
+                        <p className={styles.station}>
+                            {dep.to.railway_station_name} <span>вокзал</span>
+                        </p>
                     </div>
                 </div>
 
@@ -136,7 +148,7 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
                 </div>
             </div>
 
-            {/* БЛОК 3 — КОЛИЧЕСТВО БИЛЕТОВ */}
+            {/* БИЛЕТЫ */}
             <div className={styles.ticketsBlock}>
                 <h2 className={styles.blockTitle}>Количество билетов</h2>
 
@@ -151,7 +163,7 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
                     <TicketField
                         label="Детских —"
                         max={3}
-                        hint="Можно добавить 3 детей до 10 лет. Свое место в вагоне, как у взрослых, но дешевле в среднем на 50-65%"
+                        hint="Можно добавить 3 детей до 10 лет"
                         onUpdateTickets={onUpdateTickets}
                     />
 
@@ -164,17 +176,19 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
                 </div>
             </div>
 
-            {/* БЛОК 4 — ТИПЫ ВАГОНОВ */}
+            {/* ТИП ВАГОНА */}
             <div className={styles.typeBlock}>
                 <TypeSelector
                     onSelectType={onSelectType}
                     routeId={dep._id}
-                    disabledType={disabledType}
+                    disabledType={null}
                     onUpdateSeats={onUpdateSeats}
                     blockId={blockId}
-                /> </div>
-        </div >
+                />
+            </div>
+        </div>
     );
 };
+
 
 export default ChoiceLocationTrains;
