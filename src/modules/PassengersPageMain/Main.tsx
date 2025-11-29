@@ -51,21 +51,33 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
     }
 
     // === СОБИРАЕМ ВСЕ ОТДЕЛЬНЫЕ УСЛУГИ ===
+    // === СОБИРАЕМ ВСЕ ОТДЕЛЬНЫЕ УСЛУГИ ===
     const servicesList = seatDataArr.flatMap((wagon) => {
+
+        const seatCount = wagon.seats.length;
         const out: { name: string; price: number }[] = [];
 
+        // --- Wi-Fi: единоразово ---
         if (wagon.services.wifi) {
-            out.push({ name: "Wi-Fi", price: wagon.services.wifi_price });
+            out.push({
+                name: "Wi-Fi",
+                price: wagon.services.wifi_price
+            });
         }
 
+        // --- Бельё: за каждое выбранное место ---
         if (wagon.services.linens) {
-            out.push({ name: "Бельё", price: wagon.services.linens_price });
+            out.push({
+                name: `Бельё × ${seatCount}`,
+                price: wagon.services.linens_price * seatCount
+            });
         }
 
         return out;
     });
 
     const servicesTotal = servicesList.reduce((s, x) => s + x.price, 0);
+
 
     return {
         passengers: { adults, kids, kidsNoSeat },

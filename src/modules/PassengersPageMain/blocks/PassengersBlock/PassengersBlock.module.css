@@ -17,8 +17,11 @@
 }
 
 .left p {
-    font-size: 18px;
     font-weight: 700;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(255, 255, 255, 1);
 }
 
 .icon {

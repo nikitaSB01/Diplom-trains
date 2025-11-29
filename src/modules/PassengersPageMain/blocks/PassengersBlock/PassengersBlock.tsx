@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./PassengersBlock.module.css";
 import { ReactComponent as UserIcon } from "../../../../assets/icons/ChoiceLocationTrains/arrowBetween.svg";
 import { ReactComponent as Ruble } from "../../../../assets/icons/Train/ruble.svg";
+
 interface Props {
     passengers: {
         adults: number;
