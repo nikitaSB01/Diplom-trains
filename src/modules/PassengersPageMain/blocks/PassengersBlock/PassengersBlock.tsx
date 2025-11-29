@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./PassengersBlock.module.css";
 import { ReactComponent as UserIcon } from "../../../../assets/icons/ChoiceLocationTrains/arrowBetween.svg";
 import { ReactComponent as Ruble } from "../../../../assets/icons/Train/ruble.svg";
-
 interface Props {
     passengers: {
         adults: number;
@@ -12,6 +11,9 @@ interface Props {
     adultsPrice: number;
     kidsPrice: number;
     servicesTotal: number;
+    servicesList: { name: string; price: number }[];
+
+    hideHeader?: boolean;  // ← ДОБАВИЛ
 }
 
 const PassengersBlock: React.FC<Props> = ({
@@ -19,19 +21,22 @@ const PassengersBlock: React.FC<Props> = ({
     adultsPrice,
     kidsPrice,
     servicesTotal,
+    servicesList,        // ← ДОБАВИЛИ ЭТО!
+    hideHeader = false,
 }) => {
     const { adults, kids } = passengers;
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <div className={styles.left}>
-                    <UserIcon />
-                    <p>Пассажиры</p>
+            {!hideHeader && (
+                <div className={styles.header}>
+                    <div className={styles.left}>
+                        <UserIcon />
+                        <p>Пассажиры</p>
+                    </div>
+                    <div className={styles.icon}>≡</div>
                 </div>
-
-                <div className={styles.icon}>≡</div>
-            </div>
+            )}
 
             <div className={styles.list}>
                 {adults > 0 && (
@@ -54,15 +59,16 @@ const PassengersBlock: React.FC<Props> = ({
                     </div>
                 )}
 
-                {servicesTotal > 0 && (
-                    <div className={styles.row}>
-                        <span>Доп. услуги</span>
+                {/* === ОТДЕЛЬНЫЕ УСЛУГИ === */}
+                {servicesList.map((srv, i) => (
+                    <div className={styles.row} key={i}>
+                        <span>{srv.name}</span>
                         <div className={styles.rowPrice}>
-                            <strong>{servicesTotal}</strong>
+                            <strong>{srv.price}</strong>
                             <Ruble className={styles.rubleIcon} />
                         </div>
                     </div>
-                )}
+                ))}
             </div>
         </div>
     );

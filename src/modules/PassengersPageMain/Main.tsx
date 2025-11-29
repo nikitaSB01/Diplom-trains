@@ -36,10 +36,9 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
 
     const { adults, kids, kidsNoSeat } = tickets;
 
-    // собираем ВСЕ цены со всех вагонов блока
     const allSeatPrices: number[] = seatDataArr
         .flatMap((wagon) => wagon.seats.map((s) => s.price))
-        .sort((a, b) => b - a); // взрослым — самые дорогие
+        .sort((a, b) => b - a);
 
     let adultsPrice = 0;
     let kidsPrice = 0;
@@ -47,24 +46,33 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
     for (let i = 0; i < allSeatPrices.length; i++) {
         const price = allSeatPrices[i];
 
-        if (i < adults) {
-            adultsPrice += price;
-        } else if (i < adults + kids) {
-            kidsPrice += price * 0.5;
-        }
+        if (i < adults) adultsPrice += price;
+        else if (i < adults + kids) kidsPrice += price * 0.5;
     }
 
-    // сумма доп. услуг по всем вагонам
-    const servicesTotal = seatDataArr.reduce(
-        (sum, wagon) => sum + (wagon.services?.total || 0),
-        0
-    );
+    // === СОБИРАЕМ ВСЕ ОТДЕЛЬНЫЕ УСЛУГИ ===
+    const servicesList = seatDataArr.flatMap((wagon) => {
+        const out: { name: string; price: number }[] = [];
+
+        if (wagon.services.wifi) {
+            out.push({ name: "Wi-Fi", price: wagon.services.wifi_price });
+        }
+
+        if (wagon.services.linens) {
+            out.push({ name: "Бельё", price: wagon.services.linens_price });
+        }
+
+        return out;
+    });
+
+    const servicesTotal = servicesList.reduce((s, x) => s + x.price, 0);
 
     return {
         passengers: { adults, kids, kidsNoSeat },
         adultsPrice,
         kidsPrice,
         servicesTotal,
+        servicesList,    // ← ВАЖНО! передаём в компонент
         total: adultsPrice + kidsPrice + servicesTotal,
     };
 };
@@ -115,17 +123,24 @@ const Main: React.FC = () => {
                                 adultsPrice={block1.adultsPrice}
                                 kidsPrice={block1.kidsPrice}
                                 servicesTotal={block1.servicesTotal}
+                                servicesList={block1.servicesList}   // ← добавили
+                                hideHeader={false}   // ← явное указание
                             />
                         )}
 
                         {/* ВТОРОЙ БЛОК */}
                         {block2 && (
-                            <PassengersBlock
-                                passengers={block2.passengers}
-                                adultsPrice={block2.adultsPrice}
-                                kidsPrice={block2.kidsPrice}
-                                servicesTotal={block2.servicesTotal}
-                            />
+                            <>
+                                <div className={styles.sectionDivider}>Обратно</div>  {/* ← разделение */}
+                                <PassengersBlock
+                                    passengers={block2.passengers}
+                                    adultsPrice={block2.adultsPrice}
+                                    kidsPrice={block2.kidsPrice}
+                                    servicesTotal={block2.servicesTotal}
+                                    servicesList={block2.servicesList}   // ← добавили
+                                    hideHeader={true}    // ← Скрываем дублирующий заголовок
+                                />
+                            </>
                         )}
 
                         {/* ИТОГ */}
