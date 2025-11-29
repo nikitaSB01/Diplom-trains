@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { SeatWithPrice } from "../../../types/seat";
 
 import styles from "./ChoiceLocationTrains.module.css";
 import { Train } from "../../../types/Train/trainTypes";
@@ -17,6 +18,7 @@ interface Props {
     disabledType?: string | null;   // ← добавляем
     selectedType?: string | null;
     isSecond?: boolean;
+    blockId: "first" | "second";
 
     onUpdateTickets?: (data: {
         adults: number;
@@ -25,21 +27,23 @@ interface Props {
     }) => void;
 
     onUpdateSeats?: (data: {
+        blockId: "first" | "second";
         type: string;
         wagonId: string;
-        seats: number[];
+        seats: SeatWithPrice[];
         services: {
             wifi: boolean;
             linens: boolean;
             wifi_price: number;
             linens_price: number;
+            total: number;
         };
     }) => void;
 
 }
 
 const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, selectedType, isSecond, onUpdateTickets,
-    onUpdateSeats, disabledType }) => {
+    onUpdateSeats, disabledType, blockId }) => {
 
     const dep = train.departure;
 
@@ -162,7 +166,12 @@ const ChoiceLocationTrains: React.FC<Props> = ({ train, onBack, onSelectType, se
 
             {/* БЛОК 4 — ТИПЫ ВАГОНОВ */}
             <div className={styles.typeBlock}>
-                <TypeSelector onSelectType={onSelectType} routeId={dep._id} disabledType={disabledType} onUpdateSeats={onUpdateSeats}
+                <TypeSelector
+                    onSelectType={onSelectType}
+                    routeId={dep._id}
+                    disabledType={disabledType}
+                    onUpdateSeats={onUpdateSeats}
+                    blockId={blockId}
                 /> </div>
         </div >
     );

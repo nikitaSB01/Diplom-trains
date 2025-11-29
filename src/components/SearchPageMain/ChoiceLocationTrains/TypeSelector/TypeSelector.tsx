@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./TypeSelector.module.css";
+import { SeatWithPrice } from "../../../../types/seat";
 
 import { ReactComponent as Cupe } from "../../../../assets/icons/ChoiceLocationTrains/cupe.svg";
 import { ReactComponent as Plat } from "../../../../assets/icons/ChoiceLocationTrains/plat.svg";
@@ -32,18 +33,21 @@ interface Carriage {
 }
 
 interface Props {
+    blockId: "first" | "second";
     onSelectType: (type: string) => void;
     routeId: string;
     disabledType?: string | null;
     onUpdateSeats?: (data: {
+        blockId: "first" | "second";
         type: string;
         wagonId: string;
-        seats: number[];
+        seats: SeatWithPrice[];
         services: {
             wifi: boolean;
             linens: boolean;
             wifi_price: number;
             linens_price: number;
+            total: number;
         };
     }) => void;
 }
@@ -56,7 +60,7 @@ const TYPES = [
     { id: "люкс", label: "Люкс", Icon: Lux, className: "first" },
 ];
 
-const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, onUpdateSeats }) => {
+const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, onUpdateSeats, blockId }) => {
 
     /* для хорошей отрисовки данных по вагону */
     const [loading, setLoading] = useState(false);
@@ -177,6 +181,7 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
                                     <CarriageCard
                                         key={c.coach._id}
                                         carriage={c}
+                                        blockId={blockId}
                                         onUpdateSeats={onUpdateSeats}
                                     />
                                 ))

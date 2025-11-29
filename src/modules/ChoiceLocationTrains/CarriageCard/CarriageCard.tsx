@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./CarriageCard.module.css";
+import { SeatWithPrice } from "../../../types/seat";
 
 import { ReactComponent as AC } from "../../../assets/icons/Train/conditioning.svg";
 import { ReactComponent as Wifi } from "../../../assets/icons/Train/wifi.svg";
@@ -10,23 +11,27 @@ import CarSeatsMap from "../CarSeatsMap/CarSeatsMap";
 
 interface CarriageCardProps {
     carriage: any;
+    blockId: "first" | "second";   // ← ДОБАВИЛ ТИП
 
     onUpdateSeats?: (data: {
+        blockId: "first" | "second";
         type: string;
         wagonId: string;
-        seats: number[];
+        seats: SeatWithPrice[];
         services: {
             wifi: boolean;
             linens: boolean;
             wifi_price: number;
             linens_price: number;
+            total: number;
         };
     }) => void;
 }
 
 const CarriageCard: React.FC<CarriageCardProps> = ({
     carriage,
-    onUpdateSeats
+    onUpdateSeats,
+    blockId
 }) => {
     interface SelectedSeat {
         index: number;
@@ -98,14 +103,19 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
 
     useEffect(() => {
         onUpdateSeats?.({
+            blockId,
             type: coach.class_type,
             wagonId: coach._id,
-            seats: selectedSeats.map(s => s.index),
+            seats: selectedSeats.map(s => ({
+                index: s.index,
+                price: s.price
+            })),
             services: {
                 wifi: extras.wifi,
                 linens: extras.linens,
                 wifi_price: coach.wifi_price,
-                linens_price: coach.linens_price
+                linens_price: coach.linens_price,
+                total: servicesTotal
             }
         });
     }, [selectedSeats, extras]);

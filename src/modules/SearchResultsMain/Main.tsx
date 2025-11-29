@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SeatWithPrice } from "../../types/seat";
 
 import styles from './Main.module.css';
 import Steps from '../../components/Steps/Steps';
@@ -13,6 +14,19 @@ import { Train } from "../../types/Train/trainTypes";
 import ChoiceLocationTrains from "../../components/SearchPageMain/ChoiceLocationTrains/ChoiceLocationTrains";
 
 
+interface SeatsBlockData {
+  blockId: "first" | "second";
+  type: string;
+  wagonId: string;
+  seats: SeatWithPrice[];
+  services: {
+    wifi: boolean;
+    linens: boolean;
+    wifi_price: number;
+    linens_price: number;
+    total: number;
+  };
+}
 
 const Main: React.FC = () => {
 
@@ -29,9 +43,12 @@ const Main: React.FC = () => {
   });
 
 
-  const [selectedSeatsData, setSelectedSeatsData] = useState({
-    first: null as any,
-    second: null as any
+  const [selectedSeatsData, setSelectedSeatsData] = useState<{
+    first: SeatsBlockData | null;
+    second: SeatsBlockData | null;
+  }>({
+    first: null,
+    second: null,
   });
 
   /* данные по хранению активного типа вагона */
@@ -70,7 +87,7 @@ const Main: React.FC = () => {
 
   const isBlockIncorrect = (
     tickets: { adults: number; kids: number; kidsNoSeat: number },
-    seatsData: any,
+    seatsData: SeatsBlockData | null,
     type: string | null
   ) => {
     const needSeats = tickets.adults + tickets.kids;
@@ -181,6 +198,7 @@ const Main: React.FC = () => {
               {/* Первый блок */}
               {selectedTrain && (
                 <ChoiceLocationTrains
+                  blockId="first"
                   isSecond={false}
                   train={selectedTrain}
                   selectedType={firstType}
@@ -209,6 +227,7 @@ const Main: React.FC = () => {
               {firstType && selectedTrain && (
                 <div className={styles.secondTrainBlock}>
                   <ChoiceLocationTrains
+                    blockId="second"
                     isSecond={true}
                     train={selectedTrain}
                     selectedType={secondType}

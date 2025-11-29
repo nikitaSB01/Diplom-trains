@@ -5,8 +5,9 @@ import CarriageCard from "../CarriageCard/CarriageCard";
 
 
 interface Props {
-    routeId: string;          // id направления
-    type: string | null;      // сидячий / купе / люкс / плацкарт
+    routeId: string;
+    type: string | null;
+    blockId: "first" | "second";
 }
 
 const mapTypeToFlags: Record<string, string> = {
@@ -16,7 +17,7 @@ const mapTypeToFlags: Record<string, string> = {
     "сидячий": "have_fourth_class",
 };
 
-const CarriageList: React.FC<Props> = ({ routeId, type }) => {
+const CarriageList: React.FC<Props> = ({ routeId, type, blockId }) => {
     const [carriages, setCarriages] = useState<any[]>([]);
     const [activeCar, setActiveCar] = useState<number | null>(null);
 
@@ -60,7 +61,7 @@ const CarriageList: React.FC<Props> = ({ routeId, type }) => {
                     .filter((c) => c._id === activeCar)
                     .map((c) => (
                         <div key={c._id} className={styles.dataCar}>
-                            <CarriageCard carriage={c} />
+                            <CarriageCard carriage={c} blockId={blockId} />
                         </div>
                     ))}
             </div>
