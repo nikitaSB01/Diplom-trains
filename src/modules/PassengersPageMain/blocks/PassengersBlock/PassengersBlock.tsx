@@ -11,20 +11,16 @@ interface Props {
     };
     adultsPrice: number;
     kidsPrice: number;
-
-    services: {
-        wifi: boolean;
-        linens: boolean;
-        wifi_price: number;
-        linens_price: number;
-    } | null;
+    servicesTotal: number;
 }
 
-const PassengersBlock: React.FC<Props> = ({ passengers, adultsPrice, kidsPrice, services }) => {
+const PassengersBlock: React.FC<Props> = ({
+    passengers,
+    adultsPrice,
+    kidsPrice,
+    servicesTotal
+}) => {
     const { adults, kids } = passengers;
-
-    // Количество комплектов белья (только пассажиры с местами)
-    const linenSets = adults + kids;
 
     return (
         <div className={styles.container}>
@@ -33,7 +29,6 @@ const PassengersBlock: React.FC<Props> = ({ passengers, adultsPrice, kidsPrice, 
                     <UserIcon />
                     <p>Пассажиры</p>
                 </div>
-
                 <div className={styles.icon}>≡</div>
             </div>
 
@@ -58,31 +53,14 @@ const PassengersBlock: React.FC<Props> = ({ passengers, adultsPrice, kidsPrice, 
                     </div>
                 )}
 
-                {/* === ДОП. УСЛУГИ === */}
-                {services && (
-                    <>
-                        {/* Wi-Fi */}
-                        {services.wifi && (
-                            <div className={styles.row}>
-                                <span>Wi-Fi</span>
-                                <div className={styles.rowPrice}>
-                                    <strong>{services.wifi_price}</strong>
-                                    <Ruble className={styles.rubleIcon} />
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Бельё */}
-                        {services.linens && linenSets > 0 && (
-                            <div className={styles.row}>
-                                <span>{linenSets} Бельё</span>
-                                <div className={styles.rowPrice}>
-                                    <strong>{services.linens_price * linenSets}</strong>
-                                    <Ruble className={styles.rubleIcon} />
-                                </div>
-                            </div>
-                        )}
-                    </>
+                {servicesTotal > 0 && (
+                    <div className={styles.row}>
+                        <span>Доп. услуги</span>
+                        <div className={styles.rowPrice}>
+                            <strong>{servicesTotal}</strong>
+                            <Ruble className={styles.rubleIcon} />
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

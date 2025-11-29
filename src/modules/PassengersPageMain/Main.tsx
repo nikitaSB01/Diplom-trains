@@ -61,37 +61,36 @@ const getSeatPrice = (
 
 
 // ---------- функция сборки данных по одному блоку ----------
-const buildPassengerBlock = (
-    tickets: Tickets,
-    seatData: SeatData | null,
-    priceInfo: any,
-    fallbackPrice: number
-) => {
-    if (!seatData) return null;
+const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
+    if (!seatDataArr || seatDataArr.length === 0) return null;
 
     const { adults, kids, kidsNoSeat } = tickets;
 
-    // берём цену прямо из seatData.seats
-    const sortedPrices: number[] = seatData.seats
-        .map(s => s.price)
+    // собираем ВСЕ цены со всех вагонов
+    const allSeatPrices: number[] = seatDataArr
+        .flatMap(wagon => wagon.seats.map(s => s.price))
         .sort((a, b) => b - a);
 
     let adultsPrice = 0;
     let kidsPrice = 0;
 
-    for (let i = 0; i < sortedPrices.length; i++) {
-        const price = sortedPrices[i];
+    for (let i = 0; i < allSeatPrices.length; i++) {
+        const price = allSeatPrices[i];
         if (i < adults) adultsPrice += price;
         else if (i < adults + kids) kidsPrice += price * 0.5;
     }
 
-    const servicesTotal = seatData.services?.total ?? 0;
+    // сумма доп. услуг по всем вагонам
+    const servicesTotal = seatDataArr.reduce(
+        (sum, wagon) => sum + (wagon.services?.total || 0),
+        0
+    );
 
     return {
         passengers: { adults, kids, kidsNoSeat },
         adultsPrice,
         kidsPrice,
-        services: seatData.services,
+        servicesTotal,
         total: adultsPrice + kidsPrice + servicesTotal
     };
 };
@@ -107,17 +106,12 @@ const Main: React.FC = () => {
     // ---------- собираем блок 1 ----------
     const block1 = buildPassengerBlock(
         orderData.tickets.first,
-        orderData.seats.first,
-        dep.price_info?.[orderData.seats.first?.type],
-        dep.min_price
+        orderData.seats.first // массив!
     );
 
-    // ---------- собираем блок 2 ----------
     const block2 = buildPassengerBlock(
         orderData.tickets.second,
-        orderData.seats.second,
-        dep.price_info?.[orderData.seats.second?.type],
-        dep.min_price
+        orderData.seats.second
     );
 
 
@@ -148,17 +142,16 @@ const Main: React.FC = () => {
                                 passengers={block1.passengers}
                                 adultsPrice={block1.adultsPrice}
                                 kidsPrice={block1.kidsPrice}
-                                services={block1.services}
+                                servicesTotal={block1.servicesTotal}
                             />
                         )}
 
-                        {/* ВТОРОЙ БЛОК */}
                         {block2 && (
                             <PassengersBlock
                                 passengers={block2.passengers}
                                 adultsPrice={block2.adultsPrice}
                                 kidsPrice={block2.kidsPrice}
-                                services={block2.services}
+                                servicesTotal={block2.servicesTotal}
                             />
                         )}
 

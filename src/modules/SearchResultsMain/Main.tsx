@@ -44,11 +44,11 @@ const Main: React.FC = () => {
 
 
   const [selectedSeatsData, setSelectedSeatsData] = useState<{
-    first: SeatsBlockData | null;
-    second: SeatsBlockData | null;
+    first: SeatsBlockData[];
+    second: SeatsBlockData[];
   }>({
-    first: null,
-    second: null,
+    first: [],
+    second: [],
   });
 
   /* данные по хранению активного типа вагона */
@@ -87,50 +87,44 @@ const Main: React.FC = () => {
 
   const isBlockIncorrect = (
     tickets: { adults: number; kids: number; kidsNoSeat: number },
-    seatsData: SeatsBlockData | null,
+    seatsArr: SeatsBlockData[],
     type: string | null
   ) => {
     const needSeats = tickets.adults + tickets.kids;
-    const selectedSeats = seatsData?.seats?.length || 0;
+    const selectedSeats =
+      seatsArr.reduce((sum, wagon) => sum + wagon.seats.length, 0);
+
+    if (!type && needSeats > 0) return true;
 
     if (needSeats === 0) return selectedSeats > 0;
-
-    if (!type) return true;
 
     return needSeats !== selectedSeats;
   };
 
-  const block1Incorrect = isBlockIncorrect(ticketsBlock1, selectedSeatsData.first, firstType);
-  const block2Incorrect = isBlockIncorrect(ticketsBlock2, selectedSeatsData.second, secondType);
-
-  const block1HasTickets =
-    ticketsBlock1.adults > 0 ||
-    ticketsBlock1.kids > 0;
-
-  const block2HasTickets =
-    ticketsBlock2.adults > 0 ||
-    ticketsBlock2.kids > 0;
-
-  const totalTicketsBlock1 =
-    ticketsBlock1.adults + ticketsBlock1.kids;
-
-  const totalTicketsBlock2 =
+  // ======== ОБЩЕЕ ЧИСЛО БИЛЕТОВ (только взрослые + дети с местом) ========
+  const totalTickets =
+    ticketsBlock1.adults + ticketsBlock1.kids +
     ticketsBlock2.adults + ticketsBlock2.kids;
-  const block1Ready =
-    firstType &&
-    totalTicketsBlock1 > 0 &&
-    selectedSeatsData.first?.seats?.length === totalTicketsBlock1;
 
-  const block2Ready =
-    secondType &&
-    totalTicketsBlock2 > 0 &&
-    selectedSeatsData.second?.seats?.length === totalTicketsBlock2;
+  // ======== ОБЩЕЕ ЧИСЛО ВЫБРАННЫХ МЕСТ ========
+  const totalSelectedSeats =
+    selectedSeatsData.first.reduce((s, w) => s + w.seats.length, 0) +
+    selectedSeatsData.second.reduce((s, w) => s + w.seats.length, 0);
 
+  // ======== ПРАВИЛО ПЕРЕХОДА ДАЛЕЕ ========
+  const block1Incorrect = isBlockIncorrect(
+    ticketsBlock1,
+    selectedSeatsData.first,
+    firstType
+  );
 
-  const showNext =
-    (block1Ready && !block2Incorrect) ||
-    (block2Ready && !block1Incorrect);
+  const block2Incorrect = isBlockIncorrect(
+    ticketsBlock2,
+    selectedSeatsData.second,
+    secondType
+  );
 
+  const showNext = !block1Incorrect && !block2Incorrect;
 
   const navigate = useNavigate();
   const handleNext = () => {
@@ -147,6 +141,23 @@ const Main: React.FC = () => {
     });
   };
 
+
+  function mergeSeatData(
+    existing: SeatsBlockData[],
+    incoming: SeatsBlockData
+  ): SeatsBlockData[] {
+    const found = existing.find(s => s.wagonId === incoming.wagonId);
+
+    if (found) {
+      // обновление существующего вагона
+      return existing.map(s =>
+        s.wagonId === incoming.wagonId ? incoming : s
+      );
+    }
+
+    // добавление нового вагона
+    return [...existing, incoming];
+  }
 
   return (
     <section className={styles.main}>
@@ -218,7 +229,10 @@ const Main: React.FC = () => {
                       ...data,
                     }))
                   } onUpdateSeats={(data) =>
-                    setSelectedSeatsData(prev => ({ ...prev, first: data }))
+                    setSelectedSeatsData(prev => ({
+                      ...prev,
+                      first: mergeSeatData(prev.first, data)
+                    }))
                   }
                 />
               )}
@@ -247,7 +261,10 @@ const Main: React.FC = () => {
                         ...data,
                       }))
                     } onUpdateSeats={(data) =>
-                      setSelectedSeatsData(prev => ({ ...prev, second: data }))
+                      setSelectedSeatsData(prev => ({
+                        ...prev,
+                        second: mergeSeatData(prev.second, data)
+                      }))
                     }
                   />
                 </div>
