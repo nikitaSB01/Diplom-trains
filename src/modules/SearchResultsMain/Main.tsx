@@ -132,7 +132,7 @@ const Main: React.FC = () => {
     ticketsBlock2.adults + ticketsBlock2.kids > 0;
 
   const showNext = anyTicketsNeeded && !block1Incorrect && !block2Incorrect;
-  
+
   const navigate = useNavigate();
   const handleNext = () => {
     navigate("/passengers", {
@@ -228,7 +228,13 @@ const Main: React.FC = () => {
                     setSecondType(null);
                   }}
                   onSelectType={(type) => {
+                    // обновляем тип
                     setFirstType(type);
+                    // ОЧИЩАЕМ все выбранные места этого блока
+                    setSelectedSeatsData(prev => ({
+                      ...prev,
+                      first: []
+                    }));
                   }}
                   onUpdateTickets={(data) =>
                     setTicketsBlock1(prev => ({
@@ -261,6 +267,10 @@ const Main: React.FC = () => {
                     }}
                     onSelectType={(type) => {
                       setSecondType(type);
+                      setSelectedSeatsData(prev => ({
+                        ...prev,
+                        second: []
+                      }));
                     }}
                     onUpdateTickets={(data) =>
                       setTicketsBlock2(prev => ({

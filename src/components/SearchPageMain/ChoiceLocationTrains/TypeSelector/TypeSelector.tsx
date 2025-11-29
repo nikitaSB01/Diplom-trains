@@ -102,11 +102,30 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
 
     /* === Переключение вагона === */
     const toggleCar = (id: string) => {
-        setSelectedCars((prev) =>
-            prev.includes(id)
-                ? prev.filter((x) => x !== id) // повторное — скрыть
-                : [...prev, id] // добавить
-        );
+        setSelectedCars((prev) => {
+            const isActive = prev.includes(id);
+
+            if (isActive) {
+                // ← ВАЖНО: сразу очищаем выбранные места для закрываемого вагона
+                onUpdateSeats?.({
+                    blockId,
+                    type: activeType!,
+                    wagonId: id,
+                    seats: [],
+                    services: {
+                        wifi: false,
+                        linens: false,
+                        wifi_price: 0,
+                        linens_price: 0,
+                        total: 0
+                    }
+                });
+
+                return prev.filter((x) => x !== id);
+            }
+
+            return [...prev, id];
+        });
     };
 
     return (
@@ -133,6 +152,20 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
                                 setLoading(true);
                                 setActiveType(id);
                                 setSelectedCars([]);
+                                // ← Добавляем вызов полного сброса мест в родитель
+                                onUpdateSeats?.({
+                                    blockId,
+                                    type: id,
+                                    wagonId: "",
+                                    seats: [],
+                                    services: {
+                                        wifi: false,
+                                        linens: false,
+                                        wifi_price: 0,
+                                        linens_price: 0,
+                                        total: 0,
+                                    },
+                                });
                                 onSelectType(id);
                             }}
                             type="button"
