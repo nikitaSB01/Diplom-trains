@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./PassengerCard.module.css";
+import CustomSelect from "./CustomSelect/CustomSelect";
 
 import { ReactComponent as Plus } from "../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/Plus.svg";
 import { ReactComponent as PlusHover } from "../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/PlusNewPas.svg";
@@ -150,20 +151,14 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
 
                         {/* ====== ТИП БИЛЕТА ====== */}
                         <div className={styles.row}>
-                            <select
-                                className={styles.selectPassCard}
-                                id={`ticketType-${index}`}
+                            <CustomSelect
                                 value={formData.ticketType}
-                                onChange={(e) => {
-                                    setFormData({ ...formData, ticketType: e.target.value });
-                                    setErrorMessage("");
-                                    setCompleted(false);
-                                    onCompleteChange(index, false);
-                                }}
-                            >
-                                <option value="adult">Взрослый</option>
-                                <option value="child">Детский</option>
-                            </select>
+                                onChange={(val) => setFormData({ ...formData, ticketType: val })}
+                                options={[
+                                    { value: "adult", label: "Взрослый" },
+                                    { value: "child", label: "Детский" },
+                                ]}
+                            />
                         </div>
 
                         {/* ====== ФИО ====== */}
@@ -300,29 +295,25 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                         <div className={`${styles.row3} ${styles.rowType}`}>
                             <div
                                 className={`${styles.typeDocContainer} ${formData.docType === "Свидетельство о рождении"
-                                        ? styles.docWide
-                                        : styles.docNormal
+                                    ? styles.docWide
+                                    : styles.docNormal
                                     }`}
-                            >                                <label className={styles.labelPassCard} htmlFor={`docType-${index}`}>Тип документа</label>
-                                <select
-                                    className={`${styles.selectPassCard} ${styles.selectPassCardDoc}`}
-                                    id={`docType-${index}`}
+                            > <label className={styles.labelPassCard} htmlFor={`docType-${index}`}>Тип документа</label>
+                                <CustomSelect
                                     value={formData.docType}
-                                    onChange={(e) => {
+                                    onChange={(val) =>
                                         setFormData({
                                             ...formData,
-                                            docType: e.target.value,
+                                            docType: val,
                                             docSeries: "",
                                             docNumber: ""
-                                        });
-                                        setErrorMessage("");
-                                        setCompleted(false);
-                                        onCompleteChange(index, false);
-                                    }}
-                                >
-                                    <option value="Паспорт РФ">Паспорт РФ</option>
-                                    <option value="Свидетельство о рождении">Свидетельство о рождении</option>
-                                </select>
+                                        })
+                                    }
+                                    options={[
+                                        { value: "Паспорт РФ", label: "Паспорт РФ" },
+                                        { value: "Свидетельство о рождении", label: "Свидетельство о рождении" },
+                                    ]}
+                                />
                             </div>
 
                             {/* Серия — только для паспорта */}

@@ -195,14 +195,22 @@
     max-width: 205px;
 }
 
-/* обычный паспорт */
+.typeDocContainer {
+    display: flex;
+    flex-direction: column;
+}
+
 .docNormal {
     width: 205px;
 }
 
-/* свидетельство о рождении */
 .docWide {
     width: 440px;
+}
+
+.typeDocContainer .wrapper,
+.typeDocContainer .field {
+    width: 100% !important;
 }
 
 /* сам select внутри растягиваем по контейнеру */
