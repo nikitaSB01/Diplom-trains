@@ -7,7 +7,8 @@ import {
     capitalize,
     formatBirthday,
     formatSeries,
-    formatNumber
+    formatNumber,
+    formatBirthCertificate
 } from "./utils/formatters";
 
 import { validatePassenger } from "./utils/validation";
@@ -237,8 +238,8 @@ const PassengerCard: React.FC<Props> = ({
                                     <label
                                         htmlFor={`gender-m-${index}`}
                                         className={`${styles.genderBtn} ${formData.gender === "M"
-                                                ? styles.activeMale
-                                                : ""
+                                            ? styles.activeMale
+                                            : ""
                                             }`}
                                     >
                                         <span>М</span>
@@ -257,8 +258,8 @@ const PassengerCard: React.FC<Props> = ({
                                     <label
                                         htmlFor={`gender-f-${index}`}
                                         className={`${styles.genderBtn} ${formData.gender === "F"
-                                                ? styles.activeFemale
-                                                : ""
+                                            ? styles.activeFemale
+                                            : ""
                                             }`}
                                     >
                                         <span>Ж</span>
@@ -317,8 +318,8 @@ const PassengerCard: React.FC<Props> = ({
                         <div className={`${styles.row3} ${styles.rowType}`}>
                             <div
                                 className={`${styles.typeDocContainer} ${formData.docType === "Свидетельство о рождении"
-                                        ? styles.docWide
-                                        : styles.docNormal
+                                    ? styles.docWide
+                                    : styles.docNormal
                                     }`}
                             >
                                 <label
@@ -402,7 +403,7 @@ const PassengerCard: React.FC<Props> = ({
                                                 docNumber:
                                                     formData.docType === "Паспорт РФ"
                                                         ? formatNumber(e.target.value)
-                                                        : e.target.value
+                                                        : formatBirthCertificate(e.target.value)
                                             })
                                         }
                                         placeholder={

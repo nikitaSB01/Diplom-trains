@@ -33,3 +33,28 @@ export const formatSeries = (value: string) => {
 export const formatNumber = (value: string) => {
     return value.replace(/\D/g, "").slice(0, 6);
 };
+
+export const formatBirthCertificate = (value: string) => {
+    // 1. Очищаем ввод — оставляем только римские + русские буквы + цифры
+    let cleaned = value
+        .toUpperCase()
+        .replace(/[^IVXLCDMА-Я0-9]/g, "");
+
+    // 2. Выделяем части
+    const roman = cleaned.match(/^[IVXLCDM]+/)?.[0] ?? "";
+    const letters = cleaned.slice(roman.length).match(/^[А-Я]{0,2}/)?.[0] ?? "";
+    const digits = cleaned.slice(roman.length + letters.length).replace(/\D/g, "").slice(0, 6);
+
+    // 3. Собираем строку с автоматическими пробелами
+    let result = roman;
+
+    if (letters.length > 0) {
+        result += " " + letters;
+    }
+
+    if (digits.length > 0) {
+        result += " " + digits;
+    }
+
+    return result.trim();
+};
