@@ -185,16 +185,29 @@
             transparent 3px) 1;
 }
 
-.rowType .typeDocContainer,
-.rowType .typeDocContainer label,
-.rowType .typeDocContainer select,
+
 .rowType .seriesContainer,
 .rowType .seriesContainer label,
 .rowType .seriesContainer input,
 .rowType .numberContainer,
 .rowType .numberContainer label,
 .rowType .numberContainer input {
+    max-width: 205px;
+}
+
+/* обычный паспорт */
+.docNormal {
     width: 205px;
+}
+
+/* свидетельство о рождении */
+.docWide {
+    width: 440px;
+}
+
+/* сам select внутри растягиваем по контейнеру */
+.selectPassCardDoc {
+    width: 100%;
 }
 
 .typeDocContainer, .seriesContainer, .numberContainer,
@@ -226,7 +239,6 @@
 /* ===================== */
 /*        INPUTS         */
 /* ===================== */
-.inputPassCard {}
 
 .inputPassCard,
 select {
@@ -420,4 +432,44 @@ select:focus {
 .doneInfo svg {
     width: 28px;
     height: 28px;
+}
+
+
+/* === КАСТОМНЫЙ SELECT === */
+
+.selectPassCard {
+    width: 100%;
+
+    padding: 0 20px;
+    padding-right: 50px;
+    /* место для стрелки */
+
+    border: 1px solid rgba(146, 143, 148, 1);
+
+    background: #fff url("../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/select-arrow.svg") no-repeat right 20px center;
+    appearance: none;
+    /* скрываем системную стрелку */
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(41, 41, 41, 1);
+
+    cursor: pointer;
+}
+
+.selectPassCardDoc {
+    font-size: 18px;
+}
+
+.selectPassCard:focus {
+    border-color: #ffa800;
+    outline: none;
+}
+
+/* === DROPDOWN OPTIONS === */
+.selectPassCard option {
+    font-size: 28px;
+    padding: 10px 0;
 }

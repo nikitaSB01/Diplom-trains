@@ -163,7 +163,6 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                             >
                                 <option value="adult">Взрослый</option>
                                 <option value="child">Детский</option>
-                                <option value="childNoSeat">Детский без места</option>
                             </select>
                         </div>
 
@@ -299,10 +298,14 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
 
                         {/* ====== ДОКУМЕНТЫ ====== */}
                         <div className={`${styles.row3} ${styles.rowType}`}>
-                            <div className={styles.typeDocContainer}>
-                                <label className={styles.labelPassCard} htmlFor={`docType-${index}`}>Тип документа</label>
+                            <div
+                                className={`${styles.typeDocContainer} ${formData.docType === "Свидетельство о рождении"
+                                        ? styles.docWide
+                                        : styles.docNormal
+                                    }`}
+                            >                                <label className={styles.labelPassCard} htmlFor={`docType-${index}`}>Тип документа</label>
                                 <select
-                                    className={styles.selectPassCard}
+                                    className={`${styles.selectPassCard} ${styles.selectPassCardDoc}`}
                                     id={`docType-${index}`}
                                     value={formData.docType}
                                     onChange={(e) => {
@@ -356,7 +359,7 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                     }}
                                     placeholder={
                                         formData.docType === "Паспорт РФ"
-                                            ? "000000"
+                                            ? "__ __ __ __ __ __"
                                             : "VIII УН 123456"
                                     }
                                 />
