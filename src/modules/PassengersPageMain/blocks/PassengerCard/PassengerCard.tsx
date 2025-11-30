@@ -108,10 +108,10 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
         onRequestOpenNext(index);
     };
 
-    const isFormValid = () => {
+ /*    const isFormValid = () => {
         const error = validate();
         return error === "";
-    };
+    }; */
 
     return (
         <div
@@ -331,29 +331,36 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                             setCompleted(false);
                                             onCompleteChange(index, false);
                                         }}
+                                        placeholder="__ __ __ __"
+
                                     />
                                 </div>
                             )}
 
                             <div className={styles.numberContainer}>
                                 <label className={styles.labelPassCard} htmlFor={`docNumber-${index}`}>Номер</label>
-                                <input
-                                    className={styles.inputPassCard}
-                                    id={`docNumber-${index}`}
-                                    type="text"
-                                    value={formData.docNumber}
-                                    onChange={(e) => {
-                                        setFormData({ ...formData, docNumber: e.target.value });
-                                        setErrorMessage("");
-                                        setCompleted(false);
-                                        onCompleteChange(index, false);
-                                    }}
-                                    placeholder={
-                                        formData.docType === "Паспорт РФ"
-                                            ? "__ __ __ __ __ __"
-                                            : "VIII УН 123456"
+                                <div
+                                    className={
+                                        formData.docType === "Свидетельство о рождении"
+                                            ? styles.birthCertWrapper
+                                            : styles.inputWrapper
                                     }
-                                />
+                                    data-has-value={formData.docNumber.trim() !== ""}
+                                >
+                                    <input
+                                        className={styles.inputPassCard}
+                                        id={`docNumber-${index}`}
+                                        type="text"
+                                        value={formData.docNumber}
+                                        onChange={(e) => {
+                                            setFormData({ ...formData, docNumber: e.target.value });
+                                            setErrorMessage("");
+                                            setCompleted(false);
+                                            onCompleteChange(index, false);
+                                        }}
+                                        placeholder={formData.docType === "Паспорт РФ" ? "__ __ __ __ __ __" : ""}
+                                    />
+                                </div>
                             </div>
                         </div>
 

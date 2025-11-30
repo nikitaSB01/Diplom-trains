@@ -161,7 +161,13 @@
 .birthdayBlock {
     display: flex;
     flex-direction: column;
+}
 
+.birthdayBlock input::placeholder {
+    font-weight: 400;
+    font-size: 18px;
+
+    color: rgba(196, 196, 196, 1);
 }
 
 .row3 {
@@ -480,4 +486,55 @@ select:focus {
 .selectPassCard option {
     font-size: 28px;
     padding: 10px 0;
+}
+
+/* обёртка — становится относительным контейнером */
+.birthCertWrapper {
+    position: relative;
+}
+
+.seriesContainer input::placeholder,
+.numberContainer input::placeholder {
+    color: rgba(196, 196, 196, 1);
+}
+
+/* верхняя строка: "12 символов" */
+.birthCertWrapper::before {
+    content: "12 символов";
+    position: absolute;
+    top: 15px;
+    left: 12px;
+
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(196, 196, 196, 1);
+
+    pointer-events: none;
+}
+
+/* нижняя строка: тире */
+.birthCertWrapper::after {
+    content: "_ _ _ _ _ _ _ _ _ _ _ _";
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+
+    font-size: 16px;
+    line-height: 18px;
+    color: rgba(196, 196, 196, 1);
+
+    pointer-events: none;
+}
+
+/* когда есть значение — скрываем обе строки */
+.birthCertWrapper[data-has-value="true"]::before,
+.birthCertWrapper[data-has-value="true"]::after {
+    display: none;
+}
+
+/* чтобы input был поверх и текст виден */
+.birthCertWrapper input {
+    position: relative;
+    background: transparent;
+    z-index: 2;
 }
