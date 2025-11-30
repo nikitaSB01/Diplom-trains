@@ -80,6 +80,16 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
         return "";
     };
 
+    useEffect(() => {
+        const valid = validate() === "";
+        setCompleted(valid);
+        onCompleteChange(index, valid);
+
+        // очищаем ошибку пока пользователь вводит данные
+        setErrorMessage("");
+    }, [formData]);
+
+
     const handleNext = () => {
         const error = validate();
 
@@ -92,7 +102,7 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
 
         // валидация прошла
         setErrorMessage("");
-        setCompleted(true);
+        setCompleted(false);
         onCompleteChange(index, true);
         onRequestOpenNext(index);
     };
@@ -362,15 +372,18 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                 </div>
                             )}
 
-                            {completed && !errorMessage && (
-                                <div className={styles.successBlock}>
-                                    <CheckIcon />
-                                    <p>Готово</p>
-                                </div>
-                            )}
                             {/* показываем кнопку ТОЛЬКО если нет ошибки */}
                             {!errorMessage && (
-                                <div className={styles.containerNextButton}>
+                                <div
+                                    className={`${styles.containerNextButton} ${completed ? styles.completedState : ""
+                                        }`}
+                                >
+                                    {completed && (
+                                        <div className={styles.doneInfo}>
+                                            <CheckIcon />
+                                            <p>Готово</p>
+                                        </div>
+                                    )}
 
                                     <button
                                         type="button"
