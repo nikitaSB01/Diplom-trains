@@ -6,20 +6,33 @@
     margin-bottom: 12px;
 }
 
+/* HEADER */
 .header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
-    padding: 16px;
+    padding: 30px 45px 30px 25px;
     width: 100%;
     background: #f9f9f9;
     border: none;
     cursor: pointer;
 }
 
-.body {
-    padding: 16px;
-    border-top: 1px solid #e0e0e0;
+.leftHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.leftHeader span {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(41, 41, 41, 1);
 }
 
 .iconWrapper {
@@ -28,7 +41,7 @@
     height: 32px;
 }
 
-/* по умолчанию показываем обычную иконку */
+/* обычный + */
 .iconPlus {
     position: absolute;
     top: 0;
@@ -38,25 +51,45 @@
     opacity: 1;
 }
 
+/* маленький + */
 .iconPlusHover {
     position: absolute;
     width: 13px;
     height: 13px;
-
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     opacity: 0;
 }
 
-/* при наведении — меняем */
-.card:hover .iconPlus,
-.addBtn:hover .iconPlus {
+/* MINUS */
+.iconMinus {
+    width: 32px;
+    height: 32px;
+}
+
+/* hover эффект только когда карточка закрыта */
+.card:hover .iconPlus {
     opacity: 0;
 }
 
-.card:hover .iconPlusHover,
-.addBtn:hover .iconPlusHover {
+.card:hover .iconPlusHover {
     opacity: 1;
+}
+
+/* Кнопка очистить */
+.clearBtn {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+}
+
+.clearBtn:hover {
+    opacity: 0.8;
+}
+
+/* BODY */
+.body {
+    padding: 16px;
+    border-top: 1px solid #e0e0e0;
 }
