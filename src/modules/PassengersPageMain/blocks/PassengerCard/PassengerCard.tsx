@@ -58,13 +58,57 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
         setErrorMessage("");
         onCompleteChange(index, false);
     };
+    /* ======================= 
+              валидация 
+       ======================= */
+
+    // Разрешаем только русские буквы
+    const onlyLetters = (value: string) => {
+        return /^[А-Яа-яЁё]+$/.test(value.trim());
+    };
+
+    // Автоматическое форматирование даты в ДД/ММ/ГГГГ
+    const formatBirthday = (value: string) => {
+        // Оставляем только цифры
+        const digits = value.replace(/\D/g, "").slice(0, 8);
+
+        let result = "";
+
+        if (digits.length >= 1) result = digits.substring(0, 2);
+        if (digits.length >= 3) result += "/" + digits.substring(2, 4);
+        if (digits.length >= 5) result += "/" + digits.substring(4, 8);
+
+        return result;
+    };
+
+    const capitalize = (value: string) => {
+        if (!value) return "";
+        const lower = value.toLowerCase();
+        return lower.charAt(0).toUpperCase() + lower.slice(1);
+    };
 
     // Валидация данных
     const validate = () => {
+        // ===== ФИО =====
         if (!formData.lastName.trim()) return "Поле Фамилии не заполнено";
+        if (!onlyLetters(formData.lastName)) return "Фамилия должна содержать только буквы";
+
         if (!formData.firstName.trim()) return "Поле Имени не заполнено";
+        if (!onlyLetters(formData.firstName)) return "Имя должно содержать только буквы";
+
+        if (formData.patronymic && !onlyLetters(formData.patronymic))
+            return "Отчество должно содержать только буквы";
+
         if (!formData.gender) return "Пол не выбран";
-        if (!formData.birthday) return "Дата рождения не заполнена";
+        if (!formData.birthday || formData.birthday.length !== 10)
+            return "Дата рождения указана некорректно";
+
+        const [dd, mm, yyyy] = formData.birthday.split("/").map(Number);
+
+        if (dd < 1 || dd > 31) return "Некорректный день";
+        if (mm < 1 || mm > 12) return "Некорректный месяц";
+        if (yyyy < 1900 || yyyy > new Date().getFullYear())
+            return "Некорректный год";
 
         if (formData.docType === "Паспорт РФ") {
             if (formData.docSeries.length !== 4) return "Серия паспорта указана некорректно";
@@ -108,10 +152,10 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
         onRequestOpenNext(index);
     };
 
- /*    const isFormValid = () => {
-        const error = validate();
-        return error === "";
-    }; */
+    /*    const isFormValid = () => {
+           const error = validate();
+           return error === "";
+       }; */
 
     return (
         <div
@@ -171,7 +215,9 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                     type="text"
                                     value={formData.lastName}
                                     onChange={(e) => {
-                                        setFormData({ ...formData, lastName: e.target.value });
+                                        const cleaned = e.target.value.replace(/[^А-Яа-яЁё]/g, "");
+                                        const formatted = capitalize(cleaned);
+                                        setFormData({ ...formData, lastName: formatted });
                                         setErrorMessage("");
                                         setCompleted(false);
                                         onCompleteChange(index, false);
@@ -187,7 +233,9 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                     type="text"
                                     value={formData.firstName}
                                     onChange={(e) => {
-                                        setFormData({ ...formData, firstName: e.target.value });
+                                        const cleaned = e.target.value.replace(/[^А-Яа-яЁё]/g, "");
+                                        const formatted = capitalize(cleaned);
+                                        setFormData({ ...formData, firstName: formatted });
                                         setErrorMessage("");
                                         setCompleted(false);
                                         onCompleteChange(index, false);
@@ -202,9 +250,11 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                     id={`patronymic-${index}`}
                                     type="text"
                                     value={formData.patronymic}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, patronymic: e.target.value })
-                                    }
+                                    onChange={(e) => {
+                                        const cleaned = e.target.value.replace(/[^А-Яа-яЁё]/g, "");
+                                        const formatted = capitalize(cleaned);
+                                        setFormData({ ...formData, patronymic: formatted });
+                                    }}
                                 />
                             </div>
                         </div>
@@ -264,9 +314,11 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                     id={`birthday-${index}`}
                                     type="text"
                                     placeholder="ДД/ММ/ГГ"
+                                    maxLength={10}
                                     value={formData.birthday}
                                     onChange={(e) => {
-                                        setFormData({ ...formData, birthday: e.target.value });
+                                        const formatted = formatBirthday(e.target.value);
+                                        setFormData({ ...formData, birthday: formatted });
                                         setErrorMessage("");
                                         setCompleted(false);
                                         onCompleteChange(index, false);
@@ -326,13 +378,13 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                         type="text"
                                         value={formData.docSeries}
                                         onChange={(e) => {
-                                            setFormData({ ...formData, docSeries: e.target.value });
+                                            const digits = e.target.value.replace(/\D/g, "").slice(0, 4);
+                                            setFormData({ ...formData, docSeries: digits });
                                             setErrorMessage("");
                                             setCompleted(false);
                                             onCompleteChange(index, false);
                                         }}
                                         placeholder="__ __ __ __"
-
                                     />
                                 </div>
                             )}
@@ -353,7 +405,8 @@ const PassengerCard: React.FC<Props> = ({ index, onCompleteChange, onRequestOpen
                                         type="text"
                                         value={formData.docNumber}
                                         onChange={(e) => {
-                                            setFormData({ ...formData, docNumber: e.target.value });
+                                            const digits = e.target.value.replace(/\D/g, "").slice(0, 6);
+                                            setFormData({ ...formData, docNumber: digits });
                                             setErrorMessage("");
                                             setCompleted(false);
                                             onCompleteChange(index, false);
