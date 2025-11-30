@@ -59,7 +59,6 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
     }
 
     // === СОБИРАЕМ ВСЕ ОТДЕЛЬНЫЕ УСЛУГИ ===
-    // === СОБИРАЕМ ВСЕ ОТДЕЛЬНЫЕ УСЛУГИ ===
     const servicesList = seatDataArr.flatMap((wagon) => {
 
         const seatCount = wagon.seats.length;
@@ -125,6 +124,41 @@ const Main: React.FC = () => {
 
     const [extraPassengers, setExtraPassengers] = useState<number>(0);
 
+
+    /* массив флагов для card */
+    const totalCards = baseCount + extraPassengers;
+
+    const [completedMap, setCompletedMap] = useState<boolean[]>([]);
+
+    useEffect(() => {
+        setCompletedMap(Array(totalCards).fill(false));
+    }, [totalCards]);
+
+
+    const handleCompleteChange = (index: number, completed: boolean) => {
+        setCompletedMap((prev) => {
+            const copy = [...prev];
+            copy[index] = completed;
+            return copy;
+        });
+    };
+
+    const handleRequestOpenNext = (index: number) => {
+        const next = index + 1;
+
+        // ищем следующий PassengerCard по id
+        const nextCard = document.getElementById(`passenger-card-${next}`);
+
+        if (nextCard) {
+            const headerBtn = nextCard.querySelector("button");
+            headerBtn?.click();
+
+            nextCard.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    };
+
+    const allCompleted = completedMap.every(Boolean);
+
     return (
         <section className={styles.main}>
             <Steps currentStep={2} />
@@ -189,13 +223,21 @@ const Main: React.FC = () => {
                     <div className={styles.containerAddPassengers}>
                         {/* --- рендерим базовые карточки --- */}
                         {Array.from({ length: baseCount }).map((_, i) => (
-                            <PassengerCard key={`base-${i}`} index={i} />
-                        ))}
+                            <PassengerCard
+                                key={`base-${i}`}
+                                index={i}
+                                onCompleteChange={handleCompleteChange}
+                                onRequestOpenNext={handleRequestOpenNext}
+                            />))}
 
                         {/* --- дополнительные карточки --- */}
                         {Array.from({ length: extraPassengers }).map((_, i) => (
-                            <PassengerCard key={`extra-${i}`} index={baseCount + i} />
-                        ))}
+                            <PassengerCard
+                                key={`extra-${i}`}
+                                index={baseCount + i}
+                                onCompleteChange={handleCompleteChange}
+                                onRequestOpenNext={handleRequestOpenNext}
+                            />))}
 
                         {/* --- кнопка добавить --- */}
                         <button
@@ -207,6 +249,12 @@ const Main: React.FC = () => {
                                 <Plus className={styles.iconPlus} />
                                 <PlusHover className={styles.iconPlusHover} />
                             </div>
+                        </button>
+                        <button
+                            className={`${styles.nextMainBtn} ${allCompleted ? styles.active : ""}`}
+                            disabled={!allCompleted}
+                        >
+                            Далее
                         </button>
                     </div>
                 </div>

@@ -1,28 +1,52 @@
+/* ===================== */
+/*      CARD BASE        */
+/* ===================== */
+
 .card {
     width: 100%;
-    background: #fff;
-    border: 1px solid #e0e0e0;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid #DADADA;
     border-radius: 4px;
-    margin-bottom: 12px;
+    padding: 0;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
 }
 
-/* HEADER */
+.cardCompleted {
+    border-color: #44C776;
+}
+
+/* ===================== */
+/*        HEADER         */
+/* ===================== */
+
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 30px 45px 30px 25px;
     width: 100%;
-    background: #f9f9f9;
+    background: rgba(255, 255, 255, 1);
     border: none;
+    padding: 30px 45px 30px 25px;
     cursor: pointer;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.headerOpen {
+    background: rgba(249, 249, 249, 1);
+    /* border-bottom: 1px solid #FFC046; */
+    border-bottom: 1px solid rgba(196, 196, 196, 1);
+    border-image: repeating-linear-gradient(to right,
+            rgba(196, 196, 196, 1) 0,
+            rgba(196, 196, 196, 1) 1px,
+            transparent 1px,
+            transparent 3px) 1;
+    /* border: 1px dashed rgba(146, 143, 148, 1); */
 }
 
 .leftHeader {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
     gap: 16px;
 }
@@ -41,55 +65,331 @@
     height: 32px;
 }
 
-/* обычный + */
-.iconPlus {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 32px;
-    height: 32px;
-    opacity: 1;
-}
-
-/* маленький + */
-.iconPlusHover {
-    position: absolute;
-    width: 13px;
-    height: 13px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-}
-
-/* MINUS */
+.iconPlus,
 .iconMinus {
     width: 32px;
     height: 32px;
 }
 
-/* hover эффект только когда карточка закрыта */
-.card:hover .iconPlus {
+.iconPlusHover {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.header:hover .iconPlus {
     opacity: 0;
 }
 
-.card:hover .iconPlusHover {
+.header:hover .iconPlusHover {
     opacity: 1;
 }
 
-/* Кнопка очистить */
 .clearBtn {
     width: 12px;
     height: 12px;
     cursor: pointer;
 }
 
-.clearBtn:hover {
-    opacity: 0.8;
+/* ===================== */
+/*         BODY          */
+/* ===================== */
+
+.body {
+    /*  padding: 38px 35px 28px; */
+    display: flex;
+    flex-direction: column;
 }
 
-/* BODY */
-.body {
-    padding: 16px;
-    border-top: 1px solid #e0e0e0;
+.bodyTop {
+    padding: 38px 35px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+}
+
+.bodyBottom {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ===================== */
+/*     ROW STRUCTURE     */
+/* ===================== */
+
+.row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 280px;
+    height: 50px;
+}
+
+.checkbox {
+    width: 300px;
+    flex-direction: row;
+    gap: 25px;
+    align-items: center;
+    height: 28px;
+}
+
+.checkbox input {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+}
+
+.checkbox label {
+    margin: 0;
+    color: rgba(41, 41, 41, 1);
+}
+
+.row2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 35px;
+}
+
+.birthdayBlock {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.row3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 25px;
+}
+
+.rowType {
+    gap: 35px;
+    display: flex;
+    justify-content: start;
+    padding: 35px 35px;
+
+    border-bottom: 1px solid rgba(196, 196, 196, 1);
+    border-top: 1px solid rgba(196, 196, 196, 1);
+    border-image: repeating-linear-gradient(to right,
+            rgba(196, 196, 196, 1) 0,
+            rgba(196, 196, 196, 1) 1px,
+            transparent 1px,
+            transparent 3px) 1;
+}
+
+.rowType .typeDocContainer,
+.rowType .typeDocContainer label,
+.rowType .typeDocContainer select,
+.rowType .seriesContainer,
+.rowType .seriesContainer label,
+.rowType .seriesContainer input,
+.rowType .numberContainer,
+.rowType .numberContainer label,
+.rowType .numberContainer input {
+    width: 205px;
+}
+
+.typeDocContainer, .seriesContainer, .numberContainer,
+.surnameContainer, .nameContainer, .lastNameContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===================== */
+/*        LABELS         */
+/* ===================== */
+
+.labelPassCard {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(146, 143, 148, 1);
+    margin-bottom: 10px;
+}
+
+.genderTitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #292929;
+    margin-bottom: 6px;
+}
+
+/* ===================== */
+/*        INPUTS         */
+/* ===================== */
+.inputPassCard {}
+
+.inputPassCard,
+select {
+    width: 280px;
+    height: 50px;
+    padding: 0 12px;
+
+    border: 1px solid rgba(146, 143, 148, 1);
+    border-radius: 4px;
+
+    font-size: 14px;
+    color: #292929;
+
+    transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus {
+    border-color: #FFA800;
+    outline: none;
+}
+
+/* ===================== */
+/*   GENDER RADIO BLOCK  */
+/* ===================== */
+
+.genderBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.genderBtns {
+    display: flex;
+    width: 204px;
+    height: 50px;
+    border: 1px solid rgba(146, 143, 148, 1);
+    border-radius: 5px;
+    overflow: hidden;
+    /* чтобы жёлтый фон не выходил за рамки */
+}
+
+.genderInput {
+    display: none;
+}
+
+/* чтобы убрать двойные границы */
+.genderBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    cursor: pointer;
+    border: none;
+}
+
+.genderBtn span {
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 1);
+}
+
+/* активный МУЖСКОЙ */
+.activeMale {
+    background: rgba(255, 168, 0, 1);
+    border-right: 1px solid rgba(146, 143, 148, 1);
+}
+
+/* активная ЖЕНСКАЯ */
+.activeFemale {
+    background: rgba(255, 168, 0, 1);
+    border-left: 1px solid rgba(146, 143, 148, 1);
+}
+
+/* =============================== */
+/*   CHECKBOX: ОГРАНИЧЕННАЯ ПОДВИЖНОСТЬ */
+/* =============================== */
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+/* ===================== */
+/*     NEXT SECTION      */
+/* ===================== */
+
+.nextSection {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.errorBlock,
+.successBlock {
+    width: 100%;
+    height: 110px;
+    padding: 12px 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 14px;
+}
+
+.errorBlock {
+    background: rgba(255, 61, 0, 0.38);
+    color: #C60000;
+}
+
+.successBlock {
+    background: rgba(178, 246, 161, 1);
+    color: #217E47;
+}
+
+/* ===================== */
+/*   NEXT PASSENGER BTN  */
+/* ===================== */
+.containerNextButton {
+    margin-bottom: 25px;
+    margin-top: 35px;
+    margin-right: 30px;
+    display: flex;
+    justify-content: end;
+}
+
+.nextButton {
+    width: 320px;
+    height: 50px;
+
+    border-radius: 5px;
+    border: 1px solid rgba(41, 41, 41, 1);
+    background: none;
+
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: rgba(41, 41, 41, 1);
+
+    cursor: pointer;
+}
+
+.nextButton:hover {
+    color: rgba(255, 168, 0, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.nextButton:active {
+    background-color: rgba(255, 168, 0, 1);
+    color: rgba(41, 41, 41, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
