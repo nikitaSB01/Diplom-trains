@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./Main.module.css";
 
@@ -97,6 +98,7 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
 };
 
 const Main: React.FC = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const orderData: any = location.state; // можешь типизировать своим OrderData, если он есть
 
@@ -158,6 +160,22 @@ const Main: React.FC = () => {
     };
 
     const allCompleted = completedMap.every(Boolean);
+
+    /* массив хранения данных с карточек пасажиров */
+    const [formDataList, setFormDataList] = useState<any[]>([]);
+
+    useEffect(() => {
+        setFormDataList(Array(totalCards).fill(null));
+    }, [totalCards]);
+
+    const handleUpdatePassenger = (index: number, data: any) => {
+        setFormDataList(prev => {
+            const copy = [...prev];
+            copy[index] = data;
+            return copy;
+        });
+    };
+
 
     return (
         <section className={styles.main}>
@@ -228,6 +246,7 @@ const Main: React.FC = () => {
                                 index={i}
                                 onCompleteChange={handleCompleteChange}
                                 onRequestOpenNext={handleRequestOpenNext}
+                                onUpdate={handleUpdatePassenger}
                             />))}
 
                         {/* --- дополнительные карточки --- */}
@@ -237,6 +256,7 @@ const Main: React.FC = () => {
                                 index={baseCount + i}
                                 onCompleteChange={handleCompleteChange}
                                 onRequestOpenNext={handleRequestOpenNext}
+                                onUpdate={handleUpdatePassenger}
                             />))}
 
                         {/* --- кнопка добавить --- */}
@@ -253,6 +273,19 @@ const Main: React.FC = () => {
                         <button
                             className={`${styles.nextMainBtn} ${allCompleted ? styles.active : ""}`}
                             disabled={!allCompleted}
+                            onClick={() => {
+                                if (!allCompleted) return;
+
+                                navigate("/payment", {
+                                    state: {
+                                        orderData,
+                                        passengers: formDataList, // ← мы это добавим ниже
+                                        block1,
+                                        block2,
+                                        totalPrice
+                                    }
+                                });
+                            }}
                         >
                             Далее
                         </button>

@@ -24,12 +24,14 @@ interface Props {
     index: number;
     onCompleteChange: (index: number, completed: boolean) => void;
     onRequestOpenNext: (index: number) => void;
+    onUpdate: (index: number, data: any) => void;
 }
 
 const PassengerCard: React.FC<Props> = ({
     index,
     onCompleteChange,
-    onRequestOpenNext
+    onRequestOpenNext,
+    onUpdate
 }) => {
     const [open, setOpen] = useState(false);
     const [completed, setCompleted] = useState(false);
@@ -98,6 +100,11 @@ const PassengerCard: React.FC<Props> = ({
         onCompleteChange(index, true);
         onRequestOpenNext(index);
     };
+
+    /*  каждый раз, когда formData меняется, отправляем данные: */
+    useEffect(() => {
+        onUpdate(index, formData);
+    }, [formData]);
 
     return (
         <div
