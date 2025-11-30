@@ -1,0 +1,62 @@
+.card {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    width: 100%;
+    background: #f9f9f9;
+    border: none;
+    cursor: pointer;
+}
+
+.body {
+    padding: 16px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.iconWrapper {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+/* по умолчанию показываем обычную иконку */
+.iconPlus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    opacity: 1;
+}
+
+.iconPlusHover {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    opacity: 0;
+}
+
+/* при наведении — меняем */
+.card:hover .iconPlus,
+.addBtn:hover .iconPlus {
+    opacity: 0;
+}
+
+.card:hover .iconPlusHover,
+.addBtn:hover .iconPlusHover {
+    opacity: 1;
+}

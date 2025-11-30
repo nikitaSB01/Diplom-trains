@@ -9,8 +9,11 @@ import PassengersBlock from "./blocks/PassengersBlock/PassengersBlock";
 import TotalBlock from "./blocks/TotalBlock/TotalBlock";
 import TitleBlock from "./blocks/TitleBlock/TitleBlock";
 import CollapsibleHeader from "./blocks/CollapsibleHeader/CollapsibleHeader";
+import PassengerCard from "./blocks/PassengerCard/PassengerCard";
 
 import { ReactComponent as UserIcon } from "../../assets/icons/PassengersPage/PassengersBlock/passenger.svg";
+import { ReactComponent as PlusHover } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/PlusNewPas.svg";
+import { ReactComponent as Plus } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/Plus.svg";
 
 // ---------- типы ----------
 interface Tickets {
@@ -112,6 +115,14 @@ const Main: React.FC = () => {
 
     const [openPassengers, setOpenPassengers] = useState(true);
 
+    /* данные по хранению количества карточек пассажиров */
+    const baseCount =
+        (block1?.passengers.adults ?? 0) +
+        (block1?.passengers.kids ?? 0) +
+        (block1?.passengers.kidsNoSeat ?? 0);
+
+    const [extraPassengers, setExtraPassengers] = useState<number>(0);
+
     return (
         <section className={styles.main}>
             <Steps currentStep={2} />
@@ -173,9 +184,29 @@ const Main: React.FC = () => {
                 </div>
 
                 <div className={styles.rightColumn}>
-                    <pre style={{ whiteSpace: "pre-wrap", marginTop: 20 }}>
-                        {JSON.stringify(orderData, null, 2)}
-                    </pre>
+                    <div className={styles.containerAddPassengers}>
+                        {/* --- рендерим базовые карточки --- */}
+                        {Array.from({ length: baseCount }).map((_, i) => (
+                            <PassengerCard key={`base-${i}`} index={i} />
+                        ))}
+
+                        {/* --- дополнительные карточки --- */}
+                        {Array.from({ length: extraPassengers }).map((_, i) => (
+                            <PassengerCard key={`extra-${i}`} index={baseCount + i} />
+                        ))}
+
+                        {/* --- кнопка добавить --- */}
+                        <button
+                            className={styles.addBtn}
+                            onClick={() => setExtraPassengers(extraPassengers + 1)}
+                        >
+                            <p>Добавить пассажира</p>
+                            <div className={styles.iconWrapper}>
+                                <Plus className={styles.iconPlus} />
+                                <PlusHover className={styles.iconPlusHover} />
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
