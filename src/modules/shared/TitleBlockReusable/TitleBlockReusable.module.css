@@ -1,0 +1,13 @@
+.header {
+    width: 100%;
+    padding: 25px 32px;
+    background: #ffffff;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.title {
+    font-size: 30px;
+    line-height: 35px;
+    font-weight: 400;
+    color: #292929;
+}
