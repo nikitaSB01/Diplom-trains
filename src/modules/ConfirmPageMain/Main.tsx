@@ -7,6 +7,8 @@ import Steps from "../../components/Steps/Steps";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 import TitleBlockReusable from "../../modules/shared/TitleBlockReusable/TitleBlockReusable";
 import TrainSummaryBlock from "../../modules/shared/TrainSummaryBlock/TrainSummaryBlock";
+import PassengersSummaryBlock from "../../modules/shared/PassengersSummaryBlock/PassengersSummaryBlock";
+
 
 interface Props {
     personalData: any;
@@ -54,49 +56,15 @@ const Main: React.FC<Props> = ({
                             onEdit={() => navigate(-1)}
                         />
                     </div>
-
-
-                    {/* Персональные данные */}
-                    <div className={styles.card}>
-
-                        <p>Фамилия: {personalData.lastName}</p>
-                        <p>Имя: {personalData.firstName}</p>
-                        <p>Отчество: {personalData.middleName || "-"}</p>
-                        <p>Телефон: {personalData.phone}</p>
-                        <p>Email: {personalData.email}</p>
+                    <div>
+                        <PassengersSummaryBlock
+                            passengers={passengers}
+                            totalPrice={totalPrice}
+                        />
                     </div>
 
-                    {/* Способ оплаты */}
-                    <div className={styles.card}>
-                        <h2>Способ оплаты</h2>
-                        <p>
-                            {paymentType === "cash" && "Наличными"}
-                            {paymentType === "online" && (
-                                <>
-                                    Онлайн<br />
-                                    Метод: {onlineMethod}
-                                </>
-                            )}
-                        </p>
-                    </div>
 
-                    {/* Информация о поезде */}
-                    <div className={styles.card}>
-                        <h2>Поезд</h2>
-                        <p>Поезд №: {orderData.train.departure.train.name}</p>
-                        <p>
-                            {orderData.train.departure.from.city.name} →{" "}
-                            {orderData.train.departure.to.city.name}
-                        </p>
-                    </div>
 
-                    {/* Пассажиры */}
-                    <div className={styles.card}>
-                        <h2>Пассажиры</h2>
-                        <p>Взрослых: {passengers[0].adults}</p>
-                        <p>Детей: {passengers[0].kids}</p>
-                        <p>Без места: {passengers[0].kidsNoSeat}</p>
-                    </div>
                 </div>
 
             </div>
