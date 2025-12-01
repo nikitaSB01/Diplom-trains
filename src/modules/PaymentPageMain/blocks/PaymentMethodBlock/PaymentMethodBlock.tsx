@@ -16,6 +16,7 @@ const PaymentMethodBlock: React.FC<Props> = ({ paymentType, onSelect }) => {
             <div className={`${styles.section} ${styles.border}`}>
                 <label className={styles.checkbox}>
                     <input
+                        className={styles.checkboxInput}
                         type="checkbox"
                         checked={paymentType === "online"}
                         onChange={() => onSelect("online")}
@@ -50,6 +51,7 @@ const PaymentMethodBlock: React.FC<Props> = ({ paymentType, onSelect }) => {
             <div className={styles.section}>
                 <label className={styles.checkbox}>
                     <input
+                        className={styles.checkboxInput}
                         type="checkbox"
                         checked={paymentType === "cash"}
                         onChange={() => onSelect("cash")}

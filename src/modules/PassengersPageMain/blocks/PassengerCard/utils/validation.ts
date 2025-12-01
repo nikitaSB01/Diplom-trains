@@ -43,3 +43,14 @@ export const validatePassenger = (data: any) => {
 
     return "";
 };
+
+/* Валидация телефона */
+export const validatePhone = (value: string) => {
+    const digits = value.replace(/\D/g, "");
+    return digits.length === 11 && digits.startsWith("7");
+};
+/* Валидация E-mail */
+export const validateEmail = (value: string) => {
+    const emailRegex = /^[\w.-]+@[\w.-]+\.[A-Za-z]{2,}$/;
+    return emailRegex.test(value.trim());
+};
