@@ -8,7 +8,7 @@ import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 import TitleBlockReusable from "../../modules/shared/TitleBlockReusable/TitleBlockReusable";
 import TrainSummaryBlock from "../../modules/shared/TrainSummaryBlock/TrainSummaryBlock";
 import PassengersSummaryBlock from "../../modules/shared/PassengersSummaryBlock/PassengersSummaryBlock";
-
+import PaymentSummaryBlock from "../shared/PaymentSummaryBlock/PaymentSummaryBlock";
 
 interface Props {
     personalData: any;
@@ -62,7 +62,12 @@ const Main: React.FC<Props> = ({
                             totalPrice={totalPrice}
                         />
                     </div>
-
+                    <div>
+                        <PaymentSummaryBlock
+                            paymentType={paymentType}
+                            onlineMethod={onlineMethod}
+                        />
+                    </div>
 
 
                 </div>

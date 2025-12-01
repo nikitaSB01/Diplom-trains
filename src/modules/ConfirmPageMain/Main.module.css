@@ -10,6 +10,7 @@
 
 /* Правая колонка */
 .rightColumn {
+    max-width: 960px;
     display: flex;
     flex-direction: column;
     gap: 30px;
