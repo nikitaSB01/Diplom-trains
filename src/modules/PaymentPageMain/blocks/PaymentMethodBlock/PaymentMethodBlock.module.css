@@ -1,0 +1,64 @@
+.wrapper {
+    background: rgba(255, 255, 255, 1);
+}
+
+.title {
+    padding: 35px;
+    background: rgba(249, 249, 249, 1);
+
+}
+
+.titleText {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(41, 41, 41, 1);
+}
+
+.section {
+    padding: 50px 0 60px 35px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+}
+
+.methods {
+    display: flex;
+    gap: 24px;
+    margin-left: 36px;
+    margin-top: 12px;
+}
+
+.methodBtn {
+    border: none;
+    background: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.methodBtn.active {
+    background: #fff3cd;
+    border: 1px solid #ffc846;
+}
+
+.cashText {
+    color: #f5a623;
+    font-weight: 500;
+}
+
+.border {
+    border-bottom: 1px solid rgba(196, 196, 196, 1);
+    border-image: repeating-linear-gradient(to right,
+            rgba(196, 196, 196, 1) 0,
+            rgba(196, 196, 196, 1) 1px,
+            transparent 1px,
+            transparent 3px) 1;
+
+}

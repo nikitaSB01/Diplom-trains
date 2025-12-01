@@ -7,6 +7,8 @@ import PassengersBlock from "../PassengersPageMain/blocks/PassengersBlock/Passen
 import TotalBlock from "../PassengersPageMain/blocks/TotalBlock/TotalBlock";
 import TitleBlock from "../PassengersPageMain/blocks/TitleBlock/TitleBlock";
 import CollapsibleHeader from "../PassengersPageMain/blocks/CollapsibleHeader/CollapsibleHeader";
+import PersonalDataBlock from "./blocks/PersonalDataBlock/PersonalDataBlock";
+import PaymentMethodBlock from "./blocks/PaymentMethodBlock/PaymentMethodBlock";
 
 import { ReactComponent as UserIcon } from "../../assets/icons/PassengersPage/PassengersBlock/passenger.svg";
 
@@ -26,6 +28,22 @@ const Main: React.FC<Props> = ({
     totalPrice
 }) => {
     const [openPassengers, setOpenPassengers] = useState(true);
+
+    /* данные и функции для подключения PersonalDataBlock PaymentMethodBlock*/
+    const [personalData, setPersonalData] = useState({
+        lastName: "",
+        firstName: "",
+        middleName: "",
+        phone: "",
+        email: ""
+    });
+
+    const [paymentType, setPaymentType] = useState("online");
+
+    const handlePersonalChange = (field: any, value: string) => {
+        setPersonalData(prev => ({ ...prev, [field]: value }));
+    };
+
 
     return (
         <section className={styles.main}>
@@ -91,18 +109,12 @@ const Main: React.FC<Props> = ({
                 {/* ================= RIGHT COLUMN ================= */}
                 <div className={styles.rightColumn}>
                     <div className={styles.rightContent}>
-                        <h2 className={styles.title}>Оплата</h2>
-
-                        {/* здесь позже появятся:
-                            - форма для email
-                            - способ оплаты
-                            - дополнительная информация
-                        */}
-
-                        <button className={styles.buyButton}>
-                            Купить билеты
-                        </button>
+                        <PersonalDataBlock data={personalData} onChange={handlePersonalChange} />
+                        <PaymentMethodBlock paymentType={paymentType} onSelect={setPaymentType} />
                     </div>
+                    <button className={styles.buyButton}>
+                        Купить билеты
+                    </button>
                 </div>
             </div>
         </section>
