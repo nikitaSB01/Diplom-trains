@@ -22,6 +22,9 @@ const PaymentMethodBlock: React.FC<Props> = ({
 
     return (
         <div className={styles.wrapper}>
+            <div className={`${styles.title} ${styles.border}`}>
+                <h2 className={styles.titleText}>Способ оплаты</h2>
+            </div>
 
             <div className={`${styles.section} ${styles.border}`}>
                 <label className={styles.checkbox}>
