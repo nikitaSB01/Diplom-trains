@@ -127,14 +127,15 @@
 
 .containerButton {
     margin-top: 100px;
+    margin-right: 20px;
     display: flex;
     flex-direction: row;
     justify-content: end;
 }
 
 /* Базовая неактивная кнопка */
-.nextMainBtn {
-    width: 222px;
+.buyButton {
+    width: 320px;
     height: 60px;
 
     border-radius: 5px;
@@ -158,19 +159,18 @@
 }
 
 /* Активное состояние */
-.active {
+.buyButtonActive {
     background: rgba(255, 168, 0, 1);
     cursor: pointer;
 }
 
-.active:hover {
+.buyButtonActive:hover {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.active:active {
+.buyButtonActive:active {
     background-color: rgb(255, 255, 255);
     color: rgba(255, 168, 0, 1);
     border: 1px solid rgba(255, 168, 0, 1);
     box-shadow: none;
 }
-

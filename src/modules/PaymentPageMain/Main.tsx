@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./Main.module.css";
+import { validatePaymentForm } from "../../modules/PassengersPageMain/blocks/PassengerCard/utils/validation";
 
 import Steps from "../../components/Steps/Steps";
 import FiltersThereBack from "../../components/SearchPageMain/Filters/FiltersThereBake/FiltersThereBack";
@@ -70,6 +71,13 @@ const Main: React.FC<Props> = ({
             }
         });
     };
+
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    useEffect(() => {
+        const valid = validatePaymentForm(personalData, paymentType, onlineMethod);
+        setIsFormValid(valid);
+    }, [personalData, paymentType, onlineMethod]);
 
     return (
         <section className={styles.main}>
@@ -144,9 +152,15 @@ const Main: React.FC<Props> = ({
                         />               </div>
 
                     <div className={styles.containerButton}>
-                        <button className={styles.buyButton} onClick={handleBuy}>
+
+                        <button
+                            className={`${styles.buyButton} ${isFormValid ? styles.buyButtonActive : styles.buyButtonDisabled}`}
+                            disabled={!isFormValid}
+                            onClick={isFormValid ? handleBuy : undefined}
+                        >
                             Купить билеты
                         </button>
+
                     </div>
                 </div>
             </div>

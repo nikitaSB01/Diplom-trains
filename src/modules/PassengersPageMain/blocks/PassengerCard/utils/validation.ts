@@ -54,3 +54,46 @@ export const validateEmail = (value: string) => {
     const emailRegex = /^[\w.-]+@[\w.-]+\.[A-Za-z]{2,}$/;
     return emailRegex.test(value.trim());
 };
+
+/* Валидация формы покупки билетов */
+export const validatePaymentForm = (
+    personalData: {
+        lastName: string;
+        firstName: string;
+        middleName: string;
+        phone: string;
+        email: string;
+    },
+    paymentType: "online" | "cash",
+    onlineMethod: "card" | "paypal" | "qiwi" | null
+) => {
+    // === ФИО ===
+    if (!personalData.lastName.trim() || !onlyLetters(personalData.lastName))
+        return false;
+
+    if (!personalData.firstName.trim() || !onlyLetters(personalData.firstName))
+        return false;
+
+    if (personalData.middleName && !onlyLetters(personalData.middleName))
+        return false;
+
+    // === ТЕЛЕФОН ===
+    if (!validatePhone(personalData.phone)) return false;
+
+    // === EMAIL ===
+    if (!validateEmail(personalData.email)) return false;
+
+    // === СПОСОБ ОПЛАТЫ ===
+    if (paymentType === "cash") {
+        // наличные — всё ок, ничего не нужно
+        return true;
+    }
+
+    // === ОНЛАЙН ===
+    if (paymentType === "online") {
+        if (!onlineMethod) return false; // метод не выбран → форма недействительна
+        return true;
+    }
+
+    return false;
+};

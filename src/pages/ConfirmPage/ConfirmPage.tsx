@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../../components/layout/Header/Header";
 import Footer from "../../components/layout/Footer/Footer";
-import ConfirmPage from "../../modules/ConfirmPage/Main";
+import ConfirmPageMain from "../../modules/ConfirmPageMain/Main";
 
 import styles from "./ConfirmPage.module.css";
 
@@ -24,7 +24,7 @@ const ConfirmPage: React.FC = () => {
         <div className={styles.ConfirmPage}>
             <Header isInner />
             <main className={styles.main}>
-                <ConfirmPage />
+                <ConfirmPageMain />
             </main>
             <Footer />
         </div>
