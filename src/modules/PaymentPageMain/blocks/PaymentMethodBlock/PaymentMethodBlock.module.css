@@ -92,13 +92,15 @@
 }
 
 .methodBtn {
+    border: 1px solid transparent;
+    background: none;
+
     border: none;
     background: none;
 
     font-weight: 700;
     font-size: 24px;
     line-height: 100%;
-    letter-spacing: 0%;
     color: rgba(41, 41, 41, 1);
 
     cursor: pointer;
@@ -108,7 +110,8 @@
 
 .methodBtn.active {
     background: #fff3cd;
-    border: 1px solid #ffc846;
+    border-color: #ffc846;
+    /* ← рамка видна, но размер не меняется */
 }
 
 .cashText {

@@ -38,8 +38,16 @@ const Main: React.FC<Props> = ({
         email: ""
     });
 
-    const [paymentType, setPaymentType] = useState("online");
+    const [paymentType, setPaymentType] = useState<"online" | "cash">("online");
+    const [onlineMethod, setOnlineMethod] = useState<"card" | "paypal" | "qiwi" | null>(null);
 
+    const handleSelectPayment = (type: "online" | "cash") => {
+        setPaymentType(type);
+
+        if (type === "cash") {
+            setOnlineMethod(null); // сбрасываем PayPal/card/qiwi
+        }
+    };
     const handlePersonalChange = (field: any, value: string) => {
         setPersonalData(prev => ({ ...prev, [field]: value }));
     };
@@ -110,8 +118,12 @@ const Main: React.FC<Props> = ({
                 <div className={styles.rightColumn}>
                     <div className={styles.rightContent}>
                         <PersonalDataBlock data={personalData} onChange={handlePersonalChange} />
-                        <PaymentMethodBlock paymentType={paymentType} onSelect={setPaymentType} />
-                    </div>
+                        <PaymentMethodBlock
+                            paymentType={paymentType}
+                            onlineMethod={onlineMethod}
+                            onSelectPayment={handleSelectPayment}
+                            onSelectOnlineMethod={setOnlineMethod}
+                        />               </div>
                     <button className={styles.buyButton}>
                         Купить билеты
                     </button>

@@ -2,16 +2,26 @@ import React from "react";
 import styles from "./PaymentMethodBlock.module.css";
 
 interface Props {
-    paymentType: string;
-    onSelect: (value: string) => void;
+    paymentType: "online" | "cash";
+    onlineMethod: "card" | "paypal" | "qiwi" | null;
+    onSelectPayment: (value: "online" | "cash") => void;
+    onSelectOnlineMethod: (value: "card" | "paypal" | "qiwi") => void;
 }
 
-const PaymentMethodBlock: React.FC<Props> = ({ paymentType, onSelect }) => {
+const PaymentMethodBlock: React.FC<Props> = ({
+    paymentType,
+    onlineMethod,
+    onSelectPayment,
+    onSelectOnlineMethod
+}) => {
+
+    const handleOnlineClick = (method: "card" | "paypal" | "qiwi") => {
+        onSelectPayment("online");
+        onSelectOnlineMethod(method);
+    };
+
     return (
         <div className={styles.wrapper}>
-            <div className={`${styles.title} ${styles.border}`}>
-                <h2 className={styles.titleText}>Способ оплаты</h2>
-            </div>
 
             <div className={`${styles.section} ${styles.border}`}>
                 <label className={styles.checkbox}>
@@ -19,31 +29,32 @@ const PaymentMethodBlock: React.FC<Props> = ({ paymentType, onSelect }) => {
                         className={styles.checkboxInput}
                         type="checkbox"
                         checked={paymentType === "online"}
-                        onChange={() => onSelect("online")}
+                        onChange={() => onSelectPayment("online")}
                     />
                     <span className={styles.cashText}>Онлайн</span>
                 </label>
 
                 <div className={styles.methods}>
                     <button
-                        className={`${styles.methodBtn} ${paymentType === "card" ? styles.active : ""}`}
-                        onClick={() => onSelect("card")}
+                        className={`${styles.methodBtn} ${paymentType === "online" && onlineMethod === "card" ? styles.active : ""
+                            }`}
+                        onClick={() => handleOnlineClick("card")}
                     >
-                        Банковской
-                        <br></br>
-                        картой
+                        Банковской<br />картой
                     </button>
 
                     <button
-                        className={`${styles.methodBtn} ${paymentType === "paypal" ? styles.active : ""}`}
-                        onClick={() => onSelect("paypal")}
+                        className={`${styles.methodBtn} ${paymentType === "online" && onlineMethod === "paypal" ? styles.active : ""
+                            }`}
+                        onClick={() => handleOnlineClick("paypal")}
                     >
                         PayPal
                     </button>
 
                     <button
-                        className={`${styles.methodBtn} ${paymentType === "qiwi" ? styles.active : ""}`}
-                        onClick={() => onSelect("qiwi")}
+                        className={`${styles.methodBtn} ${paymentType === "online" && onlineMethod === "qiwi" ? styles.active : ""
+                            }`}
+                        onClick={() => handleOnlineClick("qiwi")}
                     >
                         Visa QIWI Wallet
                     </button>
@@ -56,12 +67,12 @@ const PaymentMethodBlock: React.FC<Props> = ({ paymentType, onSelect }) => {
                         className={styles.checkboxInput}
                         type="checkbox"
                         checked={paymentType === "cash"}
-                        onChange={() => onSelect("cash")}
+                        onChange={() => onSelectPayment("cash")}
                     />
                     <span className={styles.cashText}>Наличными</span>
                 </label>
             </div>
-        </div >
+        </div>
     );
 };
 
