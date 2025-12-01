@@ -1,3 +1,5 @@
+/* вариант вынеса card из Trains */
+
 import React from "react";
 import styles from "./TrainCard.module.css";
 
