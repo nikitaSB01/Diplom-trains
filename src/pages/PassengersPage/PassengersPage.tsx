@@ -10,7 +10,7 @@ import PassengersPageMain from '../../modules/PassengersPageMain/Main';
 
 const PassengersPage = () => {
     const location = useLocation();
-    const orderData = location.state;
+    const { orderData } = location.state;
 
     console.log("Пришедшие данные:", orderData);
 

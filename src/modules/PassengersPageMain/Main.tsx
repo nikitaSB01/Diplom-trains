@@ -97,8 +97,8 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
 const Main: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const orderData: any = location.state; // можешь типизировать своим OrderData, если он есть
 
+    const { orderData } = location.state;
     const dep = orderData.train.departure;
 
     // seats.first / seats.second — теперь массивы вагонов

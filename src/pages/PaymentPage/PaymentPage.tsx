@@ -7,6 +7,13 @@ import PaymentPageMain from "../../modules/PaymentPageMain/Main";
 
 const PaymentPage = () => {
     const location = useLocation();
+    const {
+        orderData,
+        passengers,
+        block1,
+        block2,
+        totalPrice
+    } = location.state;
     const navigate = useNavigate();
 
     // получаем данные
@@ -17,8 +24,6 @@ const PaymentPage = () => {
         navigate("/", { replace: true });
         return null;
     }
-
-    const { orderData, passengers, block1, block2, totalPrice } = state;
 
     return (
         <div className={styles.PaymentPage}>

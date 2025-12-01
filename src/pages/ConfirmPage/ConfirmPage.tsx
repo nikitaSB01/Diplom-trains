@@ -7,6 +7,7 @@ import ConfirmPageMain from "../../modules/ConfirmPageMain/Main";
 import styles from "./ConfirmPage.module.css";
 
 const ConfirmPage: React.FC = () => {
+    const location = useLocation();
     const { state } = useLocation() as any;
 
     const {

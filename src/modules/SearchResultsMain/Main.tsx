@@ -143,14 +143,17 @@ const Main: React.FC = () => {
   const handleNext = () => {
     navigate("/passengers", {
       state: {
-        train: selectedTrain,
-        types: { firstType, secondType },
-        tickets: {
-          first: ticketsBlock1,
-          second: ticketsBlock2
-        }, seats: selectedSeatsData,
-        filters,
-      },
+        orderData: {
+          train: selectedTrain,
+          tickets: {
+            first: ticketsBlock1,
+            second: ticketsBlock2
+          },
+          seats: selectedSeatsData,
+          types: { firstType, secondType },
+          filters
+        }
+      }
     });
   };
 
