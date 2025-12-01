@@ -3,11 +3,6 @@ import React, { useState, useEffect } from "react";
 import styles from "./Main.module.css";
 import Steps from "../../components/Steps/Steps";
 
-import TitleBlock from "../PassengersPageMain/blocks/TitleBlock/TitleBlock";
-import FiltersThereBack from "../../components/SearchPageMain/Filters/FiltersThereBake/FiltersThereBack";
-import PassengersBlock from "../PassengersPageMain/blocks/PassengersBlock/PassengersBlock";
-import TotalBlock from "../PassengersPageMain/blocks/TotalBlock/TotalBlock";
-import CollapsibleHeader from "../PassengersPageMain/blocks/CollapsibleHeader/CollapsibleHeader";
 import { ReactComponent as UserIcon } from "../../assets/icons/PassengersPage/PassengersBlock/passenger.svg";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 

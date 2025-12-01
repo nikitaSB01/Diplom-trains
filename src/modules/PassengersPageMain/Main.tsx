@@ -5,11 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Main.module.css";
 
 import Steps from "../../components/Steps/Steps";
-import FiltersThereBack from "../../components/SearchPageMain/Filters/FiltersThereBake/FiltersThereBack";
-import PassengersBlock from "./blocks/PassengersBlock/PassengersBlock";
-import TotalBlock from "./blocks/TotalBlock/TotalBlock";
-import TitleBlock from "./blocks/TitleBlock/TitleBlock";
-import CollapsibleHeader from "./blocks/CollapsibleHeader/CollapsibleHeader";
+
 import PassengerCard from "./blocks/PassengerCard/PassengerCard";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 

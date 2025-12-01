@@ -5,16 +5,9 @@ import styles from "./Main.module.css";
 import { validatePaymentForm } from "../../modules/PassengersPageMain/blocks/PassengerCard/utils/validation";
 
 import Steps from "../../components/Steps/Steps";
-import FiltersThereBack from "../../components/SearchPageMain/Filters/FiltersThereBake/FiltersThereBack";
-import PassengersBlock from "../PassengersPageMain/blocks/PassengersBlock/PassengersBlock";
-import TotalBlock from "../PassengersPageMain/blocks/TotalBlock/TotalBlock";
-import TitleBlock from "../PassengersPageMain/blocks/TitleBlock/TitleBlock";
-import CollapsibleHeader from "../PassengersPageMain/blocks/CollapsibleHeader/CollapsibleHeader";
 import PersonalDataBlock from "./blocks/PersonalDataBlock/PersonalDataBlock";
 import PaymentMethodBlock from "./blocks/PaymentMethodBlock/PaymentMethodBlock";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
-
-import { ReactComponent as UserIcon } from "../../assets/icons/PassengersPage/PassengersBlock/passenger.svg";
 
 interface Props {
     orderData: any;

@@ -8,42 +8,12 @@
     align-items: start;
 }
 
-/* Левая колонка */
-.leftColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 90px;
-}
 
 /* Правая колонка */
 .rightColumn {
     display: flex;
     flex-direction: column;
     gap: 30px;
-}
-
-.containerInfo {
-    background-color: rgba(62, 60, 65, 1);
-    display: flex;
-    flex-direction: column;
-}
-
-.sectionDivider {
-    font-size: 18px;
-    font-weight: 600;
-    color: #d9a441;
-}
-
-.containerPassengers {
-    padding: 15px 27px 40px 27px;
-    border-bottom: 1px solid rgba(229, 229, 229, 1);
-}
-
-.passengersList {
-    display: flex;
-    flex-direction: column;
-    gap: 33px;
-    margin-top: 30px;
 }
 
 .containerAddPassengers {
