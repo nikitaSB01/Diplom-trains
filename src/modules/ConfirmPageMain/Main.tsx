@@ -68,8 +68,25 @@ const Main: React.FC<Props> = ({
                             onlineMethod={onlineMethod}
                         />
                     </div>
-
-
+                    <div className={styles.confirmContainer}>
+                        <button
+                            className={styles.confirmButton}
+                            onClick={() =>
+                                navigate("/success", {
+                                    state: {
+                                        totalPrice,
+                                        fullName: {
+                                            lastName: personalData.lastName,
+                                            firstName: personalData.firstName,
+                                            middleName: personalData.middleName
+                                        }
+                                    }
+                                })
+                            }
+                        >
+                            Подтвердить
+                        </button>
+                    </div>
                 </div>
 
             </div>
