@@ -21,7 +21,7 @@ const PaymentMethodBlock: React.FC<Props> = ({ paymentType, onSelect }) => {
                         checked={paymentType === "online"}
                         onChange={() => onSelect("online")}
                     />
-                    <span>Онлайн</span>
+                    <span className={styles.cashText}>Онлайн</span>
                 </label>
 
                 <div className={styles.methods}>
@@ -29,7 +29,9 @@ const PaymentMethodBlock: React.FC<Props> = ({ paymentType, onSelect }) => {
                         className={`${styles.methodBtn} ${paymentType === "card" ? styles.active : ""}`}
                         onClick={() => onSelect("card")}
                     >
-                        Банковской картой
+                        Банковской
+                        <br></br>
+                        картой
                     </button>
 
                     <button
@@ -59,7 +61,7 @@ const PaymentMethodBlock: React.FC<Props> = ({ paymentType, onSelect }) => {
                     <span className={styles.cashText}>Наличными</span>
                 </label>
             </div>
-        </div>
+        </div >
     );
 };
 

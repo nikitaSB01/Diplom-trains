@@ -23,7 +23,7 @@
 .checkbox {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 20px;
     font-size: 16px;
 }
 
@@ -35,15 +35,59 @@
     color: rgba(146, 143, 148, 1);
 }
 
+
 .checkboxInput {
+    appearance: none;
+    /* главное */
+    -webkit-appearance: none;
+
     width: 28px;
     height: 28px;
+    border: 1px solid rgba(146, 143, 148, 1);
+    border-radius: 5px;
+    /* квадрат с круглыми углами */
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    background: white;
+}
 
+/* Галочка */
+.checkboxInput:checked {
+    background: none;
+    border-color: rgba(255, 168, 0, 1);
+}
+
+/* SVG галочки через псевдоэлемент */
+.checkboxInput:checked::after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 7px;
+    width: 8px;
+    height: 18px;
+    border: solid rgba(255, 168, 0, 1);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.checkboxInput.cash:checked {
+    background: #f5a623;
+    border-color: #f5a623;
+}
+
+.checkboxInput.cash:checked::after {
+    border-color: white;
+}
+
+.checkboxInput:checked+.cashText {
+    color: rgba(255, 168, 0, 1);
 }
 
 .methods {
     display: flex;
-    gap: 24px;
+    align-items: start;
+    gap: 80px;
     margin-top: 30px;
 }
 
@@ -59,6 +103,7 @@
 
     cursor: pointer;
     border-radius: 4px;
+    text-align: left;
 }
 
 .methodBtn.active {
