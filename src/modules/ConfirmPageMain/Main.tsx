@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./Main.module.css";
 import Steps from "../../components/Steps/Steps";
 
-import { ReactComponent as UserIcon } from "../../assets/icons/PassengersPage/PassengersBlock/passenger.svg";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
+import TitleBlockReusable from "../../modules/shared/TitleBlockReusable/TitleBlockReusable";
+import TrainSummaryBlock from "../../modules/shared/TrainSummaryBlock/TrainSummaryBlock";
 
 interface Props {
     personalData: any;
@@ -28,14 +30,14 @@ const Main: React.FC<Props> = ({
     totalPrice
 }) => {
     const [openPassengers, setOpenPassengers] = useState(true);
+    const navigate = useNavigate();
+
 
     return (
-
         <section className={styles.main}>
             <Steps currentStep={4} />
 
             <div className={styles.container}>
-
                 {/* ---------- LEFT COLUMN ----------- */}
                 <LeftColumnInfo
                     orderData={orderData}
@@ -43,13 +45,20 @@ const Main: React.FC<Props> = ({
                     block2={block2}
                     totalPrice={totalPrice}
                 />
-
                 {/* ---------- RIGHT COLUMN ----------- */}
                 <div className={styles.rightColumn}>
 
+                    <div>
+                        <TrainSummaryBlock
+                            orderData={orderData}
+                            onEdit={() => navigate(-1)}
+                        />
+                    </div>
+
+
                     {/* Персональные данные */}
                     <div className={styles.card}>
-                        <h2>Персональные данные</h2>
+
                         <p>Фамилия: {personalData.lastName}</p>
                         <p>Имя: {personalData.firstName}</p>
                         <p>Отчество: {personalData.middleName || "-"}</p>

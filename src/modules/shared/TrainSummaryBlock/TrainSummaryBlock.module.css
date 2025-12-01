@@ -1,0 +1,246 @@
+/* ============= ОБОЛОЧКА ============= */
+.wrapper {
+    max-width: 960px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(196, 196, 196, 1);
+    overflow: visible;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
+}
+
+/* чтобы заголовок “Поезд” был над карточкой */
+.wrapper>div:first-child {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* ============= ОСНОВНОЙ КОНТЕЙНЕР ============= */
+.content {
+    display: flex;
+    width: 100%;
+}
+
+
+/* ============= ЛЕВАЯ КОЛОНКА (200px) ============= */
+.left {
+    min-width: 200px;
+    max-width: 200px;
+    background: rgba(228, 224, 233, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 25px;
+}
+
+/* Иконка поезда */
+.trainIcon {
+    width: 86px;
+    height: 86px;
+    margin: 0 0 17px 17px;
+    background: url("../../../assets/icons/Train/train.svg") center/contain no-repeat;
+}
+
+.trainNumber {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* Маршрут */
+.routeMain {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.routeLine {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.routeCity {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: rgba(0, 0, 0, 1);
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+/* Чёрная стрелка */
+.routeArrowBlack {
+    width: 18px;
+    height: 14px;
+    background: url("../../../assets/icons/Train/arrowMinThereBlack.svg") center/contain no-repeat;
+}
+
+/* ============= ЦЕНТРАЛЬНАЯ КОЛОНКА ============= */
+.center {
+    display: flex;
+    flex-direction: column;
+    min-width: 480px;
+    max-width: 480px;
+    width: 100%;
+    align-items: center;
+    padding: 54px 36px 80px 40px;
+    gap: 60px;
+}
+
+.directionBlock {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.direction {
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
+    align-items: start;
+    width: 100%;
+}
+
+.timeBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.leftBlock {}
+
+.rightBlock {
+    margin-left: 38px;
+}
+
+/* стрелка + длительность */
+.arrowBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    gap: 6px;
+}
+
+.time {
+    font-weight: 700;
+    font-size: 24px;
+    color: #000000;
+}
+
+.city {
+    font-size: 18px;
+    color: #292929;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.station {
+    font-size: 18px;
+    color: #928f94;
+}
+
+/* длительность */
+.duration {
+    font-size: 16px;
+    color: #928f94;
+}
+
+.arrowSvg {
+    width: 36px;
+    height: 20px;
+}
+
+
+/* ============= ПРАВАЯ КОЛОНКА ============= */
+.right {
+    max-width: 280px;
+    width: 100%;
+    border-left: 1px solid transparent;
+    border-image: repeating-linear-gradient(to bottom,
+            #e5e5e5 0,
+            #e5e5e5 1px,
+            transparent 1px,
+            transparent 3px) 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 40px 22px 22px 25px;
+    gap: 20px;
+}
+
+/* список цен */
+.priceList {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    margin-bottom: auto;
+}
+
+.priceRow {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.priceLabel {
+    flex: 1;
+    font-weight: 400;
+    font-size: 16px;
+
+    color: rgba(62, 60, 65, 1);
+}
+
+.priceSeats {
+    font-size: 16px;
+    color: #ffa800;
+    font-weight: 500;
+    width: 25px;
+    text-align: right;
+}
+
+.priceValue {
+    min-width: 110px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.pricePrefix {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(146, 143, 148, 1);
+}
+
+.priceNumber {
+    font-size: 24px;
+    font-weight: 700;
+    color: #292929;
+}
+
+.rubleIcon {
+    margin-left: 5px;
+    fill: #292929;
+}
+
+/* услуги */
+.services {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.serviceIcon {
+    width: 20px;
+    height: 20px;
+    fill: #c4c4c4;
+}

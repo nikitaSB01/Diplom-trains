@@ -1,0 +1,28 @@
+/* кнопка ИЗМЕНИТЬ */
+.editBtn {
+    width: 230px;
+    height: 40px;
+    background: none;
+    color: rgba(41, 41, 41, 1);
+
+    border: 1px solid rgba(41, 41, 41, 1);
+    border-radius: 5px;
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+}
+
+.editBtn:hover {
+    color: rgba(255, 168, 0, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.editBtn:active {
+    background-color: rgba(255, 168, 0, 1);
+    color: rgba(41, 41, 41, 1);
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
