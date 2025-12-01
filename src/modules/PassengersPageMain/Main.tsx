@@ -11,6 +11,7 @@ import TotalBlock from "./blocks/TotalBlock/TotalBlock";
 import TitleBlock from "./blocks/TitleBlock/TitleBlock";
 import CollapsibleHeader from "./blocks/CollapsibleHeader/CollapsibleHeader";
 import PassengerCard from "./blocks/PassengerCard/PassengerCard";
+import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 
 import { ReactComponent as UserIcon } from "../../assets/icons/PassengersPage/PassengersBlock/passenger.svg";
 import { ReactComponent as PlusHover } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/PlusNewPas.svg";
@@ -182,60 +183,13 @@ const Main: React.FC = () => {
             <Steps currentStep={2} />
 
             <div className={styles.container}>
-                <div className={styles.leftColumn}>
-                    <div className={styles.containerInfo}>
-                        <TitleBlock />
-
-                        <FiltersThereBack
-                            title="Туда"
-                            passengerMode
-                            trainData={orderData.train.departure}
-                        />
-
-                        <FiltersThereBack
-                            title="Обратно"
-                            passengerMode
-                            trainData={orderData.train.arrival}
-                        />
-
-                        <div className={styles.containerPassengers}>
-                            <CollapsibleHeader
-                                iconLeft={<UserIcon />}
-                                title="Пассажиры"
-                                isOpen={openPassengers}
-                                onToggle={() => setOpenPassengers(!openPassengers)}
-                                className={styles.passengersHeader}
-                            />
-                            {openPassengers && (
-                                <div className={styles.passengersList}>
-                                    {block1 && (
-                                        <PassengersBlock
-                                            passengers={block1.passengers}
-                                            adultsPrice={block1.adultsPrice}
-                                            kidsPrice={block1.kidsPrice}
-                                            servicesList={block1.servicesList}
-                                        />
-                                    )}
-
-                                    {block2 && (
-                                        <>
-                                            <div className={styles.sectionDivider}>Обратно</div>
-                                            <PassengersBlock
-                                                passengers={block2.passengers}
-                                                adultsPrice={block2.adultsPrice}
-                                                kidsPrice={block2.kidsPrice}
-                                                servicesList={block2.servicesList}
-                                            />
-                                        </>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* ИТОГ */}
-                        <TotalBlock totalPrice={totalPrice} />
-                    </div>
-                </div>
+                {/* ---------- LEFT COLUMN ----------- */}
+                <LeftColumnInfo
+                    orderData={orderData}
+                    block1={block1}
+                    block2={block2}
+                    totalPrice={totalPrice}
+                />
 
                 <div className={styles.rightColumn}>
                     <div className={styles.containerAddPassengers}>

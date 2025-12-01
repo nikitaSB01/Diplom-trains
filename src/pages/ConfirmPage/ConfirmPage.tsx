@@ -24,7 +24,16 @@ const ConfirmPage: React.FC = () => {
         <div className={styles.ConfirmPage}>
             <Header isInner />
             <main className={styles.main}>
-                <ConfirmPageMain />
+                <ConfirmPageMain
+                    personalData={personalData}
+                    paymentType={paymentType}
+                    onlineMethod={onlineMethod}
+                    orderData={orderData}
+                    passengers={passengers}
+                    block1={block1}
+                    block2={block2}
+                    totalPrice={totalPrice}
+                />
             </main>
             <Footer />
         </div>
