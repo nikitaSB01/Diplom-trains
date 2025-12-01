@@ -9,10 +9,6 @@
     margin-bottom: 40px;
 }
 
-/* чтобы заголовок “Поезд” был над карточкой */
-.wrapper>div:first-child {
-    border-bottom: 1px solid #e5e5e5;
-}
 
 /* ============= ОСНОВНОЙ КОНТЕЙНЕР ============= */
 .content {
