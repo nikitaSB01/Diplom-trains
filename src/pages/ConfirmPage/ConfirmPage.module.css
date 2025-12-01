@@ -1,0 +1,29 @@
+.container {
+    /* !!!!!!! 250px? */
+    padding: 95px 250px 190px;
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    /* Левая колонка — фильтры, правая — поезда */
+    gap: 80px;
+    align-items: start;
+}
+
+/* Левая колонка */
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+}
+
+/* Правая колонка */
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.containerInfo {
+    background-color: rgba(62, 60, 65, 1);
+    display: flex;
+    flex-direction: column;
+}

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styles from "./Main.module.css";
 
 import Steps from "../../components/Steps/Steps";
@@ -27,6 +29,8 @@ const Main: React.FC<Props> = ({
     block2,
     totalPrice
 }) => {
+    const navigate = useNavigate();
+
     const [openPassengers, setOpenPassengers] = useState(true);
 
     /* данные и функции для подключения PersonalDataBlock PaymentMethodBlock*/
@@ -52,6 +56,20 @@ const Main: React.FC<Props> = ({
         setPersonalData(prev => ({ ...prev, [field]: value }));
     };
 
+    const handleBuy = () => {
+        navigate("/confirm", {
+            state: {
+                personalData,
+                paymentType,
+                onlineMethod,
+                orderData,
+                passengers,
+                block1,
+                block2,
+                totalPrice
+            }
+        });
+    };
 
     return (
         <section className={styles.main}>
@@ -124,10 +142,12 @@ const Main: React.FC<Props> = ({
                             onSelectPayment={handleSelectPayment}
                             onSelectOnlineMethod={setOnlineMethod}
                         />               </div>
-                        
-                    <button className={styles.buyButton}>
-                        Купить билеты
-                    </button>
+
+                    <div className={styles.containerButton}>
+                        <button className={styles.buyButton} onClick={handleBuy}>
+                            Купить билеты
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
