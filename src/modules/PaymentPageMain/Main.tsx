@@ -124,6 +124,7 @@ const Main: React.FC<Props> = ({
                             onSelectPayment={handleSelectPayment}
                             onSelectOnlineMethod={setOnlineMethod}
                         />               </div>
+                        
                     <button className={styles.buyButton}>
                         Купить билеты
                     </button>

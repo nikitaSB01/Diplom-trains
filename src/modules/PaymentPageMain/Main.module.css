@@ -122,3 +122,54 @@
 .addBtn:hover .iconPlusHover {
     opacity: 1;
 }
+
+/* ! ==================================================== */
+
+.containerButton {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+/* Базовая неактивная кнопка */
+.nextMainBtn {
+    width: 222px;
+    height: 60px;
+
+    border-radius: 5px;
+    border: none;
+
+    background: rgba(146, 143, 148, 1);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 1);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: default;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* Активное состояние */
+.active {
+    background: rgba(255, 168, 0, 1);
+    cursor: pointer;
+}
+
+.active:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.active:active {
+    background-color: rgb(255, 255, 255);
+    color: rgba(255, 168, 0, 1);
+    border: 1px solid rgba(255, 168, 0, 1);
+    box-shadow: none;
+}

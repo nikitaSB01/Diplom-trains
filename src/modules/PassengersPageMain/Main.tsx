@@ -270,25 +270,28 @@ const Main: React.FC = () => {
                                 <PlusHover className={styles.iconPlusHover} />
                             </div>
                         </button>
-                        <button
-                            className={`${styles.nextMainBtn} ${allCompleted ? styles.active : ""}`}
-                            disabled={!allCompleted}
-                            onClick={() => {
-                                if (!allCompleted) return;
+                        <div className={styles.containerButton}>
+                            <button
+                                className={`${styles.nextMainBtn} ${allCompleted ? styles.active : ""}`}
+                                disabled={!allCompleted}
+                                onClick={() => {
+                                    if (!allCompleted) return;
 
-                                navigate("/payment", {
-                                    state: {
-                                        orderData,
-                                        passengers: formDataList, // ← мы это добавим ниже
-                                        block1,
-                                        block2,
-                                        totalPrice
-                                    }
-                                });
-                            }}
-                        >
-                            Далее
-                        </button>
+                                    navigate("/payment", {
+                                        state: {
+                                            orderData,
+                                            passengers: formDataList,
+                                            block1,
+                                            block2,
+                                            totalPrice
+                                        }
+                                    });
+                                }}
+                            >
+                                Далее
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
