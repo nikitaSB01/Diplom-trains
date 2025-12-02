@@ -493,7 +493,10 @@ const Trains: React.FC<TrainsProps> = ({
       <Pagination
         page={page}
         totalPages={totalPages}
-        onChange={(p) => setPage(p)}
+        onChange={(p) => {
+          setPage(p);
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        }}
       />
 
     </div>
