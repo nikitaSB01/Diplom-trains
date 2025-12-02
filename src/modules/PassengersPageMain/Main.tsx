@@ -172,6 +172,34 @@ const Main: React.FC<PassengersPageMainProps> = ({
         passengers || Array(totalCards).fill(null)
     );
 
+    // ---------- считаем фактически введённые категории ----------
+    const calcCategories = () => {
+        let adults = 0;
+        let kids = 0;
+
+        formDataList.forEach((p) => {
+            if (!p) return;
+
+            if (p.ticketType === "adult") adults++;
+            if (p.ticketType === "child") kids++;
+            // детей без места НЕ учитываем
+        });
+
+        return { adults, kids };
+    };
+
+    const entered = calcCategories();
+
+    const requiredAdults = block1?.passengers.adults ?? 0;
+    const requiredKids = block1?.passengers.kids ?? 0;
+
+    const categoriesMatch =
+        entered.adults === requiredAdults &&
+        entered.kids === requiredKids;
+
+    // ---------- итоговая проверка ----------
+    const canGoNext = allCompleted && categoriesMatch;
+
     useEffect(() => {
         if (!passengers) {
             setFormDataList(Array(totalCards).fill(null));
@@ -238,10 +266,10 @@ const Main: React.FC<PassengersPageMainProps> = ({
 
                         <div className={styles.containerButton}>
                             <button
-                                className={`${styles.nextMainBtn} ${allCompleted ? styles.active : ""}`}
-                                disabled={!allCompleted}
+                                className={`${styles.nextMainBtn} ${canGoNext ? styles.active : ""}`}
+                                disabled={!canGoNext}
                                 onClick={() => {
-                                    if (!allCompleted) return;
+                                    if (!canGoNext) return;
 
                                     navigate("/payment", {
                                         state: {
@@ -249,7 +277,6 @@ const Main: React.FC<PassengersPageMainProps> = ({
                                             to,
                                             dateStart,
                                             dateEnd,
-
                                             orderData,
                                             passengers: formDataList,
                                             block1,
