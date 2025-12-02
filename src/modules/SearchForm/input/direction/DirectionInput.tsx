@@ -7,8 +7,7 @@ interface DirectionInputProps {
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
-  onCitySelect?: (city: City) => void; // ← ДОБАВИЛ
-
+  onCitySelect?: (city: City | null) => void;
 }
 
 interface City {
@@ -64,8 +63,9 @@ export const DirectionInput: React.FC<DirectionInputProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
     setIsOpen(true);
-    /* //todo 👉 Сбрасываем выбранный объект города, если пользователь снова вводит текст?
-    onCitySelect?.(null); */
+
+    /* onCitySelect?.(null); */
+
 
   };
 

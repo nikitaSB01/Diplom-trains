@@ -32,6 +32,10 @@ const SearchForm: React.FC<SearchFormProps> = ({ isCompact = false,
   const handleSwap = () => {
     setFrom(to);
     setTo(from);
+
+    // меняем объектные города
+    setFromCityObj(toCityObj);
+    setToCityObj(fromCityObj);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
