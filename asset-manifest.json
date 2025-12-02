@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Diplom-trains/static/css/main.dfae5df9.css",
-    "main.js": "/Diplom-trains/static/js/main.5995d4d8.js",
+    "main.js": "/Diplom-trains/static/js/main.1244b261.js",
     "static/js/453.4e40dd54.chunk.js": "/Diplom-trains/static/js/453.4e40dd54.chunk.js",
     "static/media/imgSucces.png": "/Diplom-trains/static/media/imgSucces.454f40a652b478c580e4.png",
     "static/media/train-bg.png": "/Diplom-trains/static/media/train-bg.5043a91df3169a9ef237.png",
@@ -89,11 +89,11 @@
     "static/media/2.svg": "/Diplom-trains/static/media/2.331955b821e33f471c9d75058937ca74.svg",
     "static/media/select-arrow.svg": "/Diplom-trains/static/media/select-arrow.7deddb57c81afe1a98e3.svg",
     "main.dfae5df9.css.map": "/Diplom-trains/static/css/main.dfae5df9.css.map",
-    "main.5995d4d8.js.map": "/Diplom-trains/static/js/main.5995d4d8.js.map",
+    "main.1244b261.js.map": "/Diplom-trains/static/js/main.1244b261.js.map",
     "453.4e40dd54.chunk.js.map": "/Diplom-trains/static/js/453.4e40dd54.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dfae5df9.css",
-    "static/js/main.5995d4d8.js"
+    "static/js/main.1244b261.js"
   ]
 }
