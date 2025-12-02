@@ -33,10 +33,10 @@ const Header: React.FC<HeaderProps> = ({
 
       <div className={styles.navBar}>
         <nav className={styles.nav}>
-          <a href="#about">О нас</a>
-          <a href="#how">Как это работает</a>
-          <a href="#reviews">Отзывы</a>
-          <a href="#contacts">Контакты</a>
+          <a href="#/?about">О нас</a>
+          <a href="#/?how">Как это работает</a>
+          <a href="#/?reviews">Отзывы</a>
+          <a href="#/?contacts">Контакты</a>
         </nav>
       </div>
 

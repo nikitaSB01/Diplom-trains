@@ -7,10 +7,8 @@ import { scrollToHash } from "./utils/scrollToHash";
 function App() {
 
   useEffect(() => {
-    // Скролл при загрузке страницы
     scrollToHash();
 
-    // Скролл при смене хеша (#about → #how)
     const handler = () => scrollToHash();
     window.addEventListener("hashchange", handler);
 

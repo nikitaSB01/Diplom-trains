@@ -1,12 +1,13 @@
 export const scrollToHash = () => {
-    const hash = window.location.hash.replace('#', '');
+    const hash = window.location.hash; // "#/?about"
 
-    if (!hash) return;
+    const param = hash.split("?")[1]; // "about"
+    if (!param) return;
 
-    const el = document.getElementById(hash);
+    const el = document.getElementById(param);
     if (!el) return;
 
     setTimeout(() => {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
 };
