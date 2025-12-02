@@ -81,11 +81,11 @@
 .info {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 }
 
 .fio {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 
     font-weight: 400;
     font-size: 18px;

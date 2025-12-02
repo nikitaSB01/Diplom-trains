@@ -66,6 +66,8 @@ const Main: React.FC<Props> = ({
                         <PaymentSummaryBlock
                             paymentType={paymentType}
                             onlineMethod={onlineMethod}
+                            personalData={personalData}
+
                         />
                     </div>
                     <div className={styles.confirmContainer}>

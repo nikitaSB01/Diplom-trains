@@ -7,6 +7,8 @@ import EditButton from "../EditButton/EditButton";
 interface Props {
     paymentType: "online" | "cash";
     onlineMethod: "card" | "paypal" | "qiwi" | null;
+    personalData: any;
+
 }
 
 const onlineMethodText: Record<string, string> = {
@@ -15,7 +17,8 @@ const onlineMethodText: Record<string, string> = {
     qiwi: "Qiwi"
 };
 
-const PaymentSummaryBlock: React.FC<Props> = ({ paymentType, onlineMethod }) => {
+const PaymentSummaryBlock: React.FC<Props> = ({ paymentType, onlineMethod, personalData
+}) => {
     console.log("paymentType:", paymentType, "onlineMethod:", onlineMethod);
     return (
         <div className={styles.wrapper}>

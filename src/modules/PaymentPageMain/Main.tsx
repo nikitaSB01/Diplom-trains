@@ -15,6 +15,9 @@ interface Props {
     block1: any;
     block2: any;
     totalPrice: number;
+    personalData?: any;
+    paymentType?: "online" | "cash";
+    onlineMethod?: "card" | "paypal" | "qiwi" | null;
 }
 
 const Main: React.FC<Props> = ({
@@ -22,23 +25,32 @@ const Main: React.FC<Props> = ({
     passengers,
     block1,
     block2,
-    totalPrice
+    totalPrice,
+    personalData: initialPersonalData,
+    paymentType: initialPaymentType,
+    onlineMethod: initialOnlineMethod
 }) => {
+
     const navigate = useNavigate();
 
     const [openPassengers, setOpenPassengers] = useState(true);
 
     /* данные и функции для подключения PersonalDataBlock PaymentMethodBlock*/
-    const [personalData, setPersonalData] = useState({
-        lastName: "",
-        firstName: "",
-        middleName: "",
-        phone: "",
-        email: ""
-    });
+    const [personalData, setPersonalData] = useState(() => ({
+        lastName: initialPersonalData?.lastName ?? "",
+        firstName: initialPersonalData?.firstName ?? "",
+        middleName: initialPersonalData?.middleName ?? "",
+        phone: initialPersonalData?.phone ?? "",
+        email: initialPersonalData?.email ?? ""
+    }));
 
-    const [paymentType, setPaymentType] = useState<"online" | "cash">("online");
-    const [onlineMethod, setOnlineMethod] = useState<"card" | "paypal" | "qiwi" | null>(null);
+    const [paymentType, setPaymentType] = useState<"online" | "cash">(
+        initialPaymentType ?? "online"
+    );
+
+    const [onlineMethod, setOnlineMethod] = useState<"card" | "paypal" | "qiwi" | null>(
+        initialOnlineMethod ?? null
+    );
 
     const handleSelectPayment = (type: "online" | "cash") => {
         setPaymentType(type);
