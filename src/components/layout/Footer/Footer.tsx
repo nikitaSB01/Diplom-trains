@@ -16,7 +16,7 @@ import { ReactComponent as ArrowUpIcon } from '../../../assets/icons/Footer/icon
 
 const Contacts: React.FC = () => {
   return (
-    <section className={styles.contacts}>
+    <section id="contacts" className={styles.contacts}>
       {/* Верхний блок */}
       <div className={styles.topBlock}>
         <div className={styles.container}>

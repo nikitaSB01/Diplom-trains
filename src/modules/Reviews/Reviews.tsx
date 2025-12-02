@@ -15,7 +15,7 @@ const Reviews: React.FC = () => {
   const currentReviews = reviewsData.slice(start, start + reviewsPerPage);
 
   return (
-    <section className={styles.reviews}>
+    <section id="reviews" className={styles.reviews}>
       <div className={styles.titleBlock}>
         <h2 className={styles.title}>ОТЗЫВЫ</h2>
       </div>

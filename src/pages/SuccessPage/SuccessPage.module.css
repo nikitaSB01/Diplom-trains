@@ -12,9 +12,9 @@
     position: relative;
 }
 
-.containerInfo {
+.containerBody {
     position: absolute;
-    top: -200px;
+    top: -340px;
     left: 50%;
     transform: translateX(-50%);
 
@@ -22,6 +22,25 @@
 
     min-width: 1400px;
     max-width: 1400px;
+    width: 100%;
+}
+
+
+.containerTitle {
+    width: 100%;
+    height: 120px;
+    background-color: none;
+}
+
+.title {}
+
+.title p {
+    font-weight: 700;
+    font-size: 72px;
+    color: rgba(255, 255, 255, 1);
+}
+
+.containerInfo {
     width: 100%;
     background: #ffffff;
 
@@ -43,20 +62,36 @@
     align-items: center;
 }
 
-.orderNumber {
-    color: #000;
+.orderNumber, .sum {
     font-weight: 700;
-    font-size: 22px;
+    font-size: 36px;
+    color: rgba(62, 60, 65, 1);
+
 }
 
 .sum {
-    color: #000;
-    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    padding: 5px;
 }
 
-.sum span {
-    font-weight: 700;
-    margin-left: 8px;
+.sum p {
+    font-weight: 400;
+    font-size: 36px;
+    color: rgba(146, 143, 148, 1);
+}
+
+.sumRub {
+    width: 21px;
+    height: 27px;
+}
+
+.sumSpanIcon {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
 }
 
 /* === ICONS === */
@@ -64,8 +99,15 @@
     min-height: 310px;
     background: rgba(244, 243, 246, 1);
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     padding: 40px 0;
+}
+
+.containerIconsBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 140px;
 }
 
 .iconItem {
@@ -75,13 +117,16 @@
 }
 
 .iconItem p {
-    color: #000;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    color: rgba(41, 41, 41, 1);
 }
 
 .icon {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 12px;
+    width: 155px;
+    height: 155px;
+    margin-bottom: 10px;
 }
 
 /* === MESSAGE === */
@@ -89,27 +134,29 @@
     min-height: 490px;
     background: #fff;
     border: 1px solid #e5e5e5;
-    padding: 40px;
+    padding: 95px 230px 130px 200px;
 
 }
 
 .name {
-    font-size: 28px;
+    font-size: 36px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+    color: rgba(41, 41, 41, 1);
 }
 
 .text {
-    font-size: 18px;
-    color: #000;
+    font-weight: 400;
+    font-size: 24px;
 
-    margin-bottom: 18px;
+    color: rgba(41, 41, 41, 1);
+    margin-bottom: 70px;
 }
 
 .textStrong {
-    font-weight: 600;
-    font-size: 18px;
-    color: #000;
+    font-weight: 700;
+    font-size: 24px;
+    color: rgba(41, 41, 41, 1);
 
 }
 
@@ -118,15 +165,25 @@
     min-height: 160px;
 
     background: #f3a52b;
-    padding: 30px 40px;
+    padding: 30px 80px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.ratingBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+}
+
 .ratingBlock p {
-    font-size: 18px;
+    font-weight: 400;
+    font-size: 24px;
+    color: rgba(41, 41, 41, 1);
+
 }
 
 .stars {
@@ -136,16 +193,25 @@
 
 /* Button */
 .backButton {
-    background: #fff;
-    color: #000;
-    border: 1px solid #000;
-    padding: 12px 28px;
-    font-size: 18px;
-    font-weight: 700;
+    width: 360px;
+    height: 60px;
+    background: none;
+    color: rgba(41, 41, 41, 1);
+    border: 1px solid rgba(62, 60, 65, 1);
     border-radius: 5px;
+
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    text-transform: uppercase;
     cursor: pointer;
 }
 
 .backButton:hover {
-    background: #f8f8f8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.backButton:active {
+    color: rgba(255, 168, 0, 1);
+    background: rgba(255, 255, 255, 1);
 }

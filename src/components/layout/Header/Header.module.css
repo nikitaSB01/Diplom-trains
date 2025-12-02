@@ -8,12 +8,14 @@
     color: #fff;
     background-image: url("../../../assets/img/train-bg.png");
     background-color: rgba(0, 0, 0, 0.69);
-    background-size: 1920px auto; /* фикс ширины, без растягивания */
+    background-size: 1920px auto;
+    /* фикс ширины, без растягивания */
     background-repeat: no-repeat;
     background-position: center top;
     /* overflow: hidden; */
     border-bottom: 8px solid rgba(255, 168, 0, 1);
 }
+
 .innerHeader {
     min-height: 596px;
     max-height: 596px;
@@ -25,11 +27,14 @@
 .logoBar {
     height: 64px;
     background: rgba(0, 0, 0, 0.6);
-    padding: 15px 0 0 258px; /* отступ слева */
+    padding: 15px 0 0 258px;
+    /* отступ слева */
 }
+
 .innerHeader .logoBar {
     background: rgba(41, 41, 41, 0.6);
 }
+
 .logo {
     font-weight: 700;
     color: #ffffff;
@@ -42,7 +47,8 @@
     height: 94px;
     display: flex;
     align-items: center;
-    padding-left: 258px; /* якорные ссылки с тем же отступом */
+    padding-left: 258px;
+    /* якорные ссылки с тем же отступом */
 }
 
 .nav {
@@ -75,6 +81,7 @@
     display: flex;
     align-items: center;
 }
+
 .innerHeader .hero {
     margin-top: 110px;
     min-height: 0;
@@ -86,6 +93,7 @@
     gap: 120px;
     padding-left: 350px;
 }
+
 .innerHeader .heroContent {
     padding: 0;
     margin: 0 auto;
@@ -107,11 +115,16 @@
     letter-spacing: 0%;
     color: rgba(255, 255, 255, 1);
 }
-/* 
-.formBlock {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 24px;
-    border-radius: 8px;
-    max-width: 420px;
+
+
+/* вариант для страницы SuccessPage */
+.successHeader {
+    min-height: 830px;
+    max-height: 830px;
+    border-bottom: none;
+    background-image: url("../../../assets/img/header/imgSucces.png");
 }
- */
+
+.successHeader .hero {
+    display: none;
+}

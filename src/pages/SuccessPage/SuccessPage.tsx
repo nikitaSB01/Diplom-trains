@@ -1,13 +1,16 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import styles from "./SuccessPage.module.css";
+
 import Header from "../../components/layout/Header/Header";
 import Footer from "../../components/layout/Footer/Footer";
-
-import styles from "./SuccessPage.module.css";
+import RatingStars from "../../components/RatingStars/RatingStars";
 
 import { ReactComponent as MailIcon } from "../../assets/icons/SuccessPage/svg1.svg";
 import { ReactComponent as TicketsIcon } from "../../assets/icons/SuccessPage/svg2.svg";
 import { ReactComponent as ConductorIcon } from "../../assets/icons/SuccessPage/svg3.svg";
+import { ReactComponent as RublIcon } from "../../assets/icons/Train/ruble.svg";
+
 
 const SuccessPage: React.FC = () => {
     const { state } = useLocation() as any;
@@ -33,67 +36,82 @@ const SuccessPage: React.FC = () => {
 
     return (
         <div className={styles.page}>
-            <Header />
-
+            <Header variant="success" />
             <main className={styles.main}>
-                <div className={styles.containerInfo}>
-                    {/* ---------- Верхняя панель ---------- */}
-                    <div className={styles.topPanel}>
-                        <p className={styles.orderNumber}>№ Заказа {orderNumber}</p>
-                        <p className={styles.sum}>
-                            сумма <span>{totalPrice.toLocaleString("ru-RU")} ₽</span>
-                        </p>
-                    </div>
-
-                    {/* ---------- Иконки ---------- */}
-                    <div className={styles.iconsBlock}>
-                        <div className={styles.iconItem}>
-                            <MailIcon className={styles.icon} />
-                            <p>билеты будут отправлены<br />на ваш e-mail</p>
-                        </div>
-
-                        <div className={styles.iconItem}>
-                            <TicketsIcon className={styles.icon} />
-                            <p>распечатайте<br />и сохраняйте билеты<br />до даты поездки</p>
-                        </div>
-
-                        <div className={styles.iconItem}>
-                            <ConductorIcon className={styles.icon} />
-                            <p>предъявите<br />распечатанные билеты<br />при посадке</p>
+                <div className={styles.containerBody}>
+                    <div className={styles.containerTitle}>
+                        <div className={styles.title}>
+                            <p>Благодарим Вас за заказ!</p>
                         </div>
                     </div>
+                    <div className={styles.containerInfo}>
 
-                    {/* ---------- Сообщение ---------- */}
-                    <div className={styles.messageBlock}>
-                        <h2 className={styles.name}>{formattedName}!</h2>
-
-                        <p className={styles.text}>
-                            Ваш заказ успешно оформлен.<br />
-                            В ближайшее время с вами свяжется наш оператор для подтверждения.
-                        </p>
-
-                        <p className={styles.textStrong}>
-                            Благодарим Вас за оказанное доверие и желаем приятного путешествия!
-                        </p>
-                    </div>
-
-                    {/* ---------- Оценка + кнопка ---------- */}
-                    <div className={styles.bottom}>
-                        <div className={styles.ratingBlock}>
-                            <p>Оценить сервис</p>
-                            <div className={styles.stars}>
-                                ★ ★ ★ ★ ★
+                        {/* ---------- Верхняя панель ---------- */}
+                        <div className={styles.topPanel}>
+                            <p className={styles.orderNumber}>№ Заказа {orderNumber}</p>
+                            <div className={styles.sum}>
+                                <p>сумма</p>
+                                <div className={styles.sumSpanIcon}>
+                                    <span>{totalPrice.toLocaleString("ru-RU")} </span>
+                                    <RublIcon className={styles.sumRub} />
+                                </div>
                             </div>
                         </div>
 
-                        <button
-                            className={styles.backButton}
-                            onClick={() => navigate("/")}
-                        >
-                            ВЕРНУТЬСЯ НА ГЛАВНУЮ
-                        </button>
+                        {/* ---------- Иконки ---------- */}
+                        <div className={styles.iconsBlock}>
+                            <div className={styles.containerIconsBlock}>
+                                <div className={styles.iconItem}>
+                                    <MailIcon className={styles.icon} />
+                                    <p>билеты будут <br /> отправлены <br /> на ваш <span>e-mail</span></p>
+                                </div>
+
+                                <div className={styles.iconItem}>
+                                    <TicketsIcon className={styles.icon} />
+                                    <p><span>распечатайте</span><br />и сохраняйте билеты<br />до даты поездки</p>
+                                </div>
+
+                                <div className={styles.iconItem}>
+                                    <ConductorIcon className={styles.icon} />
+                                    <p><span>предъявите</span><br />распечатанные <br />билеты при посадке</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {/* ---------- Сообщение ---------- */}
+                        <div className={styles.messageBlock}>
+                            <h2 className={styles.name}>{formattedName}!</h2>
+
+                            <p className={styles.text}>
+                                Ваш заказ успешно оформлен.<br />
+                                В ближайшее время с вами свяжется наш оператор для подтверждения.
+                            </p>
+
+                            <p className={styles.textStrong}>
+                                Благодарим Вас за оказанное доверие и желаем приятного путешествия!
+                            </p>
+                        </div>
+
+                        {/* ---------- Оценка + кнопка ---------- */}
+                        <div className={styles.bottom}>
+                            <div className={styles.ratingBlock}>
+                                <p>Оценить сервис</p>
+                                <div className={styles.stars}>
+                                    <RatingStars />
+                                </div>
+                            </div>
+
+                            <button
+                                className={styles.backButton}
+                                onClick={() => navigate("/")}
+                            >
+                                ВЕРНУТЬСЯ НА ГЛАВНУЮ
+                            </button>
+                        </div>
                     </div>
                 </div>
+
 
 
             </main>

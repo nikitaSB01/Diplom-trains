@@ -9,26 +9,34 @@ interface HeaderProps {
   to?: City | null;
   dateStart?: string;
   dateEnd?: string;
+  variant?: "default" | "success";
+
 }
 const Header: React.FC<HeaderProps> = ({
   isInner = false,
   from,
   to,
   dateStart,
-  dateEnd
+  dateEnd,
+  variant
 }) => {
   return (
-    <header className={`${styles.header} ${isInner ? styles.innerHeader : ''}`}>
-      <div className={styles.logoBar}>
+    <header
+      className={`
+      ${styles.header}
+      ${isInner ? styles.innerHeader : ""}
+      ${variant === "success" ? styles.successHeader : ""}
+  `}
+    >      <div className={styles.logoBar}>
         <div className={styles.logo}>Лого</div>
       </div>
 
       <div className={styles.navBar}>
         <nav className={styles.nav}>
-          <a href="#about">О нас</a>
-          <a href="#how">Как это работает</a>
-          <a href="#reviews">Отзывы</a>
-          <a href="#contacts">Контакты</a>
+          <a href="/#about">О нас</a>
+          <a href="/#how">Как это работает</a>
+          <a href="/#reviews">Отзывы</a>
+          <a href="/#contacts">Контакты</a>
         </nav>
       </div>
 

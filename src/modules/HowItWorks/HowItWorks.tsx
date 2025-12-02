@@ -7,7 +7,7 @@ import icon3 from '../../assets/icons/HowItWorks/icon3.svg';
 
 const HowItWorks: React.FC = () => {
   return (
-    <section className={styles.howItWorks}>
+    <section id="how" className={styles.howItWorks}>
       <div className={styles.overlay}>
         <div className={styles.topRow}>
           <h2 className={styles.title}>КАК ЭТО РАБОТАЕТ</h2>
