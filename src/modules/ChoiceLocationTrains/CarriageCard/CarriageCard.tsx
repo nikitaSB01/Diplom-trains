@@ -151,9 +151,11 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                                     <div className={styles.subRow}>
                                         <span className={styles.subTitle}>Нижние</span>
                                     </div>
-                                    <div className={styles.subRow}>
-                                        <span className={styles.subTitle}>Боковые</span>
-                                    </div>
+                                    {type === "third" && (
+                                        <div className={styles.subRow}>
+                                            <span className={styles.subTitle}>Боковые</span>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
