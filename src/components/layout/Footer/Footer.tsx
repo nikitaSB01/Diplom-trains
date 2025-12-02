@@ -13,8 +13,47 @@ import { ReactComponent as FacebookIcon } from '../../../assets/icons/Footer/ico
 import { ReactComponent as TwitterIcon } from '../../../assets/icons/Footer/icon5_tw.svg';
 
 import { ReactComponent as ArrowUpIcon } from '../../../assets/icons/Footer/iconUp.svg';
+import PopupMessage from "../../PopupMessage/PopupMessage";
 
 const Contacts: React.FC = () => {
+
+  const [email, setEmail] = React.useState("");
+  const [popup, setPopup] = React.useState<null | { type: "error" | "success"; title: string; text: string }>(null);
+  const handleSubscribe = async () => {
+    const trimmed = email.trim();
+
+    if (!trimmed || !trimmed.includes("@")) {
+      setPopup({
+        type: "error",
+        title: "Некорректный email",
+        text: "Введите действительный адрес электронной почты.",
+      });
+      return;
+    }
+
+    try {
+      await fetch(
+        `https://students.netoservices.ru/fe-diplom/subscribe?email=${encodeURIComponent(trimmed)}`
+      );
+
+      // по ТЗ подписка всегда успешна
+      setPopup({
+        type: "success",
+        title: "Вы успешно подписались!",
+        text: "Теперь вы будете получать наши новости.",
+      });
+      setEmail("");
+
+    } catch {
+      setPopup({
+        type: "success",
+        title: "Вы успешно подписались!",
+        text: "Система обработки выполнена.",
+      });
+      setEmail("");
+    }
+  };
+
   return (
     <section id="contacts" className={styles.contacts}>
       {/* Верхний блок */}
@@ -56,8 +95,32 @@ const Contacts: React.FC = () => {
               Будьте в курсе событий
             </label>
             <div className={styles.form}>
-              <input type="email" id="email" placeholder="e-mail" className={styles.input} />
-              <button className={styles.button}>ОТПРАВИТЬ</button>
+              <input
+                type="email"
+                id="email"
+                placeholder="e-mail"
+                className={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <div>
+
+              </div>
+              <button
+                type="button"
+                className={styles.button}
+                onClick={handleSubscribe}
+              >
+                ОТПРАВИТЬ
+              </button>
+              {popup && (
+                <PopupMessage
+                  type={popup.type}
+                  title={popup.title}
+                  text={popup.text}
+                  onClose={() => setPopup(null)}
+                />
+              )}
             </div>
 
             <h2 className={styles.title}>Подписывайтесь на нас</h2>

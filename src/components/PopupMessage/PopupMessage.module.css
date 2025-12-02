@@ -1,0 +1,99 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup {
+    width: 660px;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    animation: fadeIn 0.2s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.headerError {
+    height: 110px;
+    background: rgba(255, 61, 0, 0.38);
+    padding: 40px 40px 35px;
+}
+
+.headerSuccess {
+    height: 110px;
+    background: rgba(255, 245, 0, 0.36);
+    padding: 40px 40px 35px;
+}
+
+.icon {
+    font-size: 22px;
+}
+
+.body {
+    padding: 40px 25px 80px 50px;
+    position: relative;
+    border-bottom: 1px solid rgba(146, 143, 148, 1);
+    border-image: repeating-linear-gradient(to right,
+            rgba(146, 143, 148, 1) 0,
+            rgba(146, 143, 148, 1) 1px,
+            transparent 1px,
+            transparent 3px) 1;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.text {
+    font-weight: 500;
+    font-size: 24px;
+
+    color: rgba(0, 0, 0, 1);
+}
+
+.footer {
+    padding: 30px 0 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    width: 230px;
+    height: 50px;
+
+    border: 1px solid rgba(41, 41, 41, 1);
+    background: none;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 5px;
+    color: rgba(41, 41, 41, 1);
+    cursor: pointer;
+}
+
+.button:hover {
+    color: rgba(255, 168, 0, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.button:active {
+    background-color: rgba(255, 168, 0, 1);
+    color: rgba(41, 41, 41, 1);
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
