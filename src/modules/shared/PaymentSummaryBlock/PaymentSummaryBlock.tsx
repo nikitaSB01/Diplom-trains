@@ -19,7 +19,7 @@ const onlineMethodText: Record<string, string> = {
 
 const PaymentSummaryBlock: React.FC<Props> = ({ paymentType, onlineMethod, personalData
 }) => {
-    console.log("paymentType:", paymentType, "onlineMethod:", onlineMethod);
+
     return (
         <div className={styles.wrapper}>
             <TitleBlockReusable title="Способ оплаты" />

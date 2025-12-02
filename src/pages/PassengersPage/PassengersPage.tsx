@@ -17,7 +17,7 @@ const PassengersPage = () => {
     }
 
     const { orderData } = state;
-    console.log("Пришедшие данные:", orderData);
+    /* console.log("Пришедшие данные:", orderData); */
 
     return (
         <div className={styles.PassengersPage}>
@@ -29,7 +29,12 @@ const PassengersPage = () => {
                     block1={state.block1}
                     block2={state.block2}
                     totalPrice={state.totalPrice}
-                />            </main>
+                    from={state.from}
+                    to={state.to}
+                    dateStart={state.dateStart}
+                    dateEnd={state.dateEnd}
+                />
+            </main>
             <Footer />
         </div>
     );
