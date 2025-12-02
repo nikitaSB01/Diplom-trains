@@ -64,7 +64,19 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
     }
   }, [passengerMode, trainData]);
 
-  
+
+  // --- корректная ориентация данных для Туда / Обратно ---
+  const fromData =
+    title === "Туда"
+      ? trainData?.from
+      : trainData?.to;
+
+  const toData =
+    title === "Туда"
+      ? trainData?.to
+      : trainData?.from;
+
+
   return (
     <div
       className={
@@ -101,18 +113,20 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
           <div className={styles.row}>
             <p className={styles.label}>Название</p>
             <div className={styles.direction}>
-              <p>{trainData.from.city.name}</p>
-              <p>{trainData.to.city.name}</p>
+              <p>{fromData.city.name}</p>
+              <p>{toData.city.name}</p>
             </div>
           </div>
 
           <div className={styles.timesWrapper}>
             {/* Левая колонка */}
             <div className={`${styles.col} ${styles.colLeft}`}>
-              <p className={styles.time}>{formatTime(trainData.from.datetime)}</p>
-              <p className={styles.date}>{formatDate(trainData.from.datetime)}</p>
-              <p className={styles.city}>{trainData.from.city.name}</p>
-              <p className={styles.station}>{trainData.from.railway_station_name}<br />вокзал</p>
+              <p className={styles.time}>{formatTime(fromData.datetime)}</p>
+              <p className={styles.date}>{formatDate(fromData.datetime)}</p>
+              <p className={styles.city}>{fromData.city.name}</p>
+              <p className={styles.station}>
+                {fromData.railway_station_name}<br />вокзал
+              </p>
             </div>
 
             {/* Центральная колонка (стрелка + время в пути) */}
@@ -127,10 +141,12 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
 
             {/* Правая колонка */}
             <div className={`${styles.col} ${styles.colRight}`}>
-              <p className={styles.time}>{formatTime(trainData.to.datetime)}</p>
-              <p className={styles.date}>{formatDate(trainData.to.datetime)}</p>
-              <p className={styles.city}>{trainData.to.city.name}</p>
-              <p className={styles.station}>{trainData.to.railway_station_name}<br />вокзал</p>
+              <p className={styles.time}>{formatTime(toData.datetime)}</p>
+              <p className={styles.date}>{formatDate(toData.datetime)}</p>
+              <p className={styles.city}>{toData.city.name}</p>
+              <p className={styles.station}>
+                {toData.railway_station_name}<br />вокзал
+              </p>
             </div>
           </div>
         </div>
