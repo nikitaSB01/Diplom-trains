@@ -163,7 +163,7 @@ const ChoiceLocationTrains: React.FC<Props> = ({
                     <TicketField
                         label="Детских —"
                         max={3}
-                        hint="Можно добавить 3 детей до 10 лет"
+                        hint="Можно добавить 3 детей до 10 лет. Свое место в вагоне, как у взрослых, но дешевле в среднем на 50%"
                         onUpdateTickets={onUpdateTickets}
                     />
 
