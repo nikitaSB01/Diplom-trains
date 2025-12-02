@@ -25,13 +25,16 @@ interface Props {
     onCompleteChange: (index: number, completed: boolean) => void;
     onRequestOpenNext: (index: number) => void;
     onUpdate: (index: number, data: any) => void;
+    initialData?: any;
+
 }
 
 const PassengerCard: React.FC<Props> = ({
     index,
     onCompleteChange,
     onRequestOpenNext,
-    onUpdate
+    onUpdate,
+    initialData
 }) => {
     const [open, setOpen] = useState(false);
     const [completed, setCompleted] = useState(false);
@@ -42,18 +45,18 @@ const PassengerCard: React.FC<Props> = ({
     }, [index]);
 
     // ===== ДАННЫЕ ФОРМЫ =====
-    const [formData, setFormData] = useState({
-        ticketType: "adult",
-        lastName: "",
-        firstName: "",
-        patronymic: "",
-        gender: "",
-        birthday: "",
-        mobility: false,
-        docType: "Паспорт РФ",
-        docSeries: "",
-        docNumber: ""
-    });
+    const [formData, setFormData] = useState(() => ({
+        ticketType: initialData?.ticketType ?? "adult",
+        lastName: initialData?.lastName ?? "",
+        firstName: initialData?.firstName ?? "",
+        patronymic: initialData?.patronymic ?? "",
+        gender: initialData?.gender ?? "",
+        birthday: initialData?.birthday ?? "",
+        mobility: initialData?.mobility ?? false,
+        docType: initialData?.docType ?? "Паспорт РФ",
+        docSeries: initialData?.docSeries ?? "",
+        docNumber: initialData?.docNumber ?? ""
+    }));
 
     // ===== СБРОС =====
     const clearFields = (e: React.MouseEvent) => {

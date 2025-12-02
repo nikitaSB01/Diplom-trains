@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
 import styles from "./PassengersPage.module.css";
 
@@ -10,16 +10,26 @@ import PassengersPageMain from '../../modules/PassengersPageMain/Main';
 
 const PassengersPage = () => {
     const location = useLocation();
-    const { orderData } = location.state;
 
+    const state = location.state;
+    if (!state) {
+        return <Navigate to="/" replace />;
+    }
+
+    const { orderData } = state;
     console.log("Пришедшие данные:", orderData);
 
     return (
         <div className={styles.PassengersPage}>
             <Header isInner />
             <main className={styles.main}>
-                <PassengersPageMain />
-            </main>
+                <PassengersPageMain
+                    orderData={orderData}
+                    passengers={state.passengers || null}
+                    block1={state.block1}
+                    block2={state.block2}
+                    totalPrice={state.totalPrice}
+                />            </main>
             <Footer />
         </div>
     );

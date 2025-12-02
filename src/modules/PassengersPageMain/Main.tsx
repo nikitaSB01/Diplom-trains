@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./Main.module.css";
 
 import Steps from "../../components/Steps/Steps";
-
 import PassengerCard from "./blocks/PassengerCard/PassengerCard";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 
-import { ReactComponent as UserIcon } from "../../assets/icons/PassengersPage/PassengersBlock/passenger.svg";
 import { ReactComponent as PlusHover } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/PlusNewPas.svg";
 import { ReactComponent as Plus } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/Plus.svg";
 
-
+interface PassengersPageMainProps {
+    orderData: any;
+    passengers: any[] | null;
+    block1: any;
+    block2: any;
+    totalPrice: number;
+}
 
 // ---------- типы ----------
 interface Tickets {
@@ -58,7 +61,6 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
 
     // === СОБИРАЕМ ВСЕ ОТДЕЛЬНЫЕ УСЛУГИ ===
     const servicesList = seatDataArr.flatMap((wagon) => {
-
         const seatCount = wagon.seats.length;
         const out: { name: string; price: number }[] = [];
 
@@ -83,56 +85,56 @@ const buildPassengerBlock = (tickets: Tickets, seatDataArr: SeatData[]) => {
 
     const servicesTotal = servicesList.reduce((s, x) => s + x.price, 0);
 
-
     return {
         passengers: { adults, kids, kidsNoSeat },
         adultsPrice,
         kidsPrice,
         servicesTotal,
-        servicesList,    // ← ВАЖНО! передаём в компонент
-        total: adultsPrice + kidsPrice + servicesTotal,
+        servicesList,
+        total: adultsPrice + kidsPrice + servicesTotal
     };
 };
 
-const Main: React.FC = () => {
+const Main: React.FC<PassengersPageMainProps> = ({
+    orderData,
+    passengers,
+    block1: initialBlock1,
+    block2: initialBlock2,
+    totalPrice: initialTotalPrice
+}) => {
     const navigate = useNavigate();
-    const location = useLocation();
 
-    const { orderData } = location.state;
-    const dep = orderData.train.departure;
-
-    // seats.first / seats.second — теперь массивы вагонов
+    // ---------- seats ----------
     const seatsFirst: SeatData[] = orderData.seats.first || [];
     const seatsSecond: SeatData[] = orderData.seats.second || [];
 
-    // ---------- собираем блок 1 ----------
-    const block1 = buildPassengerBlock(orderData.tickets.first, seatsFirst);
+    // ---------- блоки поезда (если не переданы – считаем) ----------
+    const block1 = initialBlock1 ?? buildPassengerBlock(orderData.tickets.first, seatsFirst);
+    const block2 = initialBlock2 ?? buildPassengerBlock(orderData.tickets.second, seatsSecond);
+    const totalPrice =
+        initialTotalPrice ?? (block1?.total ?? 0) + (block2?.total ?? 0);
 
-    // ---------- собираем блок 2 ----------
-    const block2 = buildPassengerBlock(orderData.tickets.second, seatsSecond);
-
-    const totalPrice = (block1?.total ?? 0) + (block2?.total ?? 0);
-
-    const [openPassengers, setOpenPassengers] = useState(true);
-
-    /* данные по хранению количества карточек пассажиров */
+    // ---------- базовое количество карточек ----------
     const baseCount =
-        (block1?.passengers.adults ?? 0) +
-        (block1?.passengers.kids ?? 0) +
-        (block1?.passengers.kidsNoSeat ?? 0);
+        passengers?.length ??
+        ((block1?.passengers.adults ?? 0) +
+            (block1?.passengers.kids ?? 0) +
+            (block1?.passengers.kidsNoSeat ?? 0));
 
     const [extraPassengers, setExtraPassengers] = useState<number>(0);
 
-
-    /* массив флагов для card */
     const totalCards = baseCount + extraPassengers;
 
-    const [completedMap, setCompletedMap] = useState<boolean[]>([]);
+    // ---------- completedMap (галочки "карточка заполнена") ----------
+    const [completedMap, setCompletedMap] = useState<boolean[]>(
+        passengers ? passengers.map(() => true) : Array(totalCards).fill(false)
+    );
 
     useEffect(() => {
-        setCompletedMap(Array(totalCards).fill(false));
-    }, [totalCards]);
-
+        if (!passengers) {
+            setCompletedMap(Array(totalCards).fill(false));
+        }
+    }, [totalCards, passengers]);
 
     const handleCompleteChange = (index: number, completed: boolean) => {
         setCompletedMap((prev) => {
@@ -145,7 +147,6 @@ const Main: React.FC = () => {
     const handleRequestOpenNext = (index: number) => {
         const next = index + 1;
 
-        // ищем следующий PassengerCard по id
         const nextCard = document.getElementById(`passenger-card-${next}`);
 
         if (nextCard) {
@@ -158,21 +159,24 @@ const Main: React.FC = () => {
 
     const allCompleted = completedMap.every(Boolean);
 
-    /* массив хранения данных с карточек пасажиров */
-    const [formDataList, setFormDataList] = useState<any[]>([]);
+    // ---------- formDataList (данные всех пассажиров) ----------
+    const [formDataList, setFormDataList] = useState<any[]>(
+        passengers || Array(totalCards).fill(null)
+    );
 
     useEffect(() => {
-        setFormDataList(Array(totalCards).fill(null));
-    }, [totalCards]);
+        if (!passengers) {
+            setFormDataList(Array(totalCards).fill(null));
+        }
+    }, [totalCards, passengers]);
 
     const handleUpdatePassenger = (index: number, data: any) => {
-        setFormDataList(prev => {
+        setFormDataList((prev) => {
             const copy = [...prev];
             copy[index] = data;
             return copy;
         });
     };
-
 
     return (
         <section className={styles.main}>
@@ -189,7 +193,7 @@ const Main: React.FC = () => {
 
                 <div className={styles.rightColumn}>
                     <div className={styles.containerAddPassengers}>
-                        {/* --- рендерим базовые карточки --- */}
+                        {/* --- базовые карточки --- */}
                         {Array.from({ length: baseCount }).map((_, i) => (
                             <PassengerCard
                                 key={`base-${i}`}
@@ -197,7 +201,9 @@ const Main: React.FC = () => {
                                 onCompleteChange={handleCompleteChange}
                                 onRequestOpenNext={handleRequestOpenNext}
                                 onUpdate={handleUpdatePassenger}
-                            />))}
+                                initialData={passengers ? passengers[i] : undefined}
+                            />
+                        ))}
 
                         {/* --- дополнительные карточки --- */}
                         {Array.from({ length: extraPassengers }).map((_, i) => (
@@ -207,7 +213,8 @@ const Main: React.FC = () => {
                                 onCompleteChange={handleCompleteChange}
                                 onRequestOpenNext={handleRequestOpenNext}
                                 onUpdate={handleUpdatePassenger}
-                            />))}
+                            />
+                        ))}
 
                         {/* --- кнопка добавить --- */}
                         <button
@@ -220,6 +227,7 @@ const Main: React.FC = () => {
                                 <PlusHover className={styles.iconPlusHover} />
                             </div>
                         </button>
+
                         <div className={styles.containerButton}>
                             <button
                                 className={`${styles.nextMainBtn} ${allCompleted ? styles.active : ""}`}
@@ -241,7 +249,6 @@ const Main: React.FC = () => {
                                 Далее
                             </button>
                         </div>
-
                     </div>
                 </div>
             </div>
