@@ -7,7 +7,7 @@ interface Props {
 
 const EditButton: React.FC<Props> = ({ target }) => {
     const navigate = useNavigate();
-    const { state } = useLocation(); // ← ТЕКУЩИЕ ДАННЫЕ СО ВСЕЙ СТРАНИЦЫ
+    const { state } = useLocation();
 
     const routes = {
         train: "/search",
@@ -16,12 +16,19 @@ const EditButton: React.FC<Props> = ({ target }) => {
     };
 
     return (
+
         <button
             className={styles.editBtn}
-            onClick={() => navigate(routes[target], { state })}
+            onClick={() =>
+                navigate(routes[target], {
+                    state: {
+                        ...state,
+                    }
+                })
+            }
         >
             Изменить
-        </button>
+        </button >
     );
 };
 

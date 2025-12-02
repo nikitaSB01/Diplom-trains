@@ -57,7 +57,12 @@ const Main: React.FC = () => {
   const [secondType, setSecondType] = useState<string | null>(null);
 
   const location = useLocation();
-  const { from, to, dateStart, dateEnd } = location.state || {};
+  const state = location.state || {};
+
+  const from = state.from?.from ?? state.from ?? null;
+  const to = state.to?.to ?? state.to ?? null;
+  const dateStart = state.dateStart?.dateStart ?? state.dateStart ?? "";
+  const dateEnd = state.dateEnd?.dateEnd ?? state.dateEnd ?? "";
 
   const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
   const [isChoosingSeats, setIsChoosingSeats] = useState(false);
@@ -139,10 +144,16 @@ const Main: React.FC = () => {
 
   const showNext = anyTicketsNeeded && !block1Incorrect && !block2Incorrect;
 
+
   const navigate = useNavigate();
   const handleNext = () => {
     navigate("/passengers", {
       state: {
+        from,
+        to,
+        dateStart,
+        dateEnd,
+
         orderData: {
           train: selectedTrain,
           tickets: {

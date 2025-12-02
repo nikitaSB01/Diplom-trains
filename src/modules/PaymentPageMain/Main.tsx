@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import styles from "./Main.module.css";
 import { validatePaymentForm } from "../../modules/PassengersPageMain/blocks/PassengerCard/utils/validation";
@@ -32,6 +32,8 @@ const Main: React.FC<Props> = ({
 }) => {
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const { from, to, dateStart, dateEnd } = location.state || {};
 
     const [openPassengers, setOpenPassengers] = useState(true);
 
@@ -73,7 +75,11 @@ const Main: React.FC<Props> = ({
                 passengers,
                 block1,
                 block2,
-                totalPrice
+                totalPrice,
+                from,
+                to,
+                dateStart,
+                dateEnd,
             }
         });
     };

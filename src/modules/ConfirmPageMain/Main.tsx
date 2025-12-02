@@ -5,7 +5,6 @@ import styles from "./Main.module.css";
 import Steps from "../../components/Steps/Steps";
 
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
-import TitleBlockReusable from "../../modules/shared/TitleBlockReusable/TitleBlockReusable";
 import TrainSummaryBlock from "../../modules/shared/TrainSummaryBlock/TrainSummaryBlock";
 import PassengersSummaryBlock from "../../modules/shared/PassengersSummaryBlock/PassengersSummaryBlock";
 import PaymentSummaryBlock from "../shared/PaymentSummaryBlock/PaymentSummaryBlock";
@@ -33,7 +32,6 @@ const Main: React.FC<Props> = ({
 }) => {
     const [openPassengers, setOpenPassengers] = useState(true);
     const navigate = useNavigate();
-
 
     return (
         <section className={styles.main}>

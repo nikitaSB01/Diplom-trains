@@ -16,6 +16,10 @@ interface PassengersPageMainProps {
     block1: any;
     block2: any;
     totalPrice: number;
+    from: any;
+    to: any;
+    dateStart: any;
+    dateEnd: any;
 }
 
 // ---------- типы ----------
@@ -100,7 +104,11 @@ const Main: React.FC<PassengersPageMainProps> = ({
     passengers,
     block1: initialBlock1,
     block2: initialBlock2,
-    totalPrice: initialTotalPrice
+    totalPrice: initialTotalPrice,
+    from,
+    to,
+    dateStart,
+    dateEnd
 }) => {
     const navigate = useNavigate();
 
@@ -237,6 +245,11 @@ const Main: React.FC<PassengersPageMainProps> = ({
 
                                     navigate("/payment", {
                                         state: {
+                                            from,
+                                            to,
+                                            dateStart,
+                                            dateEnd,
+
                                             orderData,
                                             passengers: formDataList,
                                             block1,
