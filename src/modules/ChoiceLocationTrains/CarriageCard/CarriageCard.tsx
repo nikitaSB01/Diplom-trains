@@ -8,6 +8,7 @@ import { ReactComponent as Food } from "../../../assets/icons/Train/cup.svg";
 import { ReactComponent as Linens } from "../../../assets/icons/Train/Underwear.svg";
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 import CarSeatsMap from "../CarSeatsMap/CarSeatsMap";
+import { formatPrice } from "../../../utils/format";
 
 interface CarriageCardProps {
     carriage: any;
@@ -169,7 +170,7 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                                     {/* верхние */}
                                     <div className={styles.costRow}>
                                         <span className={styles.costValue}>
-                                            {upperPrice.toLocaleString("ru-RU")}
+                                            {formatPrice(upperPrice)}
                                         </span>
                                         <Ruble className={styles.rubleIcon} />
                                     </div>
@@ -177,7 +178,7 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                                     {/* нижние */}
                                     <div className={styles.costRow}>
                                         <span className={styles.costValue}>
-                                            {lowerPrice.toLocaleString("ru-RU")}
+                                            {formatPrice(lowerPrice)}
                                         </span>
                                         <Ruble className={styles.rubleIcon} />
                                     </div>
@@ -186,7 +187,7 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                                     {type === "third" && (
                                         <div className={styles.costRow}>
                                             <span className={styles.costValue}>
-                                                {sidePrice!.toLocaleString("ru-RU")}
+                                                {formatPrice(sidePrice!)}
                                             </span>
                                             <Ruble className={styles.rubleIcon} />
                                         </div>
@@ -197,7 +198,7 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                             {isLuxOrSeat && (
                                 <div className={styles.costRow}>
                                     <span className={styles.costValue}>
-                                        {lowerPrice.toLocaleString("ru-RU")}
+                                        {formatPrice(lowerPrice)}
                                     </span>
                                     <Ruble className={styles.rubleIcon} />
 
@@ -284,16 +285,16 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                 <div className={styles.totalBox}>
                     <div className={styles.rowLine}>
                         <span>Билеты:</span>
-                        <span>{ticketsTotal.toLocaleString("ru-RU")} ₽</span>
+                        <span>{formatPrice(ticketsTotal)} ₽</span>
                     </div>
 
                     <div className={styles.rowLine}>
                         <span>Доп. услуги:</span>
-                        <span>{servicesTotal.toLocaleString("ru-RU")} ₽</span>
+                        <span>{formatPrice(servicesTotal)} ₽</span>
                     </div>
 
                     <div className={styles.totalAmount}>
-                        <div>{total.toLocaleString("ru-RU")}</div>
+                        <div>{formatPrice(total)}</div>
                         <Ruble className={styles.rubleIcon} />
                     </div>
                 </div>

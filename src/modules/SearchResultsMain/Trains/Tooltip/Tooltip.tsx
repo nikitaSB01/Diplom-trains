@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Tooltip.module.css";
 import { ReactComponent as Ruble } from "../../../../assets/icons/Train/ruble.svg";
+import { formatPrice } from "../../../../utils/format";
 
 interface TooltipItem {
   label: string;
@@ -20,7 +21,7 @@ const Tooltip: React.FC<TooltipProps> = ({ items }) => {
           <span className={styles.tooltipLabel}>{row.label}</span>
           <span className={styles.tooltipCount}>{row.count}</span>
           <span className={styles.tooltipPrice}>
-            {row.price.toLocaleString("ru-RU")}
+            {formatPrice(row.price)}
             <Ruble className={styles.rubleIcon} />
           </span>
         </div>
