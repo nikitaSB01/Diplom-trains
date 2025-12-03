@@ -3,7 +3,7 @@ import styles from "./TrainSummaryBlock.module.css";
 
 import TitleBlockReusable from "../TitleBlockReusable/TitleBlockReusable";
 import EditButton from "../../shared/EditButton/EditButton";
-
+import { formatTime } from "../../../utils/format";
 import { ReactComponent as ArrowThere } from "../../../assets/icons/Train/arrowThere.svg";
 import { ReactComponent as ArrowBack } from "../../../assets/icons/Train/arrowBack.svg";
 import { ReactComponent as Wifi } from "../../../assets/icons/Train/wifi.svg";
@@ -21,12 +21,6 @@ interface Props {
 const TrainSummaryBlock: React.FC<Props> = ({ orderData, onEdit }) => {
     const dep = orderData.train.departure;
     const arr = orderData.train.arrival;
-
-    const formatTime = (unix: number) =>
-        new Date(unix * 1000).toLocaleTimeString("ru-RU", {
-            hour: "2-digit",
-            minute: "2-digit",
-        });
 
     const formatDuration = (seconds?: number) => {
         if (!seconds) return "";

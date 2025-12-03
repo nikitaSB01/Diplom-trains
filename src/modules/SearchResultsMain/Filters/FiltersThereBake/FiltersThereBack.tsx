@@ -8,6 +8,7 @@ import { ReactComponent as ArrowBetweenBack } from "../../../../assets/icons/Cho
 import { ReactComponent as ToggleIconPlus } from "../../../../assets/icons/Filters/FiltersThereBack/plus.svg";
 import { ReactComponent as ToggleIconMinus } from "../../../../assets/icons/Filters/FiltersThereBack/minus.svg";
 import Track from "./Track/Track";
+import { formatTime, formatDate } from "../../../../utils/format";
 
 interface FiltersThereBackProps {
   title: "Туда" | "Обратно";
@@ -40,7 +41,7 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
   }, [arrival]);
 
   // форматирование времени
-  const formatTime = (timestamp: number) => {
+  /* const formatTime = (timestamp: number) => {
     const d = new Date(timestamp * 1000);
     return d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
   };
@@ -48,7 +49,7 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
   const formatDate = (timestamp: number) => {
     const d = new Date(timestamp * 1000);
     return d.toLocaleDateString("ru-RU");
-  };
+  }; */
 
   // формат времени в пути для страницу с пассажирами
   const formatDuration = (sec: number) => {

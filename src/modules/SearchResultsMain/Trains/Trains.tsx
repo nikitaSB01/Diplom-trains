@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./Trains.module.css";
+import { formatTime } from "../../../utils/format";
 
 import { ReactComponent as ArrowThere } from "../../../assets/icons/Train/arrowThere.svg";
 import { ReactComponent as ArrowBack } from "../../../assets/icons/Train/arrowBack.svg";
@@ -339,7 +340,7 @@ const Trains: React.FC<TrainsProps> = ({
 
                   <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
                     <p className={styles.time}>
-                      {new Date(dep.from.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
+                      {formatTime(dep.from.datetime)}
                     </p>
                     <p className={styles.city}>{dep.from.city.name}</p>
                     <p className={styles.station}>{dep.from.railway_station_name} вокзал</p>
@@ -352,7 +353,7 @@ const Trains: React.FC<TrainsProps> = ({
 
                   <div className={`${styles.timeBlock} ${styles.rightBlock}`}>
                     <p className={styles.time}>
-                      {new Date(dep.to.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
+                      {formatTime(dep.to.datetime)}
                     </p>
                     <p className={styles.city}>{dep.to.city.name}</p>
                     <p className={styles.station}>{dep.to.railway_station_name} вокзал</p>
@@ -369,7 +370,7 @@ const Trains: React.FC<TrainsProps> = ({
 
                     <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
                       <p className={styles.time}>
-                        {new Date(arr.to.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
+                        {formatTime(arr.to.datetime)}
                       </p>
                       <p className={styles.city}>{arr.to.city.name}</p>
                       <p className={styles.station}>{arr.to.railway_station_name} вокзал</p>
@@ -382,7 +383,7 @@ const Trains: React.FC<TrainsProps> = ({
 
                     <div className={`${styles.timeBlock} ${styles.rightBlock}`}>
                       <p className={styles.time}>
-                        {new Date(arr.from.datetime * 1000).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
+                        {formatTime(arr.from.datetime)}
                       </p>
                       <p className={styles.city}>{arr.from.city.name}</p>
                       <p className={styles.station}>{arr.from.railway_station_name} вокзал</p>

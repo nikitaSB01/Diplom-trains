@@ -6,6 +6,7 @@ import styles from "./ChoiceLocationTrains.module.css";
 import { Train } from "../../../types/Train/trainTypes";
 import TypeSelector from "./TypeSelector/TypeSelector";
 import TicketField from "./TicketField/TicketField";
+import { formatTime } from "../../../utils/format"; 
 
 import { ReactComponent as Arrow } from "../../../assets/icons/ChoiceLocationTrains/arrow.svg";
 import { ReactComponent as ArrowBetween } from "../../../assets/icons/ChoiceLocationTrains/arrowBetween.svg";
@@ -74,11 +75,11 @@ const ChoiceLocationTrains: React.FC<Props> = ({
 
     const dep = direction;
 
-    const formatTime = (unix: number) =>
+   /*  const formatTime = (unix: number) =>
         new Date(unix * 1000).toLocaleTimeString("ru-RU", {
             hour: "2-digit",
             minute: "2-digit",
-        });
+        }); */
 
     const hours = Math.floor(dep.duration / 3600);
     const minutes = Math.floor((dep.duration % 3600) / 60);
