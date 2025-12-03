@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./FiltersLastTickets.module.css";
+import { formatPrice } from "../../../utils/format";
 
 import { ReactComponent as WifiIcon } from "../../../assets/icons/Train/wifi.svg";
 import { ReactComponent as ConditioningIcon } from "../../../assets/icons/Train/conditioning.svg";
@@ -103,8 +104,9 @@ const FiltersLastTickets: React.FC = () => {
                 <div className={styles.priceBlock}>
                   <span className={styles.fromText}>от</span>
                   <span className={styles.price}>
-                    {el.departure?.min_price?.toLocaleString("ru-RU")}
-                    <Ruble className={styles.rubleIcon} />
+                    {el.departure?.min_price != null
+                      ? formatPrice(el.departure.min_price)
+                      : "--"}                    <Ruble className={styles.rubleIcon} />
                   </span>
 
                 </div>

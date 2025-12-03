@@ -6,6 +6,7 @@ import EditButton from "../EditButton/EditButton";
 
 import { ReactComponent as PassType } from "../../../assets/icons/ConfirmPageMain/passType.svg";
 import { ReactComponent as RublIcon } from "../../../assets/icons/Train/ruble.svg";
+import { formatPrice } from "../../../utils/format";
 
 
 interface PassengerItem {
@@ -87,7 +88,7 @@ const PassengersSummaryBlock: React.FC<Props> = ({ passengers, totalPrice }) => 
                     <div className={styles.total}>
                         <p className={styles.totalLabel}>Всего</p>
                         <p className={styles.totalPrice}>
-                            {totalPrice.toLocaleString("ru-RU")}
+                            {formatPrice(totalPrice)}
                             <RublIcon className={styles.rublIcon} />
                         </p>
                     </div>

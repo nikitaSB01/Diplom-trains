@@ -10,6 +10,7 @@ import { ReactComponent as MailIcon } from "../../assets/icons/SuccessPage/svg1.
 import { ReactComponent as TicketsIcon } from "../../assets/icons/SuccessPage/svg2.svg";
 import { ReactComponent as ConductorIcon } from "../../assets/icons/SuccessPage/svg3.svg";
 import { ReactComponent as RublIcon } from "../../assets/icons/Train/ruble.svg";
+import { formatPrice } from "../../utils/format";
 
 
 const SuccessPage: React.FC = () => {
@@ -52,7 +53,7 @@ const SuccessPage: React.FC = () => {
                             <div className={styles.sum}>
                                 <p>сумма</p>
                                 <div className={styles.sumSpanIcon}>
-                                    <span>{totalPrice.toLocaleString("ru-RU")} </span>
+                                    <span>{formatPrice(totalPrice)}</span>
                                     <RublIcon className={styles.sumRub} />
                                 </div>
                             </div>

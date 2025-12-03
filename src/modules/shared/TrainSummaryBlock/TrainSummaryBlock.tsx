@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./TrainSummaryBlock.module.css";
+import { formatPrice } from "../../../utils/format";
 
 import TitleBlockReusable from "../TitleBlockReusable/TitleBlockReusable";
 import EditButton from "../../shared/EditButton/EditButton";
@@ -125,7 +126,7 @@ const TrainSummaryBlock: React.FC<Props> = ({ orderData, onEdit }) => {
                                 <span className={styles.priceValue}>
                                     <span className={styles.pricePrefix}>от</span>
                                     <span className={styles.priceNumber}>
-                                        {getPrice(dep, "third")?.toLocaleString("ru-RU")}
+                                        {getPrice(dep, "third") != null ? formatPrice(getPrice(dep, "third")!) : "-"}
                                         <Ruble className={styles.rubleIcon} />
                                     </span>
                                 </span>
@@ -139,7 +140,7 @@ const TrainSummaryBlock: React.FC<Props> = ({ orderData, onEdit }) => {
                                 <span className={styles.priceValue}>
                                     <span className={styles.pricePrefix}>от</span>
                                     <span className={styles.priceNumber}>
-                                        {getPrice(dep, "second")?.toLocaleString("ru-RU")}
+                                        {getPrice(dep, "second") != null ? formatPrice(getPrice(dep, "second")!) : "-"}
                                         <Ruble className={styles.rubleIcon} />
                                     </span>
                                 </span>
@@ -153,7 +154,7 @@ const TrainSummaryBlock: React.FC<Props> = ({ orderData, onEdit }) => {
                                 <span className={styles.priceValue}>
                                     <span className={styles.pricePrefix}>от</span>
                                     <span className={styles.priceNumber}>
-                                        {getPrice(dep, "first")?.toLocaleString("ru-RU")}
+                                        {getPrice(dep, "first") != null ? formatPrice(getPrice(dep, "first")!) : "-"}
                                         <Ruble className={styles.rubleIcon} />
                                     </span>
                                 </span>
@@ -167,7 +168,7 @@ const TrainSummaryBlock: React.FC<Props> = ({ orderData, onEdit }) => {
                                 <span className={styles.priceValue}>
                                     <span className={styles.pricePrefix}>от</span>
                                     <span className={styles.priceNumber}>
-                                        {getPrice(dep, "fourth")?.toLocaleString("ru-RU")}
+                                        {getPrice(dep, "fourth") != null ? formatPrice(getPrice(dep, "fourth")!) : "-"}
                                         <Ruble className={styles.rubleIcon} />
                                     </span>
                                 </span>

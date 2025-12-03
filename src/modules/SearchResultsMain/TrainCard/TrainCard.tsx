@@ -3,6 +3,7 @@
 import React from "react";
 import styles from "./TrainCard.module.css";
 import { formatTime } from "../../../utils/format";
+import { formatPrice } from "../../../utils/format";
 
 import { ReactComponent as ArrowThere } from "../../../assets/icons/Train/arrowThere.svg";
 import { ReactComponent as ArrowBack } from "../../../assets/icons/Train/arrowBack.svg";
@@ -149,8 +150,7 @@ const TrainCard: React.FC<Props> = ({
                                     <span className={styles.priceValue}>
                                         <span className={styles.pricePrefix}>от</span>{" "}
                                         <span className={styles.priceNumber}>
-                                            {getPrice(dep, "third")?.toLocaleString("ru-RU")}
-                                            <Ruble className={styles.rubleIcon} />
+                                            {getPrice(dep, "third") != null ? formatPrice(getPrice(dep, "third")!) : "-"}                                            <Ruble className={styles.rubleIcon} />
                                         </span>
                                     </span>
                                 </div>
@@ -163,7 +163,7 @@ const TrainCard: React.FC<Props> = ({
                                     <span className={styles.priceValue}>
                                         <span className={styles.pricePrefix}>от</span>{" "}
                                         <span className={styles.priceNumber}>
-                                            {getPrice(dep, "second")?.toLocaleString("ru-RU")}
+                                            {getPrice(dep, "second") != null ? formatPrice(getPrice(dep, "second")!) : "-"}
                                             <Ruble className={styles.rubleIcon} />
                                         </span>
                                     </span>
@@ -177,7 +177,7 @@ const TrainCard: React.FC<Props> = ({
                                     <span className={styles.priceValue}>
                                         <span className={styles.pricePrefix}>от</span>{" "}
                                         <span className={styles.priceNumber}>
-                                            {getPrice(dep, "first")?.toLocaleString("ru-RU")}
+                                            {getPrice(dep, "first") != null ? formatPrice(getPrice(dep, "first")!) : "-"}
                                             <Ruble className={styles.rubleIcon} />
                                         </span>
                                     </span>
@@ -191,7 +191,7 @@ const TrainCard: React.FC<Props> = ({
                                     <span className={styles.priceValue}>
                                         <span className={styles.pricePrefix}>от</span>{" "}
                                         <span className={styles.priceNumber}>
-                                            {getPrice(dep, "fourth")?.toLocaleString("ru-RU")}
+                                            {getPrice(dep, "fourth") != null ? formatPrice(getPrice(dep, "fourth")!) : "-"}
                                             <Ruble className={styles.rubleIcon} />
                                         </span>
                                     </span>
