@@ -13,7 +13,7 @@ import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 
 import Pagination from "./Pagination/Pagination";
 import TrainsTopFilter from "./TrainsTopFilter/TrainsTopFilter";
-import TrainCard from "../../TrainCard/TrainCard";
+import TrainCard from "../TrainCard/TrainCard";
 
 import {
   Train,

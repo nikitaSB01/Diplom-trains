@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./LeftColumnInfo.module.css";
 
 import TitleBlock from "../../PassengersPageMain/blocks/TitleBlock/TitleBlock";
-import FiltersThereBack from "../../../components/SearchPageMain/Filters/FiltersThereBake/FiltersThereBack";
+import FiltersThereBack from "../../../modules/SearchResultsMain/Filters/FiltersThereBake/FiltersThereBack";
 import CollapsibleHeader from "../../PassengersPageMain/blocks/CollapsibleHeader/CollapsibleHeader";
 import PassengersBlock from "../../PassengersPageMain/blocks/PassengersBlock/PassengersBlock";
 import TotalBlock from "../../PassengersPageMain/blocks/TotalBlock/TotalBlock";

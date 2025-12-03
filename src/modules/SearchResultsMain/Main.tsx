@@ -4,14 +4,14 @@ import { SeatWithPrice } from "../../types/seat";
 
 import styles from './Main.module.css';
 import Steps from '../../components/Steps/Steps';
-import Filters from '../../components/SearchPageMain/Filters/Filters';
-import FiltersLastTickets from '../../components/SearchPageMain/FiltersLastTickets/FiltersLastTickets';
-import Trains from '../../components/SearchPageMain/Trains/Trains';
+import Filters from './Filters/Filters';
+import FiltersLastTickets from './FiltersLastTickets/FiltersLastTickets';
+import Trains from './Trains/Trains';
 import { useLocation } from 'react-router-dom';
 import { FiltersState } from "../../types/filtersTypes/filtersTypes";
 import LoaderGif from "../../assets/gif/анимация-загрузки.gif"
 import { Train } from "../../types/Train/trainTypes";
-import ChoiceLocationTrains from "../../components/SearchPageMain/ChoiceLocationTrains/ChoiceLocationTrains";
+import ChoiceLocationTrains from "./ChoiceLocationTrains/ChoiceLocationTrains";
 
 
 interface SeatsBlockData {

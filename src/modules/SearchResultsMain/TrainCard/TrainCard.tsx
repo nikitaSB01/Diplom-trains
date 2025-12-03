@@ -3,20 +3,20 @@
 import React from "react";
 import styles from "./TrainCard.module.css";
 
-import { ReactComponent as ArrowThere } from "../../assets/icons/Train/arrowThere.svg";
-import { ReactComponent as ArrowBack } from "../../assets/icons/Train/arrowBack.svg";
-import { ReactComponent as Cup } from "../../assets/icons/Train/cup.svg";
-import { ReactComponent as Wifi } from "../../assets/icons/Train/wifi.svg";
-import { ReactComponent as Express } from "../../assets/icons/Train/express.svg";
-import { ReactComponent as Сonditioning } from "../../assets/icons/Train/conditioning.svg";
-import { ReactComponent as Underwear } from "../../assets/icons/Train/Underwear.svg";
-import { ReactComponent as Ruble } from "../../assets/icons/Train/ruble.svg";
+import { ReactComponent as ArrowThere } from "../../../assets/icons/Train/arrowThere.svg";
+import { ReactComponent as ArrowBack } from "../../../assets/icons/Train/arrowBack.svg";
+import { ReactComponent as Cup } from "../../../assets/icons/Train/cup.svg";
+import { ReactComponent as Wifi } from "../../../assets/icons/Train/wifi.svg";
+import { ReactComponent as Express } from "../../../assets/icons/Train/express.svg";
+import { ReactComponent as Сonditioning } from "../../../assets/icons/Train/conditioning.svg";
+import { ReactComponent as Underwear } from "../../../assets/icons/Train/Underwear.svg";
+import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 
 import {
     Train,
     WagonClass,
     DirectionInfo
-} from "../../types/Train/trainTypes";
+} from "../../../types/Train/trainTypes";
 
 interface Props {
     train: Train;

@@ -1,13 +1,13 @@
-import user1 from '../../assets/img/Reviews/webp/д1.webp';
-import user2 from '../../assets/img/Reviews/webp/п1.webp';
-import user3 from '../../assets/img/Reviews/webp/д2.webp';
-import user4 from '../../assets/img/Reviews/webp/п2.webp';
-import user5 from '../../assets/img/Reviews/webp/д3.webp';
-import user6 from '../../assets/img/Reviews/webp/п3.webp';
-import user7 from '../../assets/img/Reviews/webp/д4.webp';
-import user8 from '../../assets/img/Reviews/webp/п4.webp';
-import user9 from '../../assets/img/Reviews/webp/д5.webp';
-import user10 from '../../assets/img/Reviews/webp/п5.webp';
+import user2 from '../../../assets/img/Reviews/webp/п1.webp';
+import user3 from '../../../assets/img/Reviews/webp/д2.webp';
+import user4 from '../../../assets/img/Reviews/webp/п2.webp';
+import user5 from '../../../assets/img/Reviews/webp/д3.webp';
+import user1 from '../../../assets/img/Reviews/webp/д1.webp';
+import user6 from '../../../assets/img/Reviews/webp/п3.webp';
+import user7 from '../../../assets/img/Reviews/webp/д4.webp';
+import user8 from '../../../assets/img/Reviews/webp/п4.webp';
+import user9 from '../../../assets/img/Reviews/webp/д5.webp';
+import user10 from '../../../assets/img/Reviews/webp/п5.webp';
 
 export interface Review {
   img: string;
