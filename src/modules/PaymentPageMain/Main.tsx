@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import styles from "./Main.module.css";
-import { validatePaymentForm } from "../../modules/PassengersPageMain/blocks/PassengerCard/utils/validation";
+import { validatePaymentForm } from "../../utils/validation";
 
 import Steps from "../../components/Steps/Steps";
 import PersonalDataBlock from "./blocks/PersonalDataBlock/PersonalDataBlock";

@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./PersonalDataBlock.module.css";
 
-import { cleanLetters, capitalize, cleanEmail, formatPhone } from "../../../../modules/PassengersPageMain/blocks/PassengerCard/utils/formatters";
-import { validatePhone, validateEmail } from "../../../../modules/PassengersPageMain/blocks/PassengerCard/utils/validation";
+import { cleanLetters, capitalize, cleanEmail, formatPhone } from "../../../../utils/formatters";
+import { validatePhone, validateEmail } from "../../../../utils/validation";
 
 export interface PersonalData {
     lastName: string;

@@ -10,8 +10,8 @@ import {
     formatSeries,
     formatNumber,
     formatBirthCertificate
-} from "./utils/formatters";
-import { validatePassenger } from "./utils/validation";
+} from "../../../../utils/formatters";
+import { validatePassenger } from "../../../../utils/validation";
 
 import PassengerCardHeader from "./parts/PassengerCardHeader";
 import PassengerCardFioFields from "./parts/PassengerCardFioFields";
