@@ -15,7 +15,7 @@ import {
 } from "./utils/buildPassengerBlock";
 
 import { PassengersPageMainProps, SeatData } from "../../types/passengers";
-
+import { usePassengersPage } from "./hooks/usePassengersPage";
 
 const Main: React.FC<PassengersPageMainProps> = ({
     orderData,
@@ -28,109 +28,28 @@ const Main: React.FC<PassengersPageMainProps> = ({
     dateStart,
     dateEnd
 }) => {
+    const {
+        block1,
+        block2,
+        totalPrice,
+        baseCount,
+        extraPassengers,
+        setExtraPassengers,
+        completedMap,
+        handleCompleteChange,
+        handleRequestOpenNext,
+        formDataList,
+        handleUpdatePassenger,
+        canGoNext,
+    } = usePassengersPage(
+        orderData,
+        passengers,
+        initialBlock1,
+        initialBlock2,
+        initialTotalPrice
+    );
+
     const navigate = useNavigate();
-
-    // ---------- seats ----------
-    const seatsFirst: SeatData[] = orderData.seats.first || [];
-    const seatsSecond: SeatData[] = orderData.seats.second || [];
-
-    // ---------- блоки поезда (если не переданы – считаем) ----------
-    const block1 = initialBlock1 ?? buildPassengerBlock(orderData.tickets.first, seatsFirst);
-    const block2 = initialBlock2 ?? buildPassengerBlock(orderData.tickets.second, seatsSecond);
-    const totalPrice =
-        initialTotalPrice ?? (block1?.total ?? 0) + (block2?.total ?? 0);
-
-    // ---------- базовое количество карточек ----------
-    const baseCount =
-        passengers?.length ??
-        ((block1?.passengers.adults ?? 0) +
-            (block1?.passengers.kids ?? 0) +
-            (block1?.passengers.kidsNoSeat ?? 0));
-
-    const [extraPassengers, setExtraPassengers] = useState<number>(0);
-
-    const totalCards = baseCount + extraPassengers;
-
-    // ---------- completedMap (галочки "карточка заполнена") ----------
-    const [completedMap, setCompletedMap] = useState<boolean[]>(
-        passengers ? passengers.map(() => true) : Array(totalCards).fill(false)
-    );
-
-    useEffect(() => {
-        if (!passengers) {
-            setCompletedMap(Array(totalCards).fill(false));
-        }
-    }, [totalCards, passengers]);
-
-    const handleCompleteChange = (index: number, completed: boolean) => {
-        setCompletedMap((prev) => {
-            const copy = [...prev];
-            copy[index] = completed;
-            return copy;
-        });
-    };
-
-    const handleRequestOpenNext = (index: number) => {
-        const next = index + 1;
-
-        const nextCard = document.getElementById(`passenger-card-${next}`);
-
-        if (nextCard) {
-            const headerBtn = nextCard.querySelector("button");
-            headerBtn?.click();
-
-            nextCard.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-    };
-
-    const allCompleted = completedMap.every(Boolean);
-
-    // ---------- formDataList (данные всех пассажиров) ----------
-    const [formDataList, setFormDataList] = useState<any[]>(
-        passengers || Array(totalCards).fill(null)
-    );
-
-    // ---------- считаем фактически введённые категории ----------
-    const calcCategories = () => {
-        let adults = 0;
-        let kids = 0;
-
-        formDataList.forEach((p) => {
-            if (!p) return;
-
-            if (p.ticketType === "adult") adults++;
-            if (p.ticketType === "child") kids++;
-            // детей без места НЕ учитываем
-        });
-
-        return { adults, kids };
-    };
-
-    const entered = calcCategories();
-
-    const requiredAdults = block1?.passengers.adults ?? 0;
-    const requiredKids = block1?.passengers.kids ?? 0;
-
-    const categoriesMatch =
-        entered.adults === requiredAdults &&
-        entered.kids === requiredKids;
-
-    // ---------- итоговая проверка ----------
-    const canGoNext = allCompleted && categoriesMatch;
-
-    useEffect(() => {
-        if (!passengers) {
-            setFormDataList(Array(totalCards).fill(null));
-        }
-    }, [totalCards, passengers]);
-
-    const handleUpdatePassenger = (index: number, data: any) => {
-        setFormDataList((prev) => {
-            const copy = [...prev];
-            copy[index] = data;
-            return copy;
-        });
-    };
 
     return (
         <section className={styles.main}>
