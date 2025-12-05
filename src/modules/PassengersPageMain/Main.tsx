@@ -12,21 +12,10 @@ import { ReactComponent as Plus } from "../../assets/icons/PassengersPage/Passen
 
 import {
     buildPassengerBlock,
-    Tickets,
-    SeatData,
 } from "./utils/buildPassengerBlock";
 
-interface PassengersPageMainProps {
-    orderData: any;
-    passengers: any[] | null;
-    block1: any;
-    block2: any;
-    totalPrice: number;
-    from: any;
-    to: any;
-    dateStart: any;
-    dateEnd: any;
-}
+import { PassengersPageMainProps, SeatData } from "../../types/passengers";
+
 
 const Main: React.FC<PassengersPageMainProps> = ({
     orderData,

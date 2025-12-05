@@ -1,23 +1,4 @@
-// ---------- типы ----------
-export interface Tickets {
-    adults: number;
-    kids: number;
-    kidsNoSeat: number;
-}
-
-export interface SeatData {
-    blockId: "first" | "second";
-    type: string;
-    wagonId: string;
-    seats: { index: number; price: number }[];
-    services: {
-        wifi: boolean;
-        linens: boolean;
-        wifi_price: number;
-        linens_price: number;
-        total: number;
-    };
-}
+import { Tickets, SeatData } from "../../../types/passengers";
 
 export interface PassengerBlock {
     passengers: Tickets;
