@@ -3,6 +3,8 @@ import styles from "./EditButton.module.css";
 
 interface Props {
     target: "train" | "passengers" | "payment";
+    onClick?: () => void;   // <- ДОБАВЛЯЕМ
+
 }
 
 const EditButton: React.FC<Props> = ({ target }) => {

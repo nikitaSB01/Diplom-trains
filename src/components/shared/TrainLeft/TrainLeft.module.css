@@ -1,0 +1,67 @@
+.left {
+    min-width: 200px;
+    max-width: 200px;
+    background: rgba(228, 224, 233, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 25px;
+}
+
+.trainIcon {
+    width: 86px;
+    height: 86px;
+    margin: 0 0 17px 17px;
+    background: url("../../../assets/icons/Train/train.svg") center/contain no-repeat;
+}
+
+.trainNumber {
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 16px;
+    color: rgba(62, 60, 65, 1);
+}
+
+.routeCityStart {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    color: rgba(146, 143, 148, 1);
+    margin-bottom: 6px;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.routeMain {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.routeLine {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.routeCity {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(41, 41, 41, 1);
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.routeArrowBlack {
+    width: 18px;
+    height: 14px;
+    background: url("../../../assets/icons/Train/arrowMinThereBlack.svg") center/contain no-repeat;
+}
+
+.routeArrowGray {
+    width: 18px;
+    height: 14px;
+    background: url("../../../assets/icons/Train/arrowMinThereGray.svg") center/contain no-repeat;
+}

@@ -1,0 +1,58 @@
+.priceList {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.priceRow {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.priceLabel {
+    flex: 1;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(62, 60, 65, 1);
+}
+
+.priceSeats {
+    font-size: 16px;
+    color: rgba(255, 168, 0, 1);
+    font-weight: 500;
+    width: 25px;
+    text-align: right;
+}
+
+.priceValue {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    min-width: 110px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #292929;
+}
+
+.pricePrefix {
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(146, 143, 148, 1);
+}
+
+.priceNumber {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(45, 43, 47, 1);
+}
+
+.rubleIcon {
+    margin-left: 5px;
+    fill: #292929;
+}
