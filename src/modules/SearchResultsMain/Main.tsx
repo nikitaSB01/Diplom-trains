@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SeatWithPrice } from "../../types/seat";
 
@@ -12,138 +11,41 @@ import { FiltersState } from "../../types/filtersTypes/filtersTypes";
 import LoaderGif from "../../assets/gif/анимация-загрузки.gif"
 import { Train } from "../../types/Train/trainTypes";
 import ChoiceLocationTrains from "./ChoiceLocationTrains/ChoiceLocationTrains";
+import { useSearchResults } from "./hooks/useSearchResults";
 
-
-interface SeatsBlockData {
-
-  blockId: "first" | "second";
-  type: string;
-  wagonId: string;
-  seats: SeatWithPrice[];
-  services: {
-    wifi: boolean;
-    linens: boolean;
-    wifi_price: number;
-    linens_price: number;
-    total: number;
-  };
-}
 
 const Main: React.FC = () => {
-
-  const [ticketsBlock1, setTicketsBlock1] = useState({
-    adults: 0,
-    kids: 0,
-    kidsNoSeat: 0,
-  });
-
-  const [ticketsBlock2, setTicketsBlock2] = useState({
-    adults: 0,
-    kids: 0,
-    kidsNoSeat: 0,
-  });
-
-
-  const [selectedSeatsData, setSelectedSeatsData] = useState<{
-    first: SeatsBlockData[];
-    second: SeatsBlockData[];
-  }>({
-    first: [],
-    second: [],
-  });
-
-  /* данные по хранению активного типа вагона */
-  const [firstType, setFirstType] = useState<string | null>(null);
-  const [secondType, setSecondType] = useState<string | null>(null);
-
   const location = useLocation();
-  const state = location.state || {};
-
-  const from = state.from?.from ?? state.from ?? null;
-  const to = state.to?.to ?? state.to ?? null;
-  const dateStart = state.dateStart?.dateStart ?? state.dateStart ?? "";
-  const dateEnd = state.dateEnd?.dateEnd ?? state.dateEnd ?? "";
-
-  const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
-  const [isChoosingSeats, setIsChoosingSeats] = useState(false);
-
-
-  const [filters, setFilters] = useState<FiltersState>({
-    options: {},
-    price: null,
-    thereDeparture: null,
-    thereArrival: null,
-    backDeparture: null,
-    backArrival: null,
-  });
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [showLoader, setShowLoader] = useState(true);
-
-  useEffect(() => {
-    if (isLoading) {
-      setShowLoader(true);
-    } else {
-      const timer = setTimeout(() => setShowLoader(false), 400);
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading]);
-
-
-
-  const isBlockIncorrect = (
-    tickets: { adults: number; kids: number; kidsNoSeat: number },
-    seatsArr: SeatsBlockData[],
-    type: string | null
-  ) => {
-    const needSeats = tickets.adults + tickets.kids;
-    const selectedSeats = seatsArr.reduce((s, w) => s + w.seats.length, 0);
-
-    // 1) Если мест выбрано больше, чем билетов — ошибка
-    if (selectedSeats > needSeats) return true;
-
-    // 2) Если выбраны места, но билеты = 0 — ошибка
-    if (needSeats === 0 && selectedSeats > 0) return true;
-
-    // 3) Если ни билетов, ни мест — ок
-    if (needSeats === 0 && selectedSeats === 0) return false;
-
-    // 4) Тип вагона обязателен
-    if (!type) return true;
-
-    // 5) Количество мест не совпадает с количеством билетов
-    return needSeats !== selectedSeats;
-  };
-
-  // ======== ОБЩЕЕ ЧИСЛО БИЛЕТОВ (только взрослые + дети с местом) ========
-  const totalTickets =
-    ticketsBlock1.adults + ticketsBlock1.kids +
-    ticketsBlock2.adults + ticketsBlock2.kids;
-
-  // ======== ОБЩЕЕ ЧИСЛО ВЫБРАННЫХ МЕСТ ========
-  const totalSelectedSeats =
-    selectedSeatsData.first.reduce((s, w) => s + w.seats.length, 0) +
-    selectedSeatsData.second.reduce((s, w) => s + w.seats.length, 0);
-
-  // ======== ПРАВИЛО ПЕРЕХОДА ДАЛЕЕ ========
-  const block1Incorrect = isBlockIncorrect(
+  const {
+    from,
+    to,
+    dateStart,
+    dateEnd,
+    selectedTrain,
+    setSelectedTrain,
+    isChoosingSeats,
+    setIsChoosingSeats,
+    filters,
+    setFilters,
     ticketsBlock1,
-    selectedSeatsData.first,
-    firstType
-  );
-
-  const block2Incorrect = isBlockIncorrect(
+    setTicketsBlock1,
     ticketsBlock2,
-    selectedSeatsData.second,
-    secondType
-  );
-
-  const anyTicketsNeeded =
-    ticketsBlock1.adults + ticketsBlock1.kids +
-    ticketsBlock2.adults + ticketsBlock2.kids > 0;
-
-  const showNext = anyTicketsNeeded && !block1Incorrect && !block2Incorrect;
-
+    setTicketsBlock2,
+    selectedSeatsData,
+    setSelectedSeatsData,
+    firstType,
+    setFirstType,
+    secondType,
+    setSecondType,
+    mergeSeatData,
+    isLoading,
+    setIsLoading,
+    showLoader,
+    block1Incorrect,
+    block2Incorrect,
+    showNext,
+    hasReturnDirection
+  } = useSearchResults(location.state || {});
 
   const navigate = useNavigate();
   const handleNext = () => {
@@ -168,27 +70,6 @@ const Main: React.FC = () => {
     });
   };
 
-
-  function mergeSeatData(
-    existing: SeatsBlockData[],
-    incoming: SeatsBlockData
-  ): SeatsBlockData[] {
-    const found = existing.find(s => s.wagonId === incoming.wagonId);
-
-    if (found) {
-      // обновление существующего вагона
-      return existing.map(s =>
-        s.wagonId === incoming.wagonId ? incoming : s
-      );
-    }
-
-    // добавление нового вагона
-    return [...existing, incoming];
-  }
-
-  /* флаг для вычисления обратного маршрута */
-  const hasReturnDirection = !!selectedTrain?.arrival;
-
   return (
     <section className={styles.main}>
 
@@ -207,9 +88,7 @@ const Main: React.FC = () => {
             <Filters onChange={setFilters} dateStart={dateStart} dateEnd={dateEnd} />
             <FiltersLastTickets />
           </div>
-
           <div className={styles.rightColumn}>
-
             {/* список поездов */}
             <div
               className={styles.listTrains}
