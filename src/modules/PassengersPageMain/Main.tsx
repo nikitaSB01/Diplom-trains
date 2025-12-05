@@ -10,11 +10,8 @@ import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 import { ReactComponent as PlusHover } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/PlusNewPas.svg";
 import { ReactComponent as Plus } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/Plus.svg";
 
-import {
-    buildPassengerBlock,
-} from "./utils/buildPassengerBlock";
 
-import { PassengersPageMainProps, SeatData } from "../../types/passengers";
+import { PassengersPageMainProps } from "../../types/passengers";
 import { usePassengersPage } from "./hooks/usePassengersPage";
 
 const Main: React.FC<PassengersPageMainProps> = ({

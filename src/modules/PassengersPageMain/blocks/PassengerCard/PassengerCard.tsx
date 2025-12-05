@@ -1,3 +1,4 @@
+// PassengerCard.tsx
 import React, { useState, useEffect } from "react";
 import styles from "./PassengerCard.module.css";
 import CustomSelect from "./CustomSelect/CustomSelect";
@@ -10,24 +11,47 @@ import {
     formatNumber,
     formatBirthCertificate
 } from "./utils/formatters";
-
 import { validatePassenger } from "./utils/validation";
 
-import { ReactComponent as Plus } from "../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/Plus.svg";
-import { ReactComponent as PlusHover } from "../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/PlusNewPas.svg";
-import { ReactComponent as Minus } from "../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/Minus.svg";
-import { ReactComponent as Close } from "../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/close.svg";
-import { ReactComponent as CheckIcon } from "../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/check.svg";
-import { ReactComponent as ErrorIcon } from "../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/error.svg";
+import PassengerCardHeader from "./parts/PassengerCardHeader";
+import PassengerCardFioFields from "./parts/PassengerCardFioFields";
+import PassengerCardGenderBirthday from "./parts/PassengerCardGenderBirthday";
+import PassengerCardDocSection from "./parts/PassengerCardDocSection";
+import PassengerCardFooter from "./parts/PassengerCardFooter";
+
+interface FormData {
+    ticketType: "adult" | "child";
+    lastName: string;
+    firstName: string;
+    patronymic: string;
+    gender: "" | "M" | "F";
+    birthday: string;
+    mobility: boolean;
+    docType: "Паспорт РФ" | "Свидетельство о рождении";
+    docSeries: string;
+    docNumber: string;
+}
 
 interface Props {
     index: number;
     onCompleteChange: (index: number, completed: boolean) => void;
     onRequestOpenNext: (index: number) => void;
-    onUpdate: (index: number, data: any) => void;
-    initialData?: any;
-
+    onUpdate: (index: number, data: FormData) => void;
+    initialData?: Partial<FormData>;
 }
+
+const defaultForm: FormData = {
+    ticketType: "adult",
+    lastName: "",
+    firstName: "",
+    patronymic: "",
+    gender: "",
+    birthday: "",
+    mobility: false,
+    docType: "Паспорт РФ",
+    docSeries: "",
+    docNumber: ""
+};
 
 const PassengerCard: React.FC<Props> = ({
     index,
@@ -40,54 +64,34 @@ const PassengerCard: React.FC<Props> = ({
     const [completed, setCompleted] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [formData, setFormData] = useState<FormData>({
+        ...defaultForm,
+        ...initialData
+    });
+
     useEffect(() => {
         if (index === 0) setOpen(true);
     }, [index]);
 
-    // ===== ДАННЫЕ ФОРМЫ =====
-    const [formData, setFormData] = useState(() => ({
-        ticketType: initialData?.ticketType ?? "adult",
-        lastName: initialData?.lastName ?? "",
-        firstName: initialData?.firstName ?? "",
-        patronymic: initialData?.patronymic ?? "",
-        gender: initialData?.gender ?? "",
-        birthday: initialData?.birthday ?? "",
-        mobility: initialData?.mobility ?? false,
-        docType: initialData?.docType ?? "Паспорт РФ",
-        docSeries: initialData?.docSeries ?? "",
-        docNumber: initialData?.docNumber ?? ""
-    }));
-
-    // ===== СБРОС =====
-    const clearFields = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setFormData({
-            ticketType: "adult",
-            lastName: "",
-            firstName: "",
-            patronymic: "",
-            gender: "",
-            birthday: "",
-            mobility: false,
-            docType: "Паспорт РФ",
-            docSeries: "",
-            docNumber: ""
-        });
+    // ===== Сброс =====
+    const handleClear = () => {
+        setFormData(defaultForm);
         setCompleted(false);
         setErrorMessage("");
         onCompleteChange(index, false);
     };
 
-    // ===== ВАЛИДАЦИЯ =====
     useEffect(() => {
         const error = validatePassenger(formData);
         const valid = error === "";
 
         setCompleted(valid);
         onCompleteChange(index, valid);
-        setErrorMessage(""); // сброс ошибки при вводе
-    }, [formData]);
+        setErrorMessage("");
+        // ВАЖНО: без onCompleteChange в зависимостях
+    }, [formData, index]);
 
+    // ===== Кнопка "Следующий пассажир" =====
     const handleNext = () => {
         const error = validatePassenger(formData);
 
@@ -99,57 +103,45 @@ const PassengerCard: React.FC<Props> = ({
         }
 
         setErrorMessage("");
-        setCompleted(false);
+        setCompleted(true);
         onCompleteChange(index, true);
         onRequestOpenNext(index);
     };
 
-    /*  каждый раз, когда formData меняется, отправляем данные: */
+    // каждый раз, когда formData меняется, отправляем наружу
     useEffect(() => {
         onUpdate(index, formData);
-    }, [formData]);
+        // ВАЖНО: без onUpdate в зависимостях
+    }, [formData, index]);
+
+    // хендлеры для дочерних блоков
+    const updateField = (patch: Partial<FormData>) => {
+        setFormData((prev) => ({ ...prev, ...patch }));
+        setCompleted(false);
+    };
 
     return (
         <div
             id={`passenger-card-${index}`}
             className={`${styles.card} ${completed ? styles.cardCompleted : ""}`}
         >
-            {/* ===== HEADER ===== */}
-            <button
-                className={`${styles.header} ${open ? styles.headerOpen : ""}`}
-                onClick={() => setOpen(!open)}
-            >
-                <div className={styles.leftHeader}>
-                    <div className={styles.iconWrapper}>
-                        {!open && (
-                            <>
-                                <Plus className={styles.iconPlus} />
-                                <PlusHover className={styles.iconPlusHover} />
-                            </>
-                        )}
-                        {open && <Minus className={styles.iconMinus} />}
-                    </div>
+            <PassengerCardHeader
+                index={index}
+                open={open}
+                onToggle={() => setOpen((prev) => !prev)}
+                onClear={handleClear}
+                completed={completed}
+            />
 
-                    <span>Пассажир {index + 1}</span>
-                </div>
-
-                <div className={styles.rightHeader}>
-                    {open && (
-                        <Close className={styles.clearBtn} onClick={clearFields} />
-                    )}
-                </div>
-            </button>
-
-            {/* ===== BODY ===== */}
             {open && (
                 <div className={styles.body}>
                     <div className={styles.bodyTop}>
-                        {/* ====== ТИП БИЛЕТА ====== */}
+                        {/* Тип билета */}
                         <div className={styles.row}>
                             <CustomSelect
                                 value={formData.ticketType}
                                 onChange={(val) =>
-                                    setFormData({ ...formData, ticketType: val })
+                                    updateField({ ticketType: val as FormData["ticketType"] })
                                 }
                                 options={[
                                     { value: "adult", label: "Взрослый" },
@@ -158,149 +150,24 @@ const PassengerCard: React.FC<Props> = ({
                             />
                         </div>
 
-                        {/* ====== ФИО ====== */}
-                        <div className={styles.row3}>
-                            <div className={styles.lastNameContainer}>
-                                <label
-                                    className={styles.labelPassCard}
-                                    htmlFor={`lastName-${index}`}
-                                >
-                                    Фамилия
-                                </label>
-                                <input
-                                    className={styles.inputPassCard}
-                                    id={`lastName-${index}`}
-                                    type="text"
-                                    value={formData.lastName}
-                                    onChange={(e) => {
-                                        const cleaned = cleanLetters(e.target.value);
-                                        const formatted = capitalize(cleaned);
-                                        setFormData({ ...formData, lastName: formatted });
-                                        setCompleted(false);
-                                    }}
-                                />
-                            </div>
+                        {/* ФИО */}
+                        <PassengerCardFioFields
+                            index={index}
+                            formData={formData}
+                            onChange={updateField}
+                            cleanLetters={cleanLetters}
+                            capitalize={capitalize}
+                        />
 
-                            <div className={styles.nameContainer}>
-                                <label
-                                    className={styles.labelPassCard}
-                                    htmlFor={`firstName-${index}`}
-                                >
-                                    Имя
-                                </label>
-                                <input
-                                    className={styles.inputPassCard}
-                                    id={`firstName-${index}`}
-                                    type="text"
-                                    value={formData.firstName}
-                                    onChange={(e) => {
-                                        const cleaned = cleanLetters(e.target.value);
-                                        const formatted = capitalize(cleaned);
-                                        setFormData({
-                                            ...formData,
-                                            firstName: formatted
-                                        });
-                                        setCompleted(false);
-                                    }}
-                                />
-                            </div>
+                        {/* Пол + дата */}
+                        <PassengerCardGenderBirthday
+                            index={index}
+                            formData={formData}
+                            onChange={updateField}
+                            formatBirthday={formatBirthday}
+                        />
 
-                            <div className={styles.surnameContainer}>
-                                <label
-                                    className={styles.labelPassCard}
-                                    htmlFor={`patronymic-${index}`}
-                                >
-                                    Отчество
-                                </label>
-                                <input
-                                    className={styles.inputPassCard}
-                                    id={`patronymic-${index}`}
-                                    type="text"
-                                    value={formData.patronymic}
-                                    onChange={(e) => {
-                                        const cleaned = cleanLetters(e.target.value);
-                                        const formatted = capitalize(cleaned);
-                                        setFormData({
-                                            ...formData,
-                                            patronymic: formatted
-                                        });
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        {/* ====== ПОЛ + ДАТА ====== */}
-                        <div className={styles.row2}>
-                            <div className={styles.genderBlock}>
-                                <span className={styles.labelPassCard}>Пол</span>
-
-                                <div className={styles.genderBtns}>
-                                    <input
-                                        id={`gender-m-${index}`}
-                                        type="radio"
-                                        name={`gender-${index}`}
-                                        checked={formData.gender === "M"}
-                                        onChange={() =>
-                                            setFormData({ ...formData, gender: "M" })
-                                        }
-                                        className={styles.genderInput}
-                                    />
-                                    <label
-                                        htmlFor={`gender-m-${index}`}
-                                        className={`${styles.genderBtn} ${formData.gender === "M"
-                                            ? styles.activeMale
-                                            : ""
-                                            }`}
-                                    >
-                                        <span>М</span>
-                                    </label>
-
-                                    <input
-                                        id={`gender-f-${index}`}
-                                        type="radio"
-                                        name={`gender-${index}`}
-                                        checked={formData.gender === "F"}
-                                        onChange={() =>
-                                            setFormData({ ...formData, gender: "F" })
-                                        }
-                                        className={styles.genderInput}
-                                    />
-                                    <label
-                                        htmlFor={`gender-f-${index}`}
-                                        className={`${styles.genderBtn} ${formData.gender === "F"
-                                            ? styles.activeFemale
-                                            : ""
-                                            }`}
-                                    >
-                                        <span>Ж</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div className={styles.birthdayBlock}>
-                                <label
-                                    className={styles.labelPassCard}
-                                    htmlFor={`birthday-${index}`}
-                                >
-                                    Дата рождения
-                                </label>
-                                <input
-                                    className={styles.inputPassCard}
-                                    id={`birthday-${index}`}
-                                    type="text"
-                                    placeholder="ДД/ММ/ГГ"
-                                    maxLength={10}
-                                    value={formData.birthday}
-                                    onChange={(e) => {
-                                        const formatted = formatBirthday(e.target.value);
-                                        setFormData({ ...formData, birthday: formatted });
-                                        setCompleted(false);
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                        {/* ===== ОГРАНИЧЕННАЯ ПОДВИЖНОСТЬ ===== */}
+                        {/* Ограниченная подвижность */}
                         <div className={`${styles.row} ${styles.checkbox}`}>
                             <input
                                 className={styles.inputPassCard}
@@ -308,10 +175,7 @@ const PassengerCard: React.FC<Props> = ({
                                 type="checkbox"
                                 checked={formData.mobility}
                                 onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        mobility: e.target.checked
-                                    })
+                                    updateField({ mobility: e.target.checked })
                                 }
                             />
                             <label
@@ -323,140 +187,22 @@ const PassengerCard: React.FC<Props> = ({
                         </div>
                     </div>
 
-                    {/* ===== BLOCK 2 ===== */}
+                    {/* Документы + кнопка */}
                     <div className={styles.bodyBottom}>
-                        <div className={`${styles.row3} ${styles.rowType}`}>
-                            <div
-                                className={`${styles.typeDocContainer} ${formData.docType === "Свидетельство о рождении"
-                                    ? styles.docWide
-                                    : styles.docNormal
-                                    }`}
-                            >
-                                <label
-                                    className={styles.labelPassCard}
-                                    htmlFor={`docType-${index}`}
-                                >
-                                    Тип документа
-                                </label>
+                        <PassengerCardDocSection
+                            index={index}
+                            formData={formData}
+                            onChange={updateField}
+                            formatSeries={formatSeries}
+                            formatNumber={formatNumber}
+                            formatBirthCertificate={formatBirthCertificate}
+                        />
 
-                                <CustomSelect
-                                    value={formData.docType}
-                                    onChange={(val) =>
-                                        setFormData({
-                                            ...formData,
-                                            docType: val,
-                                            docSeries: "",
-                                            docNumber: ""
-                                        })
-                                    }
-                                    options={[
-                                        { value: "Паспорт РФ", label: "Паспорт РФ" },
-                                        {
-                                            value: "Свидетельство о рождении",
-                                            label: "Свидетельство о рождении"
-                                        }
-                                    ]}
-                                />
-                            </div>
-
-                            {/* ===== СЕРИЯ ПАСПОРТА ===== */}
-                            {formData.docType === "Паспорт РФ" && (
-                                <div className={styles.seriesContainer}>
-                                    <label
-                                        className={styles.labelPassCard}
-                                        htmlFor={`docSeries-${index}`}
-                                    >
-                                        Серия
-                                    </label>
-
-                                    <input
-                                        className={styles.inputPassCard}
-                                        id={`docSeries-${index}`}
-                                        type="text"
-                                        value={formData.docSeries}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                docSeries: formatSeries(e.target.value)
-                                            })
-                                        }
-                                        placeholder="__ __ __ __"
-                                    />
-                                </div>
-                            )}
-
-                            {/* ===== НОМЕР ПАСПОРТА / СВИДЕТЕЛЬСТВА ===== */}
-                            <div className={styles.numberContainer}>
-                                <label
-                                    className={styles.labelPassCard}
-                                    htmlFor={`docNumber-${index}`}
-                                >
-                                    Номер
-                                </label>
-
-                                <div
-                                    className={
-                                        formData.docType === "Свидетельство о рождении"
-                                            ? styles.birthCertWrapper
-                                            : styles.inputWrapper
-                                    }
-                                    data-has-value={formData.docNumber.trim() !== ""}
-                                >
-                                    <input
-                                        className={styles.inputPassCard}
-                                        id={`docNumber-${index}`}
-                                        type="text"
-                                        value={formData.docNumber}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                docNumber:
-                                                    formData.docType === "Паспорт РФ"
-                                                        ? formatNumber(e.target.value)
-                                                        : formatBirthCertificate(e.target.value)
-                                            })
-                                        }
-                                        placeholder={
-                                            formData.docType === "Паспорт РФ"
-                                                ? "__ __ __ __ __ __"
-                                                : ""
-                                        }
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* ==== КНОПКА ==== */}
-                        <div className={styles.nextSection}>
-                            {errorMessage && (
-                                <div className={styles.errorBlock}>
-                                    <ErrorIcon />
-                                    <p>{errorMessage}</p>
-                                </div>
-                            )}
-
-                            {!errorMessage && (
-                                <div
-                                    className={`${styles.containerNextButton} ${completed ? styles.completedState : ""
-                                        }`}
-                                >
-                                    {completed && (
-                                        <div className={styles.doneInfo}>
-                                            <CheckIcon />
-                                            <p>Готово</p>
-                                        </div>
-                                    )}
-
-                                    <button
-                                        type="button"
-                                        className={styles.nextButton}
-                                        onClick={handleNext}
-                                    >
-                                        Следующий пассажир
-                                    </button>
-                                </div>
-                            )}
-                        </div>
+                        <PassengerCardFooter
+                            completed={completed}
+                            errorMessage={errorMessage}
+                            onNext={handleNext}
+                        />
                     </div>
                 </div>
             )}

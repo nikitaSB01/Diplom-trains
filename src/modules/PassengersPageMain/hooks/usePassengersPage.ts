@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { PassengerFormData, OrderData } from "../../../types/passengers";
 import { buildPassengerBlock } from "../utils/buildPassengerBlock";
 import { SeatData } from "../../../types/passengers";
@@ -57,7 +57,7 @@ export const usePassengersPage = (
         }
     };
 
-    const [formDataList, setFormDataList] = useState<any[]>(
+    const [formDataList, setFormDataList] = useState<PassengerFormData[]>(
         passengers || Array(totalCards).fill(null)
     );
 
@@ -75,21 +75,18 @@ export const usePassengersPage = (
         });
     };
 
-    const calcCategories = () => {
+    const entered = useMemo(() => {
         let adults = 0;
         let kids = 0;
 
         formDataList.forEach((p) => {
             if (!p) return;
-
             if (p.ticketType === "adult") adults++;
             if (p.ticketType === "child") kids++;
         });
 
         return { adults, kids };
-    };
-
-    const entered = calcCategories();
+    }, [formDataList]);
 
     const requiredAdults = block1?.passengers.adults ?? 0;
     const requiredKids = block1?.passengers.kids ?? 0;
