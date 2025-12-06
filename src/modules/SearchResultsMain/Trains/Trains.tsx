@@ -1,60 +1,12 @@
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Trains.module.css";
-import { formatTime } from "../../../utils/format";
-import { formatPrice } from "../../../utils/format";
 
 import Pagination from "./Pagination/Pagination";
 import TrainsTopFilter from "./TrainsTopFilter/TrainsTopFilter";
-import TrainCard from "../TrainCard/TrainCard";
 import TrainRow from "../../../components/shared/TrainInfo/TrainRow/TrainRow";
-import {
-  Train,
-  DirectionInfo,
-  WagonClass,
-  TrainsProps,
-} from "../../../types/Train/trainTypes";
 
-
-// ======================================================
-// Утилиты
-// ======================================================
-
-const formatDateForApi = (value?: string) => {
-  if (!value) return "";
-  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
-
-  const [d, m, y] = value.split("/");
-  if (!d || !m || !y) return "";
-
-  return `${y.length === 2 ? "20" + y : y}-${m}-${d}`;
-};
-
-const formatDuration = (seconds?: number) => {
-  if (!seconds) return "";
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  return `${h}:${String(m).padStart(2, "0")}`;
-};
-
-const toMinutes = (unix: number) => {
-  const date = new Date(unix * 1000);
-  return date.getHours() * 60 + date.getMinutes();
-};
-
-const getSeats = (dir: DirectionInfo, cls: WagonClass) =>
-  dir.available_seats_info?.[cls] ?? 0;
-
-const getPrice = (dir: DirectionInfo, cls: WagonClass) =>
-  dir.price_info?.[cls]?.bottom_price ??
-  dir.price_info?.[cls]?.top_price ??
-  dir.price_info?.[cls]?.side_price ??
-  dir.min_price;
-
-
-// ======================================================
-// Компонент
-// ======================================================
+import { TrainsProps } from "../../../types/Train/trainTypes";
+import { useTrainsLoader } from "./hooks/useTrainsLoader";
 
 const Trains: React.FC<TrainsProps> = ({
   fromCity,
@@ -63,212 +15,45 @@ const Trains: React.FC<TrainsProps> = ({
   dateEnd,
   filters,
   onLoadingChange,
-  onSelectTrain
+  onSelectTrain,
 }) => {
-
-  // загрузка
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  // сортировка / лимит
-  const [sort, setSort] = useState<"date" | "price" | "duration">("date");
-  const [limit, setLimit] = useState<number>(5);
-  const [page, setPage] = useState(1);
-
-  // инкрементальная загрузка
-  const [cache, setCache] = useState<Train[]>([]);
-  const [serverOffset, setServerOffset] = useState(0);
-  const serverLimit = 20;
-  const [isEnd, setIsEnd] = useState(false);
-
-  // hover состояния
-  const [hover, setHover] = useState<{ index: number; cls: WagonClass } | null>(null);
-
-
-  // ======================================================
-  // 1. Загрузить 1-ю страницу при изменении города/даты/сортировки
-  // ======================================================
-
-  const loadServerPage = async (offset: number) => {
-    const params = new URLSearchParams({
-      from_city_id: fromCity!._id,
-      to_city_id: toCity!._id,
-      sort: sort,
-      limit: String(serverLimit),
-      offset: String(offset),
-    });
-
-    if (dateStart) params.append("date_start", formatDateForApi(dateStart));
-    if (dateEnd) params.append("date_end", formatDateForApi(dateEnd));
-
-    const response = await fetch(
-      `https://students.netoservices.ru/fe-diplom/routes?${params.toString()}`
-    );
-    if (!response.ok) throw new Error("Ошибка загрузки");
-
-    const data = await response.json();
-    return data.items || [];
-  };
-
-  useEffect(() => {
-    if (!fromCity || !toCity) return;
-
-    const refresh = async () => {
-      setLoading(true);
-      onLoadingChange?.(true);
-      setError("");
-      setPage(1);
-      setCache([]);
-      setServerOffset(0);
-      setIsEnd(false);
-
-      try {
-        const first = await loadServerPage(0);
-        setCache(first);
-      } catch (e: any) {
-        setError(e.message);
-      } finally {
-        setLoading(false);
-        onLoadingChange?.(false);
-      }
-    };
-
-    refresh();
-  }, [fromCity, toCity, dateStart, dateEnd, sort]);
-
-
-
-  // ======================================================
-  // 2. Фильтрация
-  // ======================================================
-
-  const applyAllFilters = (t: Train) => {
-    if (!filters) return true;
-
-    if (filters.options) {
-      const o = filters.options;
-      if (o.coupe && !t.departure.have_second_class) return false;
-      if (o.plaz && !t.departure.have_third_class) return false;
-      if (o.seat && !t.departure.have_fourth_class) return false;
-      if (o.lux && !t.departure.have_first_class) return false;
-      if (o.wifi && !t.departure.have_wifi) return false;
-      if (o.express && !t.departure.is_express) return false;
-    }
-
-    if (filters.price) {
-      const [min, max] = filters.price;
-      const price = t.departure.min_price;
-      if (price < min || price > max) return false;
-    }
-
-    if (filters.thereDeparture) {
-      const min = filters.thereDeparture.from * 60;
-      const max = filters.thereDeparture.to * 60;
-      const dep = toMinutes(t.departure.from.datetime);
-      if (dep < min || dep > max) return false;
-    }
-
-    if (filters.thereArrival) {
-      const min = filters.thereArrival.from * 60;
-      const max = filters.thereArrival.to * 60;
-      const arr = toMinutes(t.departure.to.datetime);
-      if (arr < min || arr > max) return false;
-    }
-
-    if (filters.backDeparture && t.arrival) {
-      const min = filters.backDeparture.from * 60;
-      const max = filters.backDeparture.to * 60;
-      const dep = toMinutes(t.arrival.from.datetime);
-      if (dep < min || dep > max) return false;
-    }
-
-    if (filters.backArrival && t.arrival) {
-      const min = filters.backArrival.from * 60;
-      const max = filters.backArrival.to * 60;
-      const arr = toMinutes(t.arrival.to.datetime);
-      if (arr < min || arr > max) return false;
-    }
-
-    return true;
-  };
-
-  let filtered = cache.filter(applyAllFilters);
-
-
-
-  // ======================================================
-  // 3. Догрузка по необходимости
-  // ======================================================
-
-  const need = page * limit;
-
-  const loadMoreIfNeeded = async () => {
-    if (filtered.length >= need) return;
-    if (isEnd) return;
-
-    onLoadingChange?.(true);  // <<< ДОБАВИЛИ
-
-    const next = serverOffset + serverLimit;
-
-    try {
-      const more = await loadServerPage(next);
-      if (more.length === 0) {
-        setIsEnd(true);
-        onLoadingChange?.(false);   // <<< ДОБАВИЛИ
-        return;
-      }
-
-      setCache(prev => [...prev, ...more]);
-      setServerOffset(next);
-    } catch {
-      setIsEnd(true);
-    } finally {
-      onLoadingChange?.(false);  // <<< ДОБАВИЛИ
-    }
-  };
-
-  useEffect(() => {
-    loadMoreIfNeeded();
-  }, [cache, filters, page, limit]);
-
-  // ❗ Сбрасываем страницу при изменении фильтров
-  useEffect(() => {
-    setPage(1);
-  }, [filters]);
-
-
-  // ======================================================
-  // 4. Пагинация
-  // ======================================================
-
-  const total = isEnd ? filtered.length : filtered.length + limit;
-  const totalPages = Math.ceil(total / limit);
-
-  const start = (page - 1) * limit;
-  const end = start + limit;
-  const pageItems = filtered.slice(start, end);
-
-
-  // ======================================================
-  // 5. Состояния загрузки
-  // ======================================================
+  const {
+    loading,
+    error,
+    sort,
+    setSort,
+    limit,
+    setLimit,
+    page,
+    setPage,
+    totalPages,
+    pageItems,
+    filteredCount,
+  } = useTrainsLoader({
+    fromCity,
+    toCity,
+    dateStart,
+    dateEnd,
+    filters,
+    onLoadingChange,
+  });
 
   if (loading) return <div className={styles.loading}>Загрузка…</div>;
   if (error) return <div className={styles.error}>{error}</div>;
-  if (!filtered.length)
+  if (!filteredCount)
     return <div className={styles.empty}>Нет найденных маршрутов</div>;
-
-
-  // ======================================================
-  // 6. Рендер
-  // ======================================================
 
   return (
     <div className={styles.trainsList}>
-
       <TrainsTopFilter
-        total={filtered.length}
-        sort={sort === "date" ? "времени" : sort === "price" ? "стоимости" : "длительности"}
+        total={filteredCount}
+        sort={
+          sort === "date"
+            ? "времени"
+            : sort === "price"
+              ? "стоимости"
+              : "длительности"
+        }
         onSortChange={(value) => {
           if (value === "времени") setSort("date");
           if (value === "стоимости") setSort("price");
@@ -297,10 +82,9 @@ const Trains: React.FC<TrainsProps> = ({
         totalPages={totalPages}
         onChange={(p) => {
           setPage(p);
-          window.scrollTo({ top: 0, behavior: "smooth" })
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       />
-
     </div>
   );
 };
