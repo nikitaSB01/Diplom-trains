@@ -33,10 +33,14 @@ export const usePassengersPage = (
     );
 
     useEffect(() => {
-        if (!passengers) {
-            setCompletedMap(Array(totalCards).fill(false));
-        }
-    }, [totalCards, passengers]);
+        setCompletedMap((prev) => {
+            const copy = [...prev];
+            if (copy.length < totalCards) {
+                copy.push(false); // новая карточка пока не завершена
+            }
+            return copy;
+        });
+    }, [totalCards]);
 
     const handleCompleteChange = (index: number, completed: boolean) => {
         setCompletedMap((prev) => {
@@ -57,15 +61,19 @@ export const usePassengersPage = (
         }
     };
 
-    const [formDataList, setFormDataList] = useState<PassengerFormData[]>(
-        passengers || Array(totalCards).fill(null)
+    const [formDataList, setFormDataList] = useState<(PassengerFormData | null)[]>(
+        passengers ?? Array(totalCards).fill(null)
     );
 
     useEffect(() => {
-        if (!passengers) {
-            setFormDataList(Array(totalCards).fill(null));
-        }
-    }, [totalCards, passengers]);
+        setFormDataList((prev) => {
+            const copy = [...prev];
+            if (copy.length < totalCards) {
+                copy.push(null); 
+            }
+            return copy;
+        });
+    }, [totalCards]);
 
     const handleUpdatePassenger = (index: number, data: any) => {
         setFormDataList((prev) => {
@@ -92,8 +100,8 @@ export const usePassengersPage = (
     const requiredKids = block1?.passengers.kids ?? 0;
 
     const categoriesMatch =
-        entered.adults === requiredAdults &&
-        entered.kids === requiredKids;
+        entered.adults >= requiredAdults &&
+        entered.kids >= requiredKids;
 
     const allCompleted = completedMap.every(Boolean);
 
