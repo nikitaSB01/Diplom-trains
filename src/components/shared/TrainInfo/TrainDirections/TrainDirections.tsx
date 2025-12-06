@@ -7,6 +7,7 @@ import { ReactComponent as ArrowBack } from "../../../../assets/icons/Train/arro
 interface Props {
     departure: any;
     arrival?: any;
+    useChoiceLocation?: boolean;
 }
 
 const formatDuration = (seconds?: number) => {
@@ -16,21 +17,25 @@ const formatDuration = (seconds?: number) => {
     return `${h}:${String(m).padStart(2, "0")}`;
 };
 
-const TrainDirections: React.FC<Props> = ({ departure, arrival }) => {
+const TrainDirections: React.FC<Props> = ({ departure, arrival, useChoiceLocation }) => {
     return (
-        <div className={styles.center}>
-
+        <div
+            className={`${styles.center} ${useChoiceLocation ? styles.centerChoiseLocation : ""
+                }`}
+        >
             {/* ----- ТУДА ----- */}
             <div className={styles.directionBlock}>
-                <div className={styles.direction}>
+                <div className={`${styles.direction} ${useChoiceLocation ? styles.directionChoiseLocation : ""
+                    }`}>
                     <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
                         <p className={styles.time}>{formatTime(departure.from.datetime)}</p>
                         <p className={styles.city}>{departure.from.city.name}</p>
-                        <p className={styles.station}>{departure.from.railway_station_name} <br />вокзал</p>
+                        <p className={styles.station}>{departure.from.railway_station_name} вокзал</p>
                     </div>
 
                     <div className={styles.arrowBlock}>
-                        <p className={styles.duration}>{formatDuration(departure.duration)}</p>
+                        <p className={`${styles.duration} ${useChoiceLocation ? styles.durationChoiseLocation : ""
+                            }`}>{formatDuration(departure.duration)}</p>
                         <ArrowThere className={styles.arrowSvg} />
                     </div>
 
@@ -50,7 +55,7 @@ const TrainDirections: React.FC<Props> = ({ departure, arrival }) => {
                         <div className={`${styles.timeBlock} ${styles.leftBlock}`}>
                             <p className={styles.time}>{formatTime(arrival.to.datetime)}</p>
                             <p className={styles.city}>{arrival.to.city.name}</p>
-                            <p className={styles.station}>{arrival.to.railway_station_name} <br />вокзал</p>
+                            <p className={styles.station}>{arrival.to.railway_station_name} вокзал</p>
                         </div>
 
                         <div className={styles.arrowBlock}>

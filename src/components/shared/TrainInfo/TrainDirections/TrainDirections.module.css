@@ -8,6 +8,10 @@
     gap: 60px;
 }
 
+.centerChoiseLocation {
+    padding: 0 36px;
+}
+
 .directionBlock {
     width: 100%;
     display: flex;
@@ -21,6 +25,15 @@
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
+}
+
+.directionChoiseLocation {
+    align-items: center;
+}
+
+.directionChoiseLocation .rightBlock {
+    padding-left: 50px;
+
 }
 
 .timeBlock {
@@ -66,6 +79,10 @@
     font-weight: 400;
     font-size: 18px;
     color: rgba(196, 196, 196, 1);
+}
+
+.durationChoiseLocation {
+    display: none;
 }
 
 .arrowSvg {
