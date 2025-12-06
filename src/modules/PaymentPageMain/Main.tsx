@@ -5,9 +5,14 @@ import styles from "./Main.module.css";
 import { validatePaymentForm } from "../../utils/validation";
 
 import Steps from "../../components/Steps/Steps";
-import PersonalDataBlock from "./blocks/PersonalDataBlock/PersonalDataBlock";
+import PersonalDataBlock, {
+    PersonalData,
+} from "./blocks/PersonalDataBlock/PersonalDataBlock";
 import PaymentMethodBlock from "./blocks/PaymentMethodBlock/PaymentMethodBlock";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
+
+type PaymentType = "online" | "cash";
+type OnlineMethod = "card" | "paypal" | "qiwi" | null;
 
 interface Props {
     orderData: any;
@@ -15,9 +20,9 @@ interface Props {
     block1: any;
     block2: any;
     totalPrice: number;
-    personalData?: any;
-    paymentType?: "online" | "cash";
-    onlineMethod?: "card" | "paypal" | "qiwi" | null;
+    personalData?: PersonalData;
+    paymentType?: PaymentType;
+    onlineMethod?: OnlineMethod;
 }
 
 const Main: React.FC<Props> = ({
@@ -28,41 +33,39 @@ const Main: React.FC<Props> = ({
     totalPrice,
     personalData: initialPersonalData,
     paymentType: initialPaymentType,
-    onlineMethod: initialOnlineMethod
+    onlineMethod: initialOnlineMethod,
 }) => {
-
     const navigate = useNavigate();
     const location = useLocation();
     const { from, to, dateStart, dateEnd } = location.state || {};
 
-    const [openPassengers, setOpenPassengers] = useState(true);
-
-    /* данные и функции для подключения PersonalDataBlock PaymentMethodBlock*/
-    const [personalData, setPersonalData] = useState(() => ({
+    // ----- Персональные данные -----
+    const [personalData, setPersonalData] = useState<PersonalData>(() => ({
         lastName: initialPersonalData?.lastName ?? "",
         firstName: initialPersonalData?.firstName ?? "",
         middleName: initialPersonalData?.middleName ?? "",
         phone: initialPersonalData?.phone ?? "",
-        email: initialPersonalData?.email ?? ""
+        email: initialPersonalData?.email ?? "",
     }));
 
-    const [paymentType, setPaymentType] = useState<"online" | "cash">(
+    const [paymentType, setPaymentType] = useState<PaymentType>(
         initialPaymentType ?? "online"
     );
 
-    const [onlineMethod, setOnlineMethod] = useState<"card" | "paypal" | "qiwi" | null>(
+    const [onlineMethod, setOnlineMethod] = useState<OnlineMethod>(
         initialOnlineMethod ?? null
     );
 
-    const handleSelectPayment = (type: "online" | "cash") => {
+    const handleSelectPayment = (type: PaymentType) => {
         setPaymentType(type);
 
         if (type === "cash") {
-            setOnlineMethod(null); // сбрасываем PayPal/card/qiwi
+            setOnlineMethod(null); // сбрасываем онлайн-метод
         }
     };
-    const handlePersonalChange = (field: any, value: string) => {
-        setPersonalData(prev => ({ ...prev, [field]: value }));
+
+    const handlePersonalChange = (field: keyof PersonalData, value: string) => {
+        setPersonalData((prev) => ({ ...prev, [field]: value }));
     };
 
     const handleBuy = () => {
@@ -80,7 +83,7 @@ const Main: React.FC<Props> = ({
                 to,
                 dateStart,
                 dateEnd,
-            }
+            },
         });
     };
 
@@ -96,7 +99,7 @@ const Main: React.FC<Props> = ({
             <Steps currentStep={3} />
 
             <div className={styles.container}>
-                {/* ================= LEFT COLUMN ================= */}
+                {/* ---------- ЛЕВАЯ КОЛОНКА ----------- */}
                 <LeftColumnInfo
                     orderData={orderData}
                     block1={block1}
@@ -104,27 +107,28 @@ const Main: React.FC<Props> = ({
                     totalPrice={totalPrice}
                 />
 
-                {/* ================= RIGHT COLUMN ================= */}
+                {/* ---------- ПРАВАЯ КОЛОНКА ----------- */}
                 <div className={styles.rightColumn}>
                     <div className={styles.rightContent}>
                         <PersonalDataBlock data={personalData} onChange={handlePersonalChange} />
+
                         <PaymentMethodBlock
                             paymentType={paymentType}
                             onlineMethod={onlineMethod}
                             onSelectPayment={handleSelectPayment}
                             onSelectOnlineMethod={setOnlineMethod}
-                        />               </div>
+                        />
+                    </div>
 
                     <div className={styles.containerButton}>
-
                         <button
-                            className={`${styles.buyButton} ${isFormValid ? styles.buyButtonActive : styles.buyButtonDisabled}`}
+                            className={`${styles.buyButton} ${isFormValid ? styles.buyButtonActive : styles.buyButtonDisabled
+                                }`}
                             disabled={!isFormValid}
                             onClick={isFormValid ? handleBuy : undefined}
                         >
                             Купить билеты
                         </button>
-
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./PassengerCard.module.css";
 import CustomSelect from "./CustomSelect/CustomSelect";
+import FioFields from "../../../../components/shared/FioFields/FioFields";
 
 import {
     cleanLetters,
@@ -14,7 +15,6 @@ import {
 import { validatePassenger } from "../../../../utils/validation";
 
 import PassengerCardHeader from "./parts/PassengerCardHeader";
-import PassengerCardFioFields from "./parts/PassengerCardFioFields";
 import PassengerCardGenderBirthday from "./parts/PassengerCardGenderBirthday";
 import PassengerCardDocSection from "./parts/PassengerCardDocSection";
 import PassengerCardFooter from "./parts/PassengerCardFooter";
@@ -151,12 +151,26 @@ const PassengerCard: React.FC<Props> = ({
                         </div>
 
                         {/* ФИО */}
-                        <PassengerCardFioFields
-                            index={index}
-                            formData={formData}
-                            onChange={updateField}
+                        <FioFields
+                            data={{
+                                lastName: formData.lastName,
+                                firstName: formData.firstName,
+                                middleName: formData.patronymic
+                            }}
                             cleanLetters={cleanLetters}
                             capitalize={capitalize}
+                            highlight={true}
+                            onChange={(patch) => {
+                                if ("lastName" in patch) {
+                                    updateField({ lastName: patch.lastName });
+                                }
+                                if ("firstName" in patch) {
+                                    updateField({ firstName: patch.firstName });
+                                }
+                                if ("middleName" in patch) {
+                                    updateField({ patronymic: patch.middleName });
+                                }
+                            }}
                         />
 
                         {/* Пол + дата */}

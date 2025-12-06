@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./PersonalDataBlock.module.css";
+import FioFields from "../../../../components/shared/FioFields/FioFields";
 
 import { cleanLetters, capitalize, cleanEmail, formatPhone } from "../../../../utils/formatters";
 import { validatePhone, validateEmail } from "../../../../utils/validation";
@@ -44,37 +45,26 @@ const PersonalDataBlock: React.FC<Props> = ({ data, onChange }) => {
             <div className={`${styles.containerForm} ${styles.border}`}>
 
                 {/* ====== Фамилия / Имя / Отчество ====== */}
-                <div className={styles.row}>
-                    <div className={styles.field}>
-                        <label className={styles.personalLabel} htmlFor="lastName">Фамилия</label>
-                        <input
-                            id="lastName"
-                            className={styles.personalInput}
-                            value={data.lastName}
-                            onChange={(e) => handleName("lastName", e.target.value)}
-                        />
-                    </div>
-
-                    <div className={styles.field}>
-                        <label className={styles.personalLabel} htmlFor="firstName">Имя</label>
-                        <input
-                            id="firstName"
-                            className={styles.personalInput}
-                            value={data.firstName}
-                            onChange={(e) => handleName("firstName", e.target.value)}
-                        />
-                    </div>
-
-                    <div className={styles.field}>
-                        <label className={styles.personalLabel} htmlFor="middleName">Отчество</label>
-                        <input
-                            id="middleName"
-                            className={styles.personalInput}
-                            value={data.middleName}
-                            onChange={(e) => handleName("middleName", e.target.value)}
-                        />
-                    </div>
-                </div>
+                <FioFields
+                    data={{
+                        lastName: data.lastName,
+                        firstName: data.firstName,
+                        middleName: data.middleName
+                    }}
+                    cleanLetters={cleanLetters}
+                    capitalize={capitalize}
+                    onChange={(patch) => {
+                        if (patch.lastName !== undefined) {
+                            onChange("lastName", patch.lastName);
+                        }
+                        if (patch.firstName !== undefined) {
+                            onChange("firstName", patch.firstName);
+                        }
+                        if (patch.middleName !== undefined) {
+                            onChange("middleName", patch.middleName);
+                        }
+                    }}
+                />
 
                 {/* ====== Телефон ====== */}
                 <div className={styles.row}>
