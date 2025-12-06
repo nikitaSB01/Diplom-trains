@@ -125,6 +125,8 @@ const Main: React.FC = () => {
                   onBack={() => {
                     setIsChoosingSeats(false);
                     setSelectedTrain(null);
+                    setTicketsBlock1({ adults: 0, kids: 0, kidsNoSeat: 0 });
+                    setTicketsBlock2({ adults: 0, kids: 0, kidsNoSeat: 0 });
                     setFirstType(null);
                     setSecondType(null);
                   }}
@@ -163,6 +165,8 @@ const Main: React.FC = () => {
                     onBack={() => {
                       setIsChoosingSeats(false);
                       setSelectedTrain(null);
+                      setTicketsBlock1({ adults: 0, kids: 0, kidsNoSeat: 0 });
+                      setTicketsBlock2({ adults: 0, kids: 0, kidsNoSeat: 0 });
                       setFirstType(null);
                       setSecondType(null);
                     }}
