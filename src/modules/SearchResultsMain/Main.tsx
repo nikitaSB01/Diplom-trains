@@ -122,7 +122,6 @@ const Main: React.FC = () => {
                   isSecond={false}
                   train={selectedTrain}
                   direction={selectedTrain.departure}
-                  disabledType={null}
                   onBack={() => {
                     setIsChoosingSeats(false);
                     setSelectedTrain(null);
@@ -161,7 +160,6 @@ const Main: React.FC = () => {
                     train={selectedTrain}
                     direction={selectedTrain.arrival || null}
                     selectedType={secondType}
-                    disabledType={null}    // ← ВАЖНО
                     onBack={() => {
                       setIsChoosingSeats(false);
                       setSelectedTrain(null);
