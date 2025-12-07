@@ -3,7 +3,6 @@ import styles from "./CarriageList.module.css";
 
 import CarriageCard from "../CarriageCard/CarriageCard";
 
-
 interface Props {
     routeId: string;
     type: string | null;

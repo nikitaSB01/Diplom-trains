@@ -1,9 +1,7 @@
 .container {
-    /* !!!!!!! 250px? */
     padding: 95px 250px 190px;
     display: grid;
     grid-template-columns: 360px 1fr;
-    /* Левая колонка — фильтры, правая — поезда */
     gap: 80px;
     align-items: start;
 }
@@ -11,13 +9,10 @@
 
 /* Правая колонка */
 .rightColumn {
+    max-width: 960px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
-}
-
-.containerAddPassengers {
-    max-width: 960px;
+    gap: 45px;
 }
 
 .addBtn {
@@ -30,7 +25,6 @@
     align-items: center;
 
     padding: 28px 38px 32px 26px;
-    margin-top: 16px;
 
     background: #fff;
     border: 2px solid #c8c8c8;

@@ -4,12 +4,3 @@
     margin: 0 auto;
     position: relative;
 }
-
-.container {
-    padding: 95px 250px 190px;
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    /* Левая колонка — фильтры, правая — поезда */
-    gap: 80px;
-    align-items: start;
-}

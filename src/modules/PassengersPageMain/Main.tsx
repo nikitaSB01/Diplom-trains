@@ -58,67 +58,65 @@ const Main: React.FC<PassengersPageMainProps> = ({
                 />
 
                 <div className={styles.rightColumn}>
-                    <div className={styles.containerAddPassengers}>
-                        {/* --- базовые карточки --- */}
-                        {Array.from({ length: baseCount }).map((_, i) => (
-                            <PassengerCard
-                                key={`base-${i}`}
-                                index={i}
-                                onCompleteChange={handleCompleteChange}
-                                onRequestOpenNext={handleRequestOpenNext}
-                                onUpdate={handleUpdatePassenger}
-                                initialData={passengers ? passengers[i] : undefined}
-                            />
-                        ))}
+                    {/* --- базовые карточки --- */}
+                    {Array.from({ length: baseCount }).map((_, i) => (
+                        <PassengerCard
+                            key={`base-${i}`}
+                            index={i}
+                            onCompleteChange={handleCompleteChange}
+                            onRequestOpenNext={handleRequestOpenNext}
+                            onUpdate={handleUpdatePassenger}
+                            initialData={passengers ? passengers[i] : undefined}
+                        />
+                    ))}
 
-                        {/* --- дополнительные карточки --- */}
-                        {Array.from({ length: extraPassengers }).map((_, i) => (
-                            <PassengerCard
-                                key={`extra-${i}`}
-                                index={baseCount + i}
-                                onCompleteChange={handleCompleteChange}
-                                onRequestOpenNext={handleRequestOpenNext}
-                                onUpdate={handleUpdatePassenger}
-                            />
-                        ))}
+                    {/* --- дополнительные карточки --- */}
+                    {Array.from({ length: extraPassengers }).map((_, i) => (
+                        <PassengerCard
+                            key={`extra-${i}`}
+                            index={baseCount + i}
+                            onCompleteChange={handleCompleteChange}
+                            onRequestOpenNext={handleRequestOpenNext}
+                            onUpdate={handleUpdatePassenger}
+                        />
+                    ))}
 
-                        {/* --- кнопка добавить --- */}
-                        <button
-                            className={styles.addBtn}
-                            onClick={() => setExtraPassengers(extraPassengers + 1)}
-                        >
-                            <p>Добавить пассажира</p>
-                            <div className={styles.iconWrapper}>
-                                <Plus className={styles.iconPlus} />
-                                <PlusHover className={styles.iconPlusHover} />
-                            </div>
-                        </button>
-
-                        <div className={styles.containerButton}>
-                            <button
-                                className={`${styles.nextMainBtn} ${canGoNext ? styles.active : ""}`}
-                                disabled={!canGoNext}
-                                onClick={() => {
-                                    if (!canGoNext) return;
-
-                                    navigate("/payment", {
-                                        state: {
-                                            from,
-                                            to,
-                                            dateStart,
-                                            dateEnd,
-                                            orderData,
-                                            passengers: formDataList,
-                                            block1,
-                                            block2,
-                                            totalPrice
-                                        }
-                                    });
-                                }}
-                            >
-                                Далее
-                            </button>
+                    {/* --- кнопка добавить --- */}
+                    <button
+                        className={styles.addBtn}
+                        onClick={() => setExtraPassengers(extraPassengers + 1)}
+                    >
+                        <p>Добавить пассажира</p>
+                        <div className={styles.iconWrapper}>
+                            <Plus className={styles.iconPlus} />
+                            <PlusHover className={styles.iconPlusHover} />
                         </div>
+                    </button>
+
+                    <div className={styles.containerButton}>
+                        <button
+                            className={`${styles.nextMainBtn} ${canGoNext ? styles.active : ""}`}
+                            disabled={!canGoNext}
+                            onClick={() => {
+                                if (!canGoNext) return;
+
+                                navigate("/payment", {
+                                    state: {
+                                        from,
+                                        to,
+                                        dateStart,
+                                        dateEnd,
+                                        orderData,
+                                        passengers: formDataList,
+                                        block1,
+                                        block2,
+                                        totalPrice
+                                    }
+                                });
+                            }}
+                        >
+                            Далее
+                        </button>
                     </div>
                 </div>
             </div>

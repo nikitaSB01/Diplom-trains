@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
 import styles from "./Main.module.css";
-import { validatePaymentForm } from "../../utils/validation";
 
+import { validatePaymentForm } from "../../utils/validation";
 import Steps from "../../components/Steps/Steps";
-import PersonalDataBlock, {
-    PersonalData,
-} from "./blocks/PersonalDataBlock/PersonalDataBlock";
+import PersonalDataBlock, { PersonalData } from "./blocks/PersonalDataBlock/PersonalDataBlock";
 import PaymentMethodBlock from "./blocks/PaymentMethodBlock/PaymentMethodBlock";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 

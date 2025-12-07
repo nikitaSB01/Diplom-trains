@@ -1,23 +1,13 @@
-/* ===================== */
-/*      CARD BASE        */
-/* ===================== */
-
 .card {
     width: 100%;
     background: rgba(255, 255, 255, 1);
     border: 1px solid #DADADA;
     border-radius: 4px;
     padding: 0;
-    margin-bottom: 20px;
     transition: border-color 0.2s;
 }
 
-
-
-/* ===================== */
 /*        HEADER         */
-/* ===================== */
-
 .header {
     width: 100%;
     background: rgba(255, 255, 255, 1);
@@ -96,9 +86,7 @@
     cursor: pointer;
 }
 
-/* ===================== */
 /*         BODY          */
-/* ===================== */
 
 .body {
     /*  padding: 38px 35px 28px; */
@@ -119,9 +107,7 @@
 }
 
 
-/* ===================== */
 /*     ROW STRUCTURE     */
-/* ===================== */
 
 .row {
     display: flex;
@@ -230,9 +216,7 @@
     flex-direction: column;
 }
 
-/* ===================== */
 /*        LABELS         */
-/* ===================== */
 
 .labelPassCard {
     font-weight: 400;
@@ -250,9 +234,7 @@
     margin-bottom: 6px;
 }
 
-/* ===================== */
 /*        INPUTS         */
-/* ===================== */
 .inputPassCard {
     font-weight: 400;
     font-size: 24px;
@@ -277,9 +259,7 @@ select:focus {
     outline: none;
 }
 
-/* ===================== */
 /*   GENDER RADIO BLOCK  */
-/* ===================== */
 
 .genderBlock {
     display: flex;
@@ -334,9 +314,7 @@ select:focus {
     border-left: 1px solid rgba(146, 143, 148, 1);
 }
 
-/* =============================== */
 /*   CHECKBOX: ОГРАНИЧЕННАЯ ПОДВИЖНОСТЬ */
-/* =============================== */
 
 .checkboxLabel {
     display: flex;
@@ -347,9 +325,7 @@ select:focus {
     font-size: 14px;
 }
 
-/* ===================== */
 /*     NEXT SECTION      */
-/* ===================== */
 
 .nextSection {
     display: flex;
@@ -380,9 +356,7 @@ select:focus {
     color: #217E47;
 }
 
-/* ===================== */
 /*   NEXT PASSENGER BTN  */
-/* ===================== */
 .containerNextButton {
     padding-bottom: 25px;
     padding-top: 35px;
