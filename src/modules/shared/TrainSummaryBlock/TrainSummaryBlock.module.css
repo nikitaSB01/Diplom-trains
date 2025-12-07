@@ -33,10 +33,3 @@
     justify-content: space-between;
     padding: 40px 22px 22px 25px;
 }
-
-.editWrapper {
-    padding-top: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
