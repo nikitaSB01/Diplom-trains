@@ -89,3 +89,74 @@
     width: 36px;
     height: 20px;
 }
+
+/* вариант стилей для leftCollumn */
+
+.centerPassenger {
+    padding: 0;
+    min-width: 0;
+    width: 100%;
+}
+
+.directionPassenger .direction {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+}
+
+
+.directionPassenger .direction .arrowBlock {
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.directionPassenger .direction .rightBlock {
+    text-align: right;
+    padding: 0;
+}
+
+.directionPassenger .direction .leftBlock {
+    text-align: left;
+}
+
+.directionPassenger .direction .rightBlock .date,
+.directionPassenger .direction .leftBlock .date {
+    margin-bottom: 20px;
+    color: rgba(146, 143, 148, 1);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.directionPassenger .direction .rightBlock .city,
+.directionPassenger .direction .leftBlock .city {
+    color: rgba(255, 255, 255, 1);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-transform: capitalize;
+
+}
+
+.directionPassenger .direction .rightBlock .station,
+.directionPassenger .direction .leftBlock .station {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(146, 143, 148, 1);
+}
+
+.directionPassenger .direction .rightBlock .time,
+.directionPassenger .direction .leftBlock .time {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(255, 255, 255, 1);
+}

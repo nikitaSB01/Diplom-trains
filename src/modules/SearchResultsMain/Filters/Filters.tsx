@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Filters.module.css";
 
-// модули
 import { DateInput } from "../../../modules/SearchForm/input/date/DateInput"
 import { FiltersOptions } from "../Filters/FiltersOptions/FiltersOptions";
 import { FiltersPrice } from "../Filters/FiltersPrice/FiltersPrice";
@@ -50,11 +49,11 @@ export const Filters: React.FC<{
           <div className={styles.DateInputs}>
             <div className={styles.InputsOne}>
               <span className={styles.inputsSpan}>Дата  поездки</span>
-              <DateInput placeholder="ДД/ММ/ГГ" isCompact value={dateStart}/>
+              <DateInput placeholder="ДД/ММ/ГГ" isCompact value={dateStart} />
             </div>
             <div className={styles.InputsTwo}>
               <span className={styles.inputsSpan}>Дата возвращения</span>
-              <DateInput placeholder="ДД/ММ/ГГ" isCompact value={dateEnd}/>
+              <DateInput placeholder="ДД/ММ/ГГ" isCompact value={dateEnd} />
             </div>
           </div>
 

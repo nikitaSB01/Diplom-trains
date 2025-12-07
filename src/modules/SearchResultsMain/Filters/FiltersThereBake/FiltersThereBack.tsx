@@ -9,6 +9,7 @@ import { ReactComponent as ToggleIconPlus } from "../../../../assets/icons/Filte
 import { ReactComponent as ToggleIconMinus } from "../../../../assets/icons/Filters/FiltersThereBack/minus.svg";
 import Track from "./Track/Track";
 import { formatTime, formatDate } from "../../../../utils/format";
+import TrainDirections from "../../../../components/shared/TrainInfo/TrainDirections/TrainDirections";
 
 interface FiltersThereBackProps {
   title: "Туда" | "Обратно";
@@ -17,7 +18,7 @@ interface FiltersThereBackProps {
   onArrivalChange?: (v: { from: number; to: number } | null) => void;
 
   passengerMode?: boolean;
-  trainData?: any; // orderData.train.departure OR arrival
+  trainData?: any;
 }
 
 export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
@@ -40,17 +41,6 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
     onArrivalChange?.(arrival);
   }, [arrival]);
 
-  // форматирование времени
-  /* const formatTime = (timestamp: number) => {
-    const d = new Date(timestamp * 1000);
-    return d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
-  };
-
-  const formatDate = (timestamp: number) => {
-    const d = new Date(timestamp * 1000);
-    return d.toLocaleDateString("ru-RU");
-  }; */
-
   // формат времени в пути для страницу с пассажирами
   const formatDuration = (sec: number) => {
     const h = Math.floor(sec / 3600);
@@ -64,7 +54,6 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
       setIsOpen(true);
     }
   }, [passengerMode, trainData]);
-
 
   // --- корректная ориентация данных для Туда / Обратно ---
   const fromData =
@@ -120,35 +109,19 @@ export const FiltersThereBack: React.FC<FiltersThereBackProps> = ({
           </div>
 
           <div className={styles.timesWrapper}>
-            {/* Левая колонка */}
-            <div className={`${styles.col} ${styles.colLeft}`}>
-              <p className={styles.time}>{formatTime(fromData.datetime)}</p>
-              <p className={styles.date}>{formatDate(fromData.datetime)}</p>
-              <p className={styles.city}>{fromData.city.name}</p>
-              <p className={styles.station}>
-                {fromData.railway_station_name}<br />вокзал
-              </p>
-            </div>
 
-            {/* Центральная колонка (стрелка + время в пути) */}
-            <div className={styles.center}>
-              <p className={styles.duration}>{formatDuration(trainData.duration)}</p>
-              <div className={styles.icon}>
-                {title === "Туда"
-                  ? <ArrowBetween className={styles.rotate180} />
-                  : <ArrowBetween />}
-              </div>
-            </div>
+            <TrainDirections
+              departure={{
+                from: fromData,
+                to: toData,
+                duration: trainData.duration
+              }}
+              showDates
+              useChoiceLocation={false}
+              variant="passenger"
+              arrowDirection={title === "Туда" ? "forward" : "back"}
+            />
 
-            {/* Правая колонка */}
-            <div className={`${styles.col} ${styles.colRight}`}>
-              <p className={styles.time}>{formatTime(toData.datetime)}</p>
-              <p className={styles.date}>{formatDate(toData.datetime)}</p>
-              <p className={styles.city}>{toData.city.name}</p>
-              <p className={styles.station}>
-                {toData.railway_station_name}<br />вокзал
-              </p>
-            </div>
           </div>
         </div>
       )}
