@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { Train, DirectionInfo, WagonClass } from "../../../types/Train/trainTypes";
+import { Train } from "../../../types/Train/trainTypes";
 import { FiltersState } from "../../../types/filtersTypes/filtersTypes";
+import { applyFilters } from "../Trains/utils/applyFilters";
 
 const formatDateForApi = (value?: string) => {
     if (!value) return "";
@@ -43,9 +44,7 @@ export const useTrainsLoader = ({
 
     const SERVER_LIMIT = 20;
 
-    // -----------------------------
     // ЗАГРУЗКА СЕРВЕРНОЙ СТРАНИЦЫ
-    // -----------------------------
     const loadServerPage = useCallback(
         async (offset: number): Promise<Train[]> => {
             const params = new URLSearchParams({
@@ -71,9 +70,7 @@ export const useTrainsLoader = ({
         [fromCity, toCity, sort, dateStart, dateEnd]
     );
 
-    // -----------------------------
     // ПЕРВАЯ ЗАГРУЗКА
-    // -----------------------------
     useEffect(() => {
         if (!fromCity || !toCity) return;
 
@@ -104,71 +101,13 @@ export const useTrainsLoader = ({
         };
     }, [fromCity, toCity, dateStart, dateEnd, sort]);
 
-    // -----------------------------
     // ПРИМЕНЕНИЕ ФИЛЬТРОВ
-    // -----------------------------
-    const filtered = useMemo(() => {
-        return cache.filter((t) => {
-            if (!filters) return true;
+    const filtered = useMemo(
+        () => applyFilters(cache, filters),
+        [cache, filters]
+    );
 
-            // ----- КЛАССЫ -----
-            if (filters.options) {
-                const o = filters.options;
-                const d = t.departure;
-
-                if (o.coupe && !d.have_second_class) return false;
-                if (o.plaz && !d.have_third_class) return false;
-                if (o.seat && !d.have_fourth_class) return false;
-                if (o.lux && !d.have_first_class) return false;
-                if (o.wifi && !d.have_wifi) return false;
-                if (o.express && !d.is_express) return false;
-            }
-
-            // ------ ЦЕНА ------
-            if (filters.price) {
-                const [min, max] = filters.price;
-                if (t.departure.min_price < min || t.departure.min_price > max) return false;
-            }
-
-            const dep = t.departure;
-            const arr = t.arrival;
-
-            // ------ ВРЕМЕНА ------
-            if (filters.thereDeparture) {
-                const min = filters.thereDeparture.from * 60;
-                const max = filters.thereDeparture.to * 60;
-                const val = toMinutes(dep.from.datetime);
-                if (val < min || val > max) return false;
-            }
-
-            if (filters.thereArrival) {
-                const min = filters.thereArrival.from * 60;
-                const max = filters.thereArrival.to * 60;
-                const val = toMinutes(dep.to.datetime);
-                if (val < min || val > max) return false;
-            }
-
-            if (filters.backDeparture && arr) {
-                const min = filters.backDeparture.from * 60;
-                const max = filters.backDeparture.to * 60;
-                const val = toMinutes(arr.from.datetime);
-                if (val < min || val > max) return false;
-            }
-
-            if (filters.backArrival && arr) {
-                const min = filters.backArrival.from * 60;
-                const max = filters.backArrival.to * 60;
-                const val = toMinutes(arr.to.datetime);
-                if (val < min || val > max) return false;
-            }
-
-            return true;
-        });
-    }, [cache, filters]);
-
-    // -----------------------------
     // ДОГРУЗКА ДАННЫХ
-    // -----------------------------
     useEffect(() => {
         const need = page * limit;
 
