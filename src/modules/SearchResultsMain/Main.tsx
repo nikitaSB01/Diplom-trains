@@ -10,6 +10,7 @@ import LoaderGif from "../../assets/gif/анимация-загрузки.gif"
 import { Train } from "../../types/Train/trainTypes";
 import ChoiceLocationTrains from "./ChoiceLocationTrains/ChoiceLocationTrains";
 import { useSearchResults } from "./hooks/useSearchResults";
+import MainButton from "../../components/ui/MainButton";
 
 
 const Main: React.FC = () => {
@@ -189,14 +190,15 @@ const Main: React.FC = () => {
               )}
             </div>
 
-            {isChoosingSeats && showNext && (
-              <button
-                className={styles.nextButton}
-                onClick={handleNext}
-              >
-                Далее
-              </button>
-            )}
+            <div className={`${layout.pageContainerButton} ${styles.containerButton}`}>
+              {isChoosingSeats && showNext && (
+                <MainButton active onClick={handleNext}>
+                  Далее
+                </MainButton>
+              )}
+            </div>
+
+
           </div>
         </div>
       </div>

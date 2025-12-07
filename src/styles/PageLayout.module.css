@@ -12,3 +12,10 @@
     flex-direction: column;
     gap: 45px;
 }
+
+.pageContainerButton {
+    margin-top: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Main.module.css";
 import layout from "../../styles/PageLayout.module.css";
 
+import MainButton from "../../components/ui/MainButton";
 import Steps from "../../components/Steps/Steps";
 import PassengerCard from "./blocks/PassengerCard/PassengerCard";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
@@ -94,13 +95,11 @@ const Main: React.FC<PassengersPageMainProps> = ({
                         </div>
                     </button>
 
-                    <div className={styles.containerButton}>
-                        <button
-                            className={`${styles.nextMainBtn} ${canGoNext ? styles.active : ""}`}
-                            disabled={!canGoNext}
+                    <div className={`${layout.pageContainerButton} ${styles.containerButton}`}>
+                        <MainButton
+                            active={canGoNext}
                             onClick={() => {
                                 if (!canGoNext) return;
-
                                 navigate("/payment", {
                                     state: {
                                         from,
@@ -117,7 +116,7 @@ const Main: React.FC<PassengersPageMainProps> = ({
                             }}
                         >
                             Далее
-                        </button>
+                        </MainButton>
                     </div>
                 </div>
             </div>
