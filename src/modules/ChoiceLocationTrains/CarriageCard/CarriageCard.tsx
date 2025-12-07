@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./CarriageCard.module.css";
 import { SeatWithPrice } from "../../../types/seat";
 
-import { ReactComponent as AC } from "../../../assets/icons/Train/conditioning.svg";
-import { ReactComponent as Wifi } from "../../../assets/icons/Train/wifi.svg";
-import { ReactComponent as Linens } from "../../../assets/icons/Train/Underwear.svg";
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 import CarSeatsMap from "../CarSeatsMap/CarSeatsMap";
 import { formatPrice } from "../../../utils/format";
+
+import CarriageTopRow from "./CarriageTopRow";
+import CarriageServices from "./CarriageServices";
 
 interface CarriageCardProps {
     carriage: any;
@@ -28,28 +28,17 @@ interface CarriageCardProps {
     }) => void;
 }
 
+interface SelectedSeat {
+    index: number;
+    price: number;
+}
+
 const CarriageCard: React.FC<CarriageCardProps> = ({
     carriage,
     onUpdateSeats,
-    blockId
+    blockId,
 }) => {
-    interface SelectedSeat {
-        index: number;
-        price: number;
-    }
     const [selectedSeats, setSelectedSeats] = useState<SelectedSeat[]>([]);
-    const toggleSeat = (seatIndex: number, price: number) => {
-        setSelectedSeats(prev => {
-            const exists = prev.find(s => s.index === seatIndex);
-            if (exists) {
-                return prev.filter(s => s.index !== seatIndex);
-            }
-            return [...prev, { index: seatIndex, price }];
-        });
-    };
-
-
-
     const [extras, setExtras] = React.useState({
         wifi: false,
         linens: false,
@@ -67,203 +56,83 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
     const lowerPrice = isCoupeOrPlatz ? coach.bottom_price : coach.top_price;
     const sidePrice = isCoupeOrPlatz ? coach.side_price : null;
 
-    const included = {
-        // входит в стоимость
-        ac: coach.have_air_conditioning,
-        wifi: coach.have_wifi,
-        linens: coach.is_linens_included,
-    };
-
-    const purchasable = {
-        // можно докупить
-        wifi: !coach.have_wifi && coach.wifi_price > 0,
-        linens: !coach.is_linens_included && coach.linens_price > 0,
+    const toggleSeat = (seatIndex: number, price: number) => {
+        setSelectedSeats((prev) => {
+            const exists = prev.find((s) => s.index === seatIndex);
+            if (exists) {
+                return prev.filter((s) => s.index !== seatIndex);
+            }
+            return [...prev, { index: seatIndex, price }];
+        });
     };
 
     const toggleExtra = (key: "wifi" | "linens") => {
-        if (!purchasable[key]) return; // если нельзя купить — не кликаем
-        setExtras(prev => ({ ...prev, [key]: !prev[key] }));
+
+        setExtras((prev) => ({ ...prev, [key]: !prev[key] }));
     };
 
-    // === СУММА БИЛЕТОВ ===
+    // === суммы ===
     const ticketsTotal = selectedSeats.reduce((sum, s) => sum + s.price, 0);
-
-    // === СУММА УСЛУГ ===
     const servicesTotal =
         (extras.wifi ? coach.wifi_price : 0) +
         (extras.linens ? coach.linens_price : 0);
-
-    // === ОБЩАЯ СУММА ===
     const total = ticketsTotal + servicesTotal;
-
 
     useEffect(() => {
         onUpdateSeats?.({
             blockId,
             type: coach.class_type,
             wagonId: coach._id,
-            seats: selectedSeats.map(s => ({
+            seats: selectedSeats.map((s) => ({
                 index: s.index,
-                price: s.price
+                price: s.price,
             })),
             services: {
                 wifi: extras.wifi,
                 linens: extras.linens,
                 wifi_price: coach.wifi_price,
                 linens_price: coach.linens_price,
-                total: servicesTotal
-            }
+                total: servicesTotal,
+            },
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedSeats, extras]);
-
 
     return (
         <div className={styles.card}>
             <div className={styles.container}>
-
                 <div className={styles.left}>
                     <div className={styles.wagonNumber}>{wagonNumber}</div>
                     <div className={styles.wagonLabel}>вагон</div>
                 </div>
 
                 <div className={styles.right}>
+                    {/* блок Места + Стоимость */}
+                    <CarriageTopRow
+                        coach={coach}
+                        isCoupeOrPlatz={isCoupeOrPlatz}
+                        isLuxOrSeat={isLuxOrSeat}
+                        upperPrice={upperPrice}
+                        lowerPrice={lowerPrice}
+                        sidePrice={sidePrice}
+                    />
 
-                    {/* ======= БЛОКИ 1 и 2: МЕСТА & СТОИМОСТЬ ======= */}
-                    <div className={styles.topRow}>
-                        <div className={styles.col}>
-                            <div className={styles.placeRow}>
-                                <span className={styles.titleGrayInline}>Места</span>
-                                <span className={styles.valueBigInline}>{coach.available_seats}</span>
-                            </div>
-
-                            {isCoupeOrPlatz && (
-                                <div className={styles.subInfo}>
-                                    <div className={styles.subRow}>
-                                        <span className={styles.subTitle}>Верхние</span>
-                                    </div>
-                                    <div className={styles.subRow}>
-                                        <span className={styles.subTitle}>Нижние</span>
-                                    </div>
-                                    {type === "third" && (
-                                        <div className={styles.subRow}>
-                                            <span className={styles.subTitle}>Боковые</span>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className={styles.col}>
-                            <div className={styles.titleGray}>Стоимость</div>
-
-                            {isCoupeOrPlatz && (
-                                <div className={styles.containerPrice}>
-                                    {/* верхние */}
-                                    <div className={styles.costRow}>
-                                        <span className={styles.costValue}>
-                                            {formatPrice(upperPrice)}
-                                        </span>
-                                        <Ruble className={styles.rubleIcon} />
-                                    </div>
-
-                                    {/* нижние */}
-                                    <div className={styles.costRow}>
-                                        <span className={styles.costValue}>
-                                            {formatPrice(lowerPrice)}
-                                        </span>
-                                        <Ruble className={styles.rubleIcon} />
-                                    </div>
-
-                                    {/* БОКОВЫЕ — только для плацкарта */}
-                                    {type === "third" && (
-                                        <div className={styles.costRow}>
-                                            <span className={styles.costValue}>
-                                                {formatPrice(sidePrice!)}
-                                            </span>
-                                            <Ruble className={styles.rubleIcon} />
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-
-                            {isLuxOrSeat && (
-                                <div className={styles.costRow}>
-                                    <span className={styles.costValue}>
-                                        {formatPrice(lowerPrice)}
-                                    </span>
-                                    <Ruble className={styles.rubleIcon} />
-
-                                </div>
-                            )}
-                        </div>
-
-                    </div>
-                    <div className={styles.contsinerServices}>
-                        {/* === ОБСЛУЖИВАНИЕ === */}
-                        <button
-                            type="button"
-                            className={
-                                included.wifi
-                                    ? styles.iconIncluded              // входит в стоимость
-                                    : extras.wifi
-                                        ? styles.iconActive                // пользователь купил
-                                        : purchasable.wifi
-                                            ? styles.iconAvailable             // можно купить
-                                            : styles.iconDisabled              // нет услуги
-                            }
-                            onClick={() => toggleExtra("wifi")}
-                            disabled={included.wifi || !purchasable.wifi}   // отключаем если включено или недоступно
-                        >
-                            <Wifi />
-                            <div className={styles.tooltipService}>WI-FI</div>
-
-                        </button>
-
-                        {/* === Бельё === */}
-                        <button
-                            type="button"
-                            className={
-                                included.linens
-                                    ? styles.iconIncluded
-                                    : extras.linens
-                                        ? styles.iconActive
-                                        : purchasable.linens
-                                            ? styles.iconAvailable
-                                            : styles.iconDisabled
-                            }
-                            onClick={() => toggleExtra("linens")}
-                            disabled={included.linens || !purchasable.linens}
-                        >
-                            <Linens />
-                            <div className={styles.tooltipService}>белье</div>
-
-                        </button>
-
-                        {/* === Кондиционер === */}
-                        <button
-                            type="button"
-                            className={
-                                coach.have_air_conditioning
-                                    ? styles.iconIncluded
-                                    : styles.iconDisabled
-                            }
-                            disabled
-                        >
-                            <AC />
-                            <div className={styles.tooltipService}>кондиционер</div>
-
-                        </button>
-                    </div>
+                    {/* блок услуг */}
+                    <CarriageServices
+                        coach={coach}
+                        extras={extras}
+                        onToggleExtra={toggleExtra}
+                    />
                 </div>
             </div>
 
-            {/* КАРТА МЕСТ */}
+            {/* карта мест */}
             <div className={styles.seatMap}>
                 <CarSeatsMap
                     seats={seats}
                     type={coach.class_type}
                     wagonNumber={wagonNumber}
-                    selectedSeats={selectedSeats.map(s => s.index)}
+                    selectedSeats={selectedSeats.map((s) => s.index)}
                     onSeatSelect={toggleSeat}
                     upperPrice={upperPrice!}
                     lowerPrice={lowerPrice!}
