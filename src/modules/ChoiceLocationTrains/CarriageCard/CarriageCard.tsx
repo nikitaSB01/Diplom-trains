@@ -4,7 +4,6 @@ import { SeatWithPrice } from "../../../types/seat";
 
 import { ReactComponent as AC } from "../../../assets/icons/Train/conditioning.svg";
 import { ReactComponent as Wifi } from "../../../assets/icons/Train/wifi.svg";
-import { ReactComponent as Food } from "../../../assets/icons/Train/cup.svg";
 import { ReactComponent as Linens } from "../../../assets/icons/Train/Underwear.svg";
 import { ReactComponent as Ruble } from "../../../assets/icons/Train/ruble.svg";
 import CarSeatsMap from "../CarSeatsMap/CarSeatsMap";
@@ -12,7 +11,7 @@ import { formatPrice } from "../../../utils/format";
 
 interface CarriageCardProps {
     carriage: any;
-    blockId: "first" | "second";   // ← ДОБАВИЛ ТИП
+    blockId: "first" | "second";
 
     onUpdateSeats?: (data: {
         blockId: "first" | "second";
@@ -42,11 +41,9 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
     const toggleSeat = (seatIndex: number, price: number) => {
         setSelectedSeats(prev => {
             const exists = prev.find(s => s.index === seatIndex);
-
             if (exists) {
                 return prev.filter(s => s.index !== seatIndex);
             }
-
             return [...prev, { index: seatIndex, price }];
         });
     };
@@ -60,9 +57,7 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
 
     const coach = carriage.coach;
     const seats = carriage.seats;
-
     const wagonNumber = coach.name.match(/\d+/)?.[0] ?? coach.name;
-
     const type = coach.class_type;
 
     const isLuxOrSeat = type === "first" || type === "fourth";
@@ -126,18 +121,15 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
         <div className={styles.card}>
             <div className={styles.container}>
 
-                {/* ЛЕВАЯ ЖЁЛТАЯ ЧАСТЬ */}
                 <div className={styles.left}>
                     <div className={styles.wagonNumber}>{wagonNumber}</div>
                     <div className={styles.wagonLabel}>вагон</div>
                 </div>
 
-                {/* ПРАВАЯ ЧАСТЬ */}
                 <div className={styles.right}>
 
                     {/* ======= БЛОКИ 1 и 2: МЕСТА & СТОИМОСТЬ ======= */}
                     <div className={styles.topRow}>
-                        {/* === КОЛОНКА 1: МЕСТА === */}
                         <div className={styles.col}>
                             <div className={styles.placeRow}>
                                 <span className={styles.titleGrayInline}>Места</span>
@@ -161,7 +153,6 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                             )}
                         </div>
 
-                        {/* === КОЛОНКА 2: СТОИМОСТЬ === */}
                         <div className={styles.col}>
                             <div className={styles.titleGray}>Стоимость</div>
 
@@ -209,7 +200,6 @@ const CarriageCard: React.FC<CarriageCardProps> = ({
                     </div>
                     <div className={styles.contsinerServices}>
                         {/* === ОБСЛУЖИВАНИЕ === */}
-                        {/* === WiFi === */}
                         <button
                             type="button"
                             className={

@@ -110,7 +110,6 @@ const PassengerCard: React.FC<Props> = ({
     // каждый раз, когда formData меняется, отправляем наружу
     useEffect(() => {
         onUpdate(index, formData);
-        // ВАЖНО: без onUpdate в зависимостях
     }, [formData, index]);
 
     // хендлеры для дочерних блоков

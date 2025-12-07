@@ -1,4 +1,3 @@
-// parts/PassengerCardFooter.tsx
 import React from "react";
 import styles from "../PassengerCard.module.css";
 import { ReactComponent as CheckIcon } from "../../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/check.svg";

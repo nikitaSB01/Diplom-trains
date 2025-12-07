@@ -99,7 +99,6 @@ const Main: React.FC<Props> = ({
             <Steps currentStep={3} />
 
             <div className={styles.container}>
-                {/* ---------- ЛЕВАЯ КОЛОНКА ----------- */}
                 <LeftColumnInfo
                     orderData={orderData}
                     block1={block1}
@@ -107,7 +106,6 @@ const Main: React.FC<Props> = ({
                     totalPrice={totalPrice}
                 />
 
-                {/* ---------- ПРАВАЯ КОЛОНКА ----------- */}
                 <div className={styles.rightColumn}>
                     <div className={styles.rightContent}>
                         <PersonalDataBlock data={personalData} onChange={handlePersonalChange} />

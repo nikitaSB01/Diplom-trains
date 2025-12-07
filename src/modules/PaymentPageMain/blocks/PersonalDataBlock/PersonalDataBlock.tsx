@@ -20,12 +20,6 @@ interface Props {
 
 const PersonalDataBlock: React.FC<Props> = ({ data, onChange }) => {
 
-    const handleName = (field: keyof PersonalData, value: string) => {
-        const clean = cleanLetters(value);
-        const ready = capitalize(clean);
-        onChange(field, ready);
-    };
-
     const handlePhone = (value: string) => {
         const formatted = formatPhone(value);
         onChange("phone", formatted);

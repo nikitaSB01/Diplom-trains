@@ -1,4 +1,3 @@
-import { OrderData } from "../../../../types/orderData";
 import styles from "./TotalBlock.module.css";
 import { ReactComponent as Ruble } from "../../../../assets/icons/Train/ruble.svg";
 

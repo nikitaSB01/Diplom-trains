@@ -1,4 +1,3 @@
-// parts/PassengerCardGenderBirthday.tsx
 import React from "react";
 import styles from "../PassengerCard.module.css";
 

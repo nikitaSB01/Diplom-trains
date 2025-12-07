@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./Main.module.css";
@@ -30,7 +30,6 @@ const Main: React.FC<Props> = ({
     block2,
     totalPrice
 }) => {
-    const [openPassengers, setOpenPassengers] = useState(true);
     const navigate = useNavigate();
 
     return (
@@ -38,14 +37,12 @@ const Main: React.FC<Props> = ({
             <Steps currentStep={4} />
 
             <div className={styles.container}>
-                {/* ---------- LEFT COLUMN ----------- */}
                 <LeftColumnInfo
                     orderData={orderData}
                     block1={block1}
                     block2={block2}
                     totalPrice={totalPrice}
                 />
-                {/* ---------- RIGHT COLUMN ----------- */}
                 <div className={styles.rightColumn}>
 
                     <div>

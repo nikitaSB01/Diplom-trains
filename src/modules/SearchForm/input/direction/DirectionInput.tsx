@@ -63,10 +63,6 @@ export const DirectionInput: React.FC<DirectionInputProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
     setIsOpen(true);
-
-    /* onCitySelect?.(null); */
-
-
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {

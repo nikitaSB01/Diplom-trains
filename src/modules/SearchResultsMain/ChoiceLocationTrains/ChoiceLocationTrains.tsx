@@ -50,24 +50,18 @@ const ChoiceLocationTrains: React.FC<Props> = ({
     onUpdateSeats,
 }) => {
 
-    // хуки тут не нужны — всё перенесено в отдельные компоненты
     if (!direction) return null;
-
     const dep = direction;
 
     return (
         <div className={styles.wrapper}>
             
-            {/* ВЕРХНЕЕ МЕНЮ */}
             <BackHeader isSecond={isSecond} onBack={onBack} />
 
-            {/* КАРТОЧКА ПОЕЗДА */}
             <TrainInfoCard dep={dep} />
 
-            {/* ВВОД БИЛЕТОВ (вынесено в отдельный компонент) */}
             <TicketFields onUpdateTickets={onUpdateTickets} />
 
-            {/* ВЫБОР ТИПА ВАГОНА */}
             <div className={styles.typeBlock}>
                 <TypeSelector
                     blockId={blockId}

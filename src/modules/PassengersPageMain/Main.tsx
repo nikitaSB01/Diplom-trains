@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import styles from "./Main.module.css";
 
 import Steps from "../../components/Steps/Steps";
 import PassengerCard from "./blocks/PassengerCard/PassengerCard";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
+import { PassengersPageMainProps } from "../../types/passengers";
+import { usePassengersPage } from "./hooks/usePassengersPage";
 
 import { ReactComponent as PlusHover } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/PlusNewPas.svg";
 import { ReactComponent as Plus } from "../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/Plus.svg";
-
-
-import { PassengersPageMainProps } from "../../types/passengers";
-import { usePassengersPage } from "./hooks/usePassengersPage";
 
 const Main: React.FC<PassengersPageMainProps> = ({
     orderData,
@@ -53,7 +50,6 @@ const Main: React.FC<PassengersPageMainProps> = ({
             <Steps currentStep={2} />
 
             <div className={styles.container}>
-                {/* ---------- LEFT COLUMN ----------- */}
                 <LeftColumnInfo
                     orderData={orderData}
                     block1={block1}

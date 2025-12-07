@@ -20,9 +20,7 @@ const TicketField: React.FC<Props> = ({ label, max, hint, onUpdateTickets }) => 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    // ============================
     // ОПРЕДЕЛЕНИЕ ПОЛЯ
-    // ============================
     const type: "adults" | "kids" | "kidsNoSeat" =
         label.startsWith("Взрослых")
             ? "adults"
@@ -30,9 +28,7 @@ const TicketField: React.FC<Props> = ({ label, max, hint, onUpdateTickets }) => 
                 ? "kidsNoSeat"
                 : "kids";
 
-    // ============================
     // СОХРАНЕНИЕ ВНЕШНЕГО STATE
-    // ============================
     const emitChange = (num: number) => {
         if (!onUpdateTickets) return;
 
@@ -41,9 +37,7 @@ const TicketField: React.FC<Props> = ({ label, max, hint, onUpdateTickets }) => 
         } as any);
     };
     
-    // ============================
     // ВНЕШНИЙ КЛИК
-    // ============================
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (!wrapperRef.current?.contains(e.target as Node)) {
@@ -56,17 +50,13 @@ const TicketField: React.FC<Props> = ({ label, max, hint, onUpdateTickets }) => 
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // ============================
     // ФОКУС
-    // ============================
     const handleInputFocus = () => {
         setIsFocused(true);
         if (value === "0") setValue("");
     };
 
-    // ============================
     // ВВОД
-    // ============================
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
         const raw = (e.target as HTMLInputElement).value;
         const digit = raw.replace(/\D/g, "");
@@ -83,8 +73,6 @@ const TicketField: React.FC<Props> = ({ label, max, hint, onUpdateTickets }) => 
         setValue(String(num));
         emitChange(num);
     };
-
-    // ============================
 
     return (
         <div

@@ -66,7 +66,6 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
     const [loading, setLoading] = useState(false);
 
     const [activeType, setActiveType] = useState<string | null>(null);
-
     const [carriages, setCarriages] = useState<Carriage[]>([]);
     const [selectedCars, setSelectedCars] = useState<string[]>([]);
 
@@ -75,14 +74,11 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
     // фильтруем вагончики по нужному классу
     const filtered = typeInfo
         ? carriages.filter(
-            (c) => c.coach.class_type === typeInfo.className
-        )
-        : [];
+            (c) => c.coach.class_type === typeInfo.className) : [];
 
     /* === Загружаем ВСЕ вагоны маршрута === */
     useEffect(() => {
         if (!activeType) return;
-
         setLoading(true);
 
         fetch(`https://students.netoservices.ru/fe-diplom/routes/${routeId}/seats`)
@@ -123,7 +119,6 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
 
                 return prev.filter((x) => x !== id);
             }
-
             return [...prev, id];
         });
     };
@@ -134,7 +129,7 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
 
             <div className={styles.containerType}>
                 {TYPES.map(({ id, label, Icon }) => {
-                    const isDisabled = disabledType === id; // ← вот этого у тебя НЕ было
+                    const isDisabled = disabledType === id;
 
                     return (
                         <button
@@ -143,16 +138,14 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
                             className={`
                 ${styles.typeItem}
                 ${activeType === id ? styles.active : ""}
-                ${isDisabled ? styles.disabledType : ""}
-            `}
+                ${isDisabled ? styles.disabledType : ""} `}
                             onClick={() => {
-                                if (isDisabled) return;       // ← не даём кликнуть
+                                if (isDisabled) return;
                                 if (activeType === id) return;
 
                                 setLoading(true);
                                 setActiveType(id);
                                 setSelectedCars([]);
-                                // ← Добавляем вызов полного сброса мест в родитель
                                 onUpdateSeats?.({
                                     blockId,
                                     type: id,
@@ -168,8 +161,7 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
                                 });
                                 onSelectType(id);
                             }}
-                            type="button"
-                        >
+                            type="button" >
                             <Icon className={styles.icon} />
                             <span className={styles.label}>{label}</span>
                         </button>
@@ -180,8 +172,7 @@ const TypeSelector: React.FC<Props> = ({ onSelectType, routeId, disabledType, on
             {activeType && !loading && filtered.length > 0 && (
                 <div className={styles.appearedBlock}>
                     <div className={styles.container}>
-                        {/* === Кнопки вагонов === */}
-                        {/* --- Блок "Вагоны" как в макете --- */}
+                        {/* --- Блок "Вагоны"  --- */}
                         <div className={styles.wagonsHeader}>
                             <div className={styles.left}>
                                 <span className={styles.wagonsTitle}>Вагон</span>

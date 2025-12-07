@@ -1,5 +1,4 @@
 import React from "react";
-// import styles from "../ChoiceLocationTrains.module.css";
 import styles from "./BackHeader.module.css";
 
 import { ReactComponent as Arrow } from "../../../../assets/icons/ChoiceLocationTrains/arrow.svg";

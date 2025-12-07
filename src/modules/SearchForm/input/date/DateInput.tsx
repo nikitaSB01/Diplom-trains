@@ -7,8 +7,8 @@ import arrowRight from '../../../../assets/icons/SearchForm/arrowR.png';
 interface DateInputProps {
   placeholder: string;
   isCompact?: boolean;
-  value?: string;                       // ← ДОБАВИЛ
-  onChange?: (value: string) => void;   // ← ДОБАВИЛ
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export const DateInput: React.FC<DateInputProps> = ({
@@ -66,7 +66,7 @@ export const DateInput: React.FC<DateInputProps> = ({
       input = input.replace(/(\d{2})(\d{0,2})/, '$1/$2');
     }
     setValue(input);
-    onChange?.(input);        // ← ДОБАВИЛ
+    onChange?.(input);
   };
 
   const handleDayClick = (date: Date) => {

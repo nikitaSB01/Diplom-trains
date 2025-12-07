@@ -6,7 +6,6 @@ import { LeftService } from "../common/LeftService/LeftService";
 import { RightService } from "../common/RightService/RightService";
 import CompartmentBlock from "../common/CompartmentBlock/CompartmentBlock";
 
-
 interface SeatItem {
     index: number;
     available: boolean;
@@ -21,7 +20,6 @@ interface Props {
     upperPrice: number;
     lowerPrice: number;
     sidePrice?: number;
-
 }
 
 const SeatMapPlatzkart: React.FC<Props> = ({ seats, wagonNumber, onSeatSelect, selectedSeats, upperPrice, lowerPrice, sidePrice }) => {

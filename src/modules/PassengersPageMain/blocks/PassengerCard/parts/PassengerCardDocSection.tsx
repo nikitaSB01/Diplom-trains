@@ -1,4 +1,3 @@
-// parts/PassengerCardDocSection.tsx
 import React from "react";
 import styles from "../PassengerCard.module.css";
 import CustomSelect from "../CustomSelect/CustomSelect";
