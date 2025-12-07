@@ -1,0 +1,14 @@
+.pageContainer {
+    padding: 95px 250px 190px;
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 80px;
+    align-items: start;
+}
+
+.pageRightColumn {
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+}

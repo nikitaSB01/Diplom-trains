@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Main.module.css";
+import layout from "../../styles/PageLayout.module.css";
 
 import Steps from "../../components/Steps/Steps";
 import PassengerCard from "./blocks/PassengerCard/PassengerCard";
@@ -49,7 +50,7 @@ const Main: React.FC<PassengersPageMainProps> = ({
         <section className={styles.main}>
             <Steps currentStep={2} />
 
-            <div className={styles.container}>
+            <div className={`${layout.pageContainer} ${styles.container}`}>
                 <LeftColumnInfo
                     orderData={orderData}
                     block1={block1}
@@ -57,7 +58,7 @@ const Main: React.FC<PassengersPageMainProps> = ({
                     totalPrice={totalPrice}
                 />
 
-                <div className={styles.rightColumn}>
+                <div className={`${layout.pageRightColumn} ${styles.rightColumn}`}>
                     {/* --- базовые карточки --- */}
                     {Array.from({ length: baseCount }).map((_, i) => (
                         <PassengerCard

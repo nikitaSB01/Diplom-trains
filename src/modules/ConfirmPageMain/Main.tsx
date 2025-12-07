@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import layout from "../../styles/PageLayout.module.css";
 
 import styles from "./Main.module.css";
 import Steps from "../../components/Steps/Steps";
@@ -36,14 +37,14 @@ const Main: React.FC<Props> = ({
         <section className={styles.main}>
             <Steps currentStep={4} />
 
-            <div className={styles.container}>
+            <div className={`${layout.pageContainer} ${styles.container}`}>
                 <LeftColumnInfo
                     orderData={orderData}
                     block1={block1}
                     block2={block2}
                     totalPrice={totalPrice}
                 />
-                <div className={styles.rightColumn}>
+                <div className={`${layout.pageRightColumn} ${styles.rightColumn}`}>
 
                     <div>
                         <TrainSummaryBlock
