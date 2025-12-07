@@ -1,4 +1,4 @@
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import styles from "./PaymentPage.module.css";
 
 import Header from "../../components/layout/Header/Header";
@@ -31,9 +31,9 @@ const PaymentPage = () => {
                     block1={block1}
                     block2={block2}
                     totalPrice={totalPrice}
-                    personalData={state.personalData}           // ← ДОБАВЛЯЕМ
-                    paymentType={state.paymentType}             // ← ДОБАВЛЯЕМ
-                    onlineMethod={state.onlineMethod}           // ← ДОБАВЛЯЕМ
+                    personalData={state.personalData}
+                    paymentType={state.paymentType}
+                    onlineMethod={state.onlineMethod}
 
                 />
             </main>

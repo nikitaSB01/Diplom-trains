@@ -113,8 +113,6 @@ const SuccessPage: React.FC = () => {
                     </div>
                 </div>
 
-
-
             </main>
 
             <Footer />

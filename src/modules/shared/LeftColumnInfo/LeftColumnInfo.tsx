@@ -75,7 +75,6 @@ const LeftColumnInfo: React.FC<Props> = ({
                         </div>
                     )}
                 </div>
-
                 <TotalBlock totalPrice={totalPrice} />
             </div>
         </div>

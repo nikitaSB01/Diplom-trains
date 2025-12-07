@@ -11,18 +11,14 @@ import { formatPrice } from "../../../utils/format";
 
 interface PassengerItem {
     ticketType: "adult" | "child" | "infant" | string;
-
     lastName: string;
     firstName: string;
     patronymic?: string;
-
     gender: "M" | "F";
     birthday: string;
-
-    docType: string;   // ← тип документа
+    docType: string;
     docSeries?: string;
     docNumber: string;
-
     mobility?: boolean;
 }
 
@@ -51,7 +47,6 @@ const PassengersSummaryBlock: React.FC<Props> = ({ passengers, totalPrice }) => 
             <TitleBlockReusable title="Пассажиры" />
 
             <div className={styles.content}>
-
                 {/* ЛЕВАЯ КОЛОНКА — СПИСОК ПАССАЖИРОВ */}
                 <div className={styles.passengersList}>
                     {passengers.map((p, index) => (
@@ -77,8 +72,6 @@ const PassengersSummaryBlock: React.FC<Props> = ({ passengers, totalPrice }) => 
                                     {p.docType} {p.docSeries ? p.docSeries + " " : ""}{p.docNumber}
                                 </p>
                             </div>
-
-
                         </div>
                     ))}
                 </div>
@@ -93,10 +86,8 @@ const PassengersSummaryBlock: React.FC<Props> = ({ passengers, totalPrice }) => 
                         </p>
                     </div>
 
-
                     <EditButton target="passengers" />
                 </div>
-
             </div>
         </div>
     );

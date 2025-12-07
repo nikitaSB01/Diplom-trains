@@ -4,8 +4,6 @@ import { ReactComponent as PaginationSvg } from "../../../../assets/icons/Train/
 import { ReactComponent as Left } from "../../../../assets/icons/Train/paginationArrowBtnLeft.svg";
 import { ReactComponent as Right } from "../../../../assets/icons/Train/paginationArrowBtnRight.svg";
 
-
-
 interface PaginationProps {
     page: number;
     totalPages: number;
@@ -74,7 +72,6 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, onChange }) =
                 disabled={windowStart === 1}
                 onClick={handlePrevWindow}
             >
-                {/*  &lt; */}
                 <Left className={styles.leftSvg} />
             </button>
 
@@ -109,7 +106,6 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, onChange }) =
                 disabled={windowEnd === totalPages}
                 onClick={handleNextWindow}
             >
-                {/*  &gt; */}
                 <Right className={styles.rightSvg} />
             </button>
         </div>

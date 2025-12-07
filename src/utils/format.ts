@@ -1,5 +1,3 @@
-// src/utils/format.ts
-
 /** Формат времени по unix-timestamp (секунды) → "HH:MM" */
 export const formatTime = (timestamp: number): string => {
     return new Date(timestamp * 1000).toLocaleTimeString("ru-RU", {

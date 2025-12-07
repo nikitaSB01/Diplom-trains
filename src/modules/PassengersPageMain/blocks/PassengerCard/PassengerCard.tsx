@@ -1,4 +1,3 @@
-// PassengerCard.tsx
 import React, { useState, useEffect } from "react";
 import styles from "./PassengerCard.module.css";
 import CustomSelect from "./CustomSelect/CustomSelect";

@@ -55,16 +55,6 @@ const TrainsTopFilter: React.FC<TrainsTopFilterProps> = ({
                             времени
                         </div>
 
-                        {/*  <div
-                            className={styles.option}
-                            role="button"
-                            tabIndex={0}
-                            onClick={() => { onSortChange("стоимости"); setOpenSort(false); }}
-                            onKeyDown={(e) => e.key === "Enter" && (onSortChange("стоимости"), setOpenSort(false))}
-                        >
-                            стоимости
-                        </div> */}
-
                         <div
                             className={styles.option}
                             role="button"

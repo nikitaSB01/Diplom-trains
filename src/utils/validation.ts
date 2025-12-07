@@ -1,5 +1,3 @@
-// utils/validation.ts
-
 export const onlyLetters = (value: string) => /^[А-Яа-яЁё]+$/.test(value.trim());
 
 export const validatePassenger = (data: any) => {

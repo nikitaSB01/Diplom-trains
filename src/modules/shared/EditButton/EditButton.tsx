@@ -3,7 +3,7 @@ import styles from "./EditButton.module.css";
 
 interface Props {
     target: "train" | "passengers" | "payment";
-    onClick?: () => void;   // <- ДОБАВЛЯЕМ
+    onClick?: () => void;
 
 }
 

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { SeatWithPrice } from "../../types/seat";
 
 import styles from './Main.module.css';
 import Steps from '../../components/Steps/Steps';
@@ -7,7 +6,6 @@ import Filters from './Filters/Filters';
 import FiltersLastTickets from './FiltersLastTickets/FiltersLastTickets';
 import Trains from './Trains/Trains';
 import { useLocation } from 'react-router-dom';
-import { FiltersState } from "../../types/filtersTypes/filtersTypes";
 import LoaderGif from "../../assets/gif/анимация-загрузки.gif"
 import { Train } from "../../types/Train/trainTypes";
 import ChoiceLocationTrains from "./ChoiceLocationTrains/ChoiceLocationTrains";
@@ -110,7 +108,6 @@ const Main: React.FC = () => {
               )}
             </div>
 
-            {/* выбор мест */}
             <div
               className={styles.choiceLocationTrains}
               style={{ display: isChoosingSeats ? "block" : "none" }}
@@ -153,7 +150,6 @@ const Main: React.FC = () => {
                 />
               )}
 
-              {/* Второй блок — выводим КОГДА выбран тип */}
               {hasReturnDirection && selectedTrain && (
                 <div className={styles.secondTrainBlock}>
                   <ChoiceLocationTrains
@@ -201,11 +197,9 @@ const Main: React.FC = () => {
                 Далее
               </button>
             )}
-
           </div>
         </div>
       </div>
-
     </section>
   );
 }

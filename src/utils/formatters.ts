@@ -1,5 +1,3 @@
-// utils/formatters.ts
-
 // Только русские буквы
 export const cleanLetters = (value: string) => {
     return value.replace(/[^А-Яа-яЁё]/g, "");

@@ -1,6 +1,5 @@
 import React from "react";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
-
+import { useLocation, Navigate } from "react-router-dom";
 import styles from "./PassengersPage.module.css";
 
 import Header from "../../components/layout/Header/Header";
@@ -17,7 +16,6 @@ const PassengersPage = () => {
     }
 
     const { orderData } = state;
-    /* console.log("Пришедшие данные:", orderData); */
 
     return (
         <div className={styles.PassengersPage}>

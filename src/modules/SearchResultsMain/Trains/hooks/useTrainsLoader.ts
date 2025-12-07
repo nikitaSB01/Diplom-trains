@@ -102,19 +102,14 @@ export const useTrainsLoader = ({
     useEffect(() => {
         setPage(1);
     }, [filters]);
-
     const need = page * limit;
-
     // догрузка по мере необходимости
     useEffect(() => {
         const loadMoreIfNeeded = async () => {
             if (filtered.length >= need) return;
             if (isEnd) return;
-
             onLoadingChange?.(true);
-
             const nextOffset = serverOffset + SERVER_LIMIT;
-
             try {
                 const more = await loadServerPage(nextOffset);
                 if (more.length === 0) {
@@ -122,7 +117,6 @@ export const useTrainsLoader = ({
                     onLoadingChange?.(false);
                     return;
                 }
-
                 setCache((prev) => [...prev, ...more]);
                 setServerOffset(nextOffset);
             } catch {
@@ -134,7 +128,6 @@ export const useTrainsLoader = ({
 
         loadMoreIfNeeded();
     }, [filtered.length, need, isEnd, serverOffset, loadServerPage, onLoadingChange]);
-
     // расчёт страниц
     const totalForPages = isEnd ? filteredCount : filteredCount + limit;
     const totalPages = Math.max(1, Math.ceil(totalForPages / limit));
@@ -146,16 +139,12 @@ export const useTrainsLoader = ({
     return {
         loading,
         error,
-
         sort,
         setSort,
-
         limit,
         setLimit,
-
         page,
         setPage,
-
         totalPages,
         pageItems,
         filteredCount,

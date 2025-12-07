@@ -1,8 +1,4 @@
-import { FiltersState } from "../filtersTypes/filtersTypes";
-
-
 // ======================= Типы для структуры ответа от API =======================
-
 /** Основные классы вагонов */
 export type WagonClass = "first" | "second" | "third" | "fourth";
 
