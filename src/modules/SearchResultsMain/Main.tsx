@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import layout from "../../styles/PageLayout.module.css";
 import styles from './Main.module.css';
 import Steps from '../../components/Steps/Steps';
 import Filters from './Filters/Filters';
@@ -81,12 +81,12 @@ const Main: React.FC = () => {
       <div className={`${styles.mainContainer} ${showLoader ? styles.loadingState : ""}`}>
         <Steps currentStep={1} />
 
-        <div className={styles.container}>
+        <div className={`${layout.pageContainer} ${styles.container}`}>
           <div className={styles.leftColumn}>
             <Filters onChange={setFilters} dateStart={dateStart} dateEnd={dateEnd} />
             <FiltersLastTickets />
           </div>
-          <div className={styles.rightColumn}>
+          <div className={`${layout.pageRightColumn} ${styles.rightColumn}`}>
             {/* список поездов */}
             <div
               className={styles.listTrains}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Main.module.css";
+import layout from "../../styles/PageLayout.module.css";
 
 import { validatePaymentForm } from "../../utils/validation";
 import Steps from "../../components/Steps/Steps";
@@ -95,7 +96,7 @@ const Main: React.FC<Props> = ({
         <section className={styles.main}>
             <Steps currentStep={3} />
 
-            <div className={styles.container}>
+            <div className={`${layout.pageContainer} ${styles.container}`}>
                 <LeftColumnInfo
                     orderData={orderData}
                     block1={block1}
@@ -103,7 +104,7 @@ const Main: React.FC<Props> = ({
                     totalPrice={totalPrice}
                 />
 
-                <div className={styles.rightColumn}>
+                <div className={`${layout.pageRightColumn} ${styles.rightColumn}`}>
                     <div className={styles.rightContent}>
                         <PersonalDataBlock data={personalData} onChange={handlePersonalChange} />
 
