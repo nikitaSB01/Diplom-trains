@@ -9,6 +9,7 @@ import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
 import TrainSummaryBlock from "../../modules/shared/TrainSummaryBlock/TrainSummaryBlock";
 import PassengersSummaryBlock from "../../modules/shared/PassengersSummaryBlock/PassengersSummaryBlock";
 import PaymentSummaryBlock from "../shared/PaymentSummaryBlock/PaymentSummaryBlock";
+import MainButton from "../../components/ui/MainButton";
 
 interface Props {
     personalData: any;
@@ -67,8 +68,8 @@ const Main: React.FC<Props> = ({
                         />
                     </div>
                     <div className={styles.confirmContainer}>
-                        <button
-                            className={styles.confirmButton}
+                        <MainButton
+                            size="wide"
                             onClick={() =>
                                 navigate("/success", {
                                     state: {
@@ -83,7 +84,7 @@ const Main: React.FC<Props> = ({
                             }
                         >
                             Подтвердить
-                        </button>
+                        </MainButton>
                     </div>
                 </div>
 

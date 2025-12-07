@@ -1,5 +1,4 @@
 .button {
-    width: 222px;
     height: 60px;
 
     border-radius: 5px;
@@ -14,6 +13,15 @@
     justify-content: center;
 
     transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+/* размеры */
+.buttonNormal {
+    width: 222px;
+}
+
+.buttonWide {
+    width: 320px;
 }
 
 /* Активная */

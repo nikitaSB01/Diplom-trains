@@ -8,6 +8,7 @@ import Steps from "../../components/Steps/Steps";
 import PersonalDataBlock, { PersonalData } from "./blocks/PersonalDataBlock/PersonalDataBlock";
 import PaymentMethodBlock from "./blocks/PaymentMethodBlock/PaymentMethodBlock";
 import LeftColumnInfo from "../../modules/shared/LeftColumnInfo/LeftColumnInfo";
+import MainButton from "../../components/ui/MainButton";
 
 type PaymentType = "online" | "cash";
 type OnlineMethod = "card" | "paypal" | "qiwi" | null;
@@ -117,14 +118,13 @@ const Main: React.FC<Props> = ({
                     </div>
 
                     <div className={styles.containerButton}>
-                        <button
-                            className={`${styles.buyButton} ${isFormValid ? styles.buyButtonActive : styles.buyButtonDisabled
-                                }`}
-                            disabled={!isFormValid}
-                            onClick={isFormValid ? handleBuy : undefined}
+                        <MainButton
+                            active={isFormValid}
+                            size="wide"
+                            onClick={handleBuy}
                         >
                             Купить билеты
-                        </button>
+                        </MainButton>
                     </div>
                 </div>
             </div>

@@ -96,27 +96,29 @@ const Main: React.FC<PassengersPageMainProps> = ({
                     </button>
 
                     <div className={`${layout.pageContainerButton} ${styles.containerButton}`}>
-                        <MainButton
-                            active={canGoNext}
-                            onClick={() => {
-                                if (!canGoNext) return;
-                                navigate("/payment", {
-                                    state: {
-                                        from,
-                                        to,
-                                        dateStart,
-                                        dateEnd,
-                                        orderData,
-                                        passengers: formDataList,
-                                        block1,
-                                        block2,
-                                        totalPrice
-                                    }
-                                });
-                            }}
-                        >
-                            Далее
-                        </MainButton>
+                        <div className={styles.containerButton}>
+                            <MainButton
+                                active={canGoNext}
+                                onClick={() => {
+                                    if (!canGoNext) return;
+                                    navigate("/payment", {
+                                        state: {
+                                            from,
+                                            to,
+                                            dateStart,
+                                            dateEnd,
+                                            orderData,
+                                            passengers: formDataList,
+                                            block1,
+                                            block2,
+                                            totalPrice,
+                                        }
+                                    });
+                                }}
+                            >
+                                Далее
+                            </MainButton>
+                        </div>
                     </div>
                 </div>
             </div>
