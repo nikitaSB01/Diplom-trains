@@ -23,7 +23,7 @@
 }
 
 .field:focus {
-    border-color: #ffa800;
+    border-color: rgba(255, 168, 0, 1);
     outline: none;
 }
 

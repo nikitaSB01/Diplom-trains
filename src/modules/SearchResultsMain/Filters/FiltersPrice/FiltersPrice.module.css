@@ -1,5 +1,5 @@
 .price {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 1);
     padding: 35px 34px 32px 30px;
     border-radius: 4px;
     border-bottom: 1px solid #E5E5E5;
@@ -12,7 +12,7 @@
     font-size: 30px;
     line-height: 100%;
     letter-spacing: 0%;
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 1);
 }
 
 .labels {
@@ -27,7 +27,7 @@
     font-size: 18px;
     line-height: 100%;
     letter-spacing: 0%;
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 1);
 }
 
 .sliderWrapper {

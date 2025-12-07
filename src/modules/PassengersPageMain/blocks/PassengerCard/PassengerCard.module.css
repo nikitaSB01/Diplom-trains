@@ -230,7 +230,7 @@
 .genderTitle {
     font-size: 14px;
     font-weight: 500;
-    color: #292929;
+    color: rgba(41, 41, 41, 1);
     margin-bottom: 6px;
 }
 
@@ -255,7 +255,7 @@
 
 input:focus,
 select:focus {
-    border-color: #FFA800;
+    border-color: rgba(255, 168, 0, 1);
     outline: none;
 }
 
@@ -348,12 +348,10 @@ select:focus {
 
 .errorBlock {
     background: rgba(255, 61, 0, 0.38);
-    color: #C60000;
 }
 
 .successBlock {
     background: rgba(178, 246, 161, 1);
-    color: #217E47;
 }
 
 /*   NEXT PASSENGER BTN  */
@@ -416,7 +414,7 @@ select:focus {
 .doneInfo p {
     font-size: 18px;
     font-weight: 500;
-    color: #217E47;
+    color: rgba(255, 255, 255, 1);
 }
 
 .doneInfo svg {
@@ -424,44 +422,8 @@ select:focus {
     height: 28px;
 }
 
-
-/* === КАСТОМНЫЙ SELECT === */
-
-.selectPassCard {
-    width: 100%;
-
-    padding: 0 20px;
-    padding-right: 50px;
-    /* место для стрелки */
-
-    border: 1px solid rgba(146, 143, 148, 1);
-
-    background: #fff url("../../../../assets/icons/PassengersPage/PassengersBlock/PassengerCard/select-arrow.svg") no-repeat right 20px center;
-    appearance: none;
-    /* скрываем системную стрелку */
-
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: rgba(41, 41, 41, 1);
-
-    cursor: pointer;
-}
-
 .selectPassCardDoc {
     font-size: 18px;
-}
-
-.selectPassCard:focus {
-    border-color: #ffa800;
-    outline: none;
-}
-
-/* === DROPDOWN OPTIONS === */
-.selectPassCard option {
-    font-size: 28px;
-    padding: 10px 0;
 }
 
 /* обёртка — становится относительным контейнером */

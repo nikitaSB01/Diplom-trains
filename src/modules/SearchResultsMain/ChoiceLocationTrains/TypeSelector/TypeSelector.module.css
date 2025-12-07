@@ -120,7 +120,7 @@
 
 /* Активный — синий фон + белый текст */
 .activeWagon {
-    color: white;
+    color: rgba(255, 255, 255, 1);
 }
 
 .right {

@@ -31,10 +31,10 @@
 .button {
     width: 228px;
     height: 39px;
-    background-color: #FFA800;
+    background-color: rgba(255, 168, 0, 1);
     border: none;
     border-radius: 5px;
-    color: white;
+    color: rgba(255, 255, 255, 1);
     font-weight: 700;
     font-size: 24px;
     cursor: pointer;
@@ -45,7 +45,8 @@
 }
 
 .button:active {
-    background-color: white;
-    color: #FFA800;
-    border: 1px solid #FFA800;
+    background-color: rgba(255, 255, 255, 1);
+    ;
+    color: rgba(255, 168, 0, 1);
+    border: 1px solid rgba(255, 168, 0, 1);
 }

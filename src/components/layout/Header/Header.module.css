@@ -5,7 +5,7 @@
     margin: 0 auto;
     min-height: 990px;
     max-height: 990px;
-    color: #fff;
+    color: rgba(255, 255, 255, 1);
     background-image: url("../../../assets/img/train-bg.png");
     background-color: rgba(0, 0, 0, 0.69);
     background-size: 1920px auto;
@@ -37,7 +37,7 @@
 
 .logo {
     font-weight: 700;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 1);
     font-size: 36px;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .nav a:hover {
-    color: #fcdc2a;
+    color: rgba(255, 168, 0, 1);
 }
 
 /* ======== Герой-блок ======== */

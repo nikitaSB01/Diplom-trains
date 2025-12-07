@@ -71,13 +71,8 @@
     transform: rotate(45deg);
 }
 
-.checkboxInput.cash:checked {
-    background: #f5a623;
-    border-color: #f5a623;
-}
-
 .checkboxInput.cash:checked::after {
-    border-color: white;
+    border-color: rgba(255, 255, 255, 1);
 }
 
 .checkboxInput:checked+.cashText {
@@ -109,14 +104,8 @@
 }
 
 .methodBtn.active {
-    background: #fff3cd;
-    border-color: #ffc846;
-    /* ← рамка видна, но размер не меняется */
-}
-
-.cashText {
-    color: #f5a623;
-    font-weight: 500;
+    background: rgba(255, 168, 0, 0.2);
+    border-color: rgba(255, 168, 0, 0.9);
 }
 
 .border {

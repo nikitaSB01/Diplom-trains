@@ -1,5 +1,5 @@
 .container {
-    color: #fff;
+    color: rgba(255, 255, 255, 1);
     border-bottom: 1px solid #E5E5E5;
     cursor: pointer;
     padding: 24px 34px 30px 26px;
@@ -41,7 +41,7 @@
     line-height: 100%;
     letter-spacing: 0%;
 
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 1);
 }
 
 .toggle {
@@ -91,7 +91,7 @@
     flex-direction: column;
     gap: 22px;
     padding-top: 50px;
-    color: #fff;
+    color: rgba(255, 255, 255, 1);
     cursor: default;
 }
 

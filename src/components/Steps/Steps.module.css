@@ -1,146 +1,139 @@
-/* ===================== */
-/*   КОНТЕЙНЕР           */
-/* ===================== */
-.stepsContainer {
-    display: flex;
-    width: 100%;
-    height: 98px;
-    max-width: 1920px;
-    overflow: hidden;
-}
+ /*   КОНТЕЙНЕР           */
 
-/* Один шаг */
-.step {
-    display: flex;
-    flex-direction: row;
-    height: 98px;
-    position: relative;
-}
+ .stepsContainer {
+     display: flex;
+     width: 100%;
+     height: 98px;
+     max-width: 1920px;
+     overflow: hidden;
+ }
 
-/* Шаги 2 и 3 → фиксированные 320px */
-.step2,
-.step3 {
-    width: 360px;
-    flex: 0 0 360px;
-}
+ /* Один шаг */
+ .step {
+     display: flex;
+     flex-direction: row;
+     height: 98px;
+     position: relative;
+ }
 
-/* Шаги 1 и 4 → занимают остаток пространства поровну */
-.step1,
-.step4 {
-    flex: 1 1 0;
-    display: flex;
-}
+ /* Шаги 2 и 3 → фиксированные 320px */
+ .step2,
+ .step3 {
+     width: 360px;
+     flex: 0 0 360px;
+ }
 
-/* ===================== */
-/*   ПРЯМОУГОЛЬНИК       */
-/* ===================== */
-.box {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 20px;
+ /* Шаги 1 и 4 → занимают остаток пространства поровну */
+ .step1,
+ .step4 {
+     flex: 1 1 0;
+     display: flex;
+ }
 
-    padding-left: 35px;
-    /* padding-right: 40px; */
 
-    background: #3b3b46;
-    color: white;
+ /*   ПРЯМОУГОЛЬНИК       */
 
-    /*  justify-content: center;  */
-}
+ .box {
+     flex: 1;
+     height: 100%;
+     display: flex;
+     align-items: center;
+     gap: 20px;
 
-/* ===================== */
-/*       ЦИФРА            */
-/* ===================== */
-.numberWrapper {
-    width: 56px;
-    height: 56px;
+     padding-left: 35px;
+     /* padding-right: 40px; */
 
-    border-radius: 50%;
-    border: 3px solid #fff;
+     background: #3b3b46;
+     color: rgba(255, 255, 255, 1);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
+     /*  justify-content: center;  */
+ }
 
-.number {
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 36px;
-    color: white;
-}
 
-/* ===================== */
-/*       ТЕКСТ            */
-/* ===================== */
-.title {
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 30px;
-    color: white;
-    white-space: nowrap;
-}
+ /*       ЦИФРА            */
 
-/* ===================== */
-/*     ТРЕУГОЛЬНИК       */
-/* ===================== */
-.containerTriangle {
-    width: 43px;
-    height: 98px;
-    position: relative;
-    flex-shrink: 0;
-    background: #3b3b46;
-}
+ .numberWrapper {
+     width: 56px;
+     height: 56px;
 
-.triangleBg {
-    position: absolute;
-    inset: 0;
-    background: #3b3b46;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
+     border-radius: 50%;
+     border: 3px solid #fff;
 
-.line {
-    position: absolute;
-    inset: 0;
-    width: 43px;
-    height: 98px;
-    stroke: #e5e5e5;
-    stroke-width: 2;
-    fill: none;
-    pointer-events: none;
-}
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     flex-shrink: 0;
+ }
 
-/* ===================== */
-/*     ПРОЙДЕННЫЕ        */
-/* ===================== */
-.active .box {
-    background: rgba(255, 168, 0, 1);
-    color: #3b3b46;
-}
+ .number {
+     font-weight: 700;
+     font-size: 36px;
+     line-height: 36px;
+     color: rgba(255, 255, 255, 1);
 
-.active>.containerTriangle,
-.active>.containerTriangle .triangleBg {
-    background: rgba(255, 168, 0, 1);
-}
+ }
 
-/* ===================== */
-/*     ТЕКУЩИЙ           */
-/* ===================== */
-.current .box {
-    background: rgba(255, 168, 0, 1);
-    color: #3b3b46;
-}
 
-.current>.containerTriangle .triangleBg {
-    background: rgba(255, 168, 0, 1);
-}
+ /*       ТЕКСТ            */
 
-/* ===================== */
-/*   ПОСЛЕДНИЙ ШАГ       */
-/* ===================== */
-.last .containerTriangle {
-    display: none;
-}
+ .title {
+     font-weight: 700;
+     font-size: 30px;
+     line-height: 30px;
+     color: rgba(255, 255, 255, 1);
+
+     white-space: nowrap;
+ }
+
+
+ /*     ТРЕУГОЛЬНИК       */
+
+ .containerTriangle {
+     width: 43px;
+     height: 98px;
+     position: relative;
+     flex-shrink: 0;
+     background: #3b3b46;
+ }
+
+ .triangleBg {
+     position: absolute;
+     inset: 0;
+     background: #3b3b46;
+     clip-path: polygon(0 0, 100% 50%, 0 100%);
+ }
+
+ .line {
+     position: absolute;
+     inset: 0;
+     width: 43px;
+     height: 98px;
+     stroke: #e5e5e5;
+     stroke-width: 2;
+     fill: none;
+     pointer-events: none;
+ }
+
+ /*     ПРОЙДЕННЫЕ        */
+ .active .box {
+     background: rgba(255, 168, 0, 1);
+ }
+
+ .active>.containerTriangle,
+ .active>.containerTriangle .triangleBg {
+     background: rgba(255, 168, 0, 1);
+ }
+
+ /*     ТЕКУЩИЙ           */
+ .current .box {
+     background: rgba(255, 168, 0, 1);
+ }
+
+ .current>.containerTriangle .triangleBg {
+     background: rgba(255, 168, 0, 1);
+ }
+
+ /*   ПОСЛЕДНИЙ ШАГ       */
+ .last .containerTriangle {
+     display: none;
+ }

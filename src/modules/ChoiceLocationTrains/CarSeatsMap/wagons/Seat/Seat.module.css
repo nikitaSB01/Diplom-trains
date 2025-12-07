@@ -12,7 +12,7 @@
 
 /* СВОБОДНО/ЗАНЯТО/ЗАБРОНИРОВАНО */
 .free {
-    background: #fff;
+    background: rgba(255, 255, 255, 1)ZF;
 }
 
 .taken {
@@ -20,9 +20,9 @@
 }
 
 .reserved {
-    background: #3e8ef7 !important;
+    background: rgb(84, 140, 240) !important;
     color: white !important;
-    border-color: #2f6fd6 !important;
+    border-color: rgb(60, 110, 200) !important;
     cursor: default;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .lowerSeat {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 1);
 }
 
 /* ======== БОКОВЫЕ ======== */
@@ -41,13 +41,13 @@
 }
 
 .sideLowerSeat {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 1);
 }
 
 .unavailable {
     background: #747a74;
     /* зелёный */
-    color: white;
+    color: rgba(255, 255, 255, 1);
     border-color: rgb(74, 74, 74);
     cursor: default;
 }
@@ -58,6 +58,5 @@
 }
 
 .sittingSeat {
-    background-color: #e6f0ff;
-    /* или любое другое оформление */
+    background-color: rgba(255, 255, 255, 1);
 }
