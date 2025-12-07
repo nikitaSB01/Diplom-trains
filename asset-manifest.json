@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Diplom-trains/static/css/main.dfae5df9.css",
-    "main.js": "/Diplom-trains/static/js/main.e9400ea8.js",
+    "main.css": "/Diplom-trains/static/css/main.a0ddad55.css",
+    "main.js": "/Diplom-trains/static/js/main.caaaae42.js",
     "static/js/453.4e40dd54.chunk.js": "/Diplom-trains/static/js/453.4e40dd54.chunk.js",
     "static/media/imgSucces.png": "/Diplom-trains/static/media/imgSucces.454f40a652b478c580e4.png",
     "static/media/train-bg.png": "/Diplom-trains/static/media/train-bg.5043a91df3169a9ef237.png",
@@ -76,7 +76,6 @@
     "static/media/arrowMinThereBlack.svg": "/Diplom-trains/static/media/arrowMinThereBlack.760f09a3b4997f189753.svg",
     "static/media/arrowMinThereGray.svg": "/Diplom-trains/static/media/arrowMinThereGray.90a8a74c5e8d8ab68142.svg",
     "static/media/arrowBack.svg": "/Diplom-trains/static/media/arrowBack.9d9e13181b78a586825168c859f1c0e4.svg",
-    "static/media/arrowBetween.svg": "/Diplom-trains/static/media/arrowBetween.e740ca89a5e3cdb630eda7362fa2825e.svg",
     "static/media/arrowThere.svg": "/Diplom-trains/static/media/arrowThere.2aa11c97a3bfb3ffd4b562f456571d71.svg",
     "static/media/close.svg": "/Diplom-trains/static/media/close.cb21825c45d5ac7fa1ea4721bb599d0e.svg",
     "static/media/Star.svg": "/Diplom-trains/static/media/Star.ff04524ad1f84a713c7f2e2017f12ca8.svg",
@@ -88,12 +87,12 @@
     "static/media/lux.svg": "/Diplom-trains/static/media/lux.d53bdcf45f00ec33c622d501a0ecce4e.svg",
     "static/media/2.svg": "/Diplom-trains/static/media/2.331955b821e33f471c9d75058937ca74.svg",
     "static/media/select-arrow.svg": "/Diplom-trains/static/media/select-arrow.7deddb57c81afe1a98e3.svg",
-    "main.dfae5df9.css.map": "/Diplom-trains/static/css/main.dfae5df9.css.map",
-    "main.e9400ea8.js.map": "/Diplom-trains/static/js/main.e9400ea8.js.map",
+    "main.a0ddad55.css.map": "/Diplom-trains/static/css/main.a0ddad55.css.map",
+    "main.caaaae42.js.map": "/Diplom-trains/static/js/main.caaaae42.js.map",
     "453.4e40dd54.chunk.js.map": "/Diplom-trains/static/js/453.4e40dd54.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dfae5df9.css",
-    "static/js/main.e9400ea8.js"
+    "static/css/main.a0ddad55.css",
+    "static/js/main.caaaae42.js"
   ]
 }
