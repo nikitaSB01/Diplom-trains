@@ -1,5 +1,8 @@
 {
-  "env": { "browser": true, "es2021": true },
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
   "extends": [
     "react-app",
     "plugin:jsx-a11y/recommended",
@@ -8,11 +11,42 @@
     "plugin:import/typescript",
     "prettier"
   ],
-  "plugins": ["import", "jsx-a11y"],
+  "plugins": [
+    "import",
+    "jsx-a11y",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "no-unused-vars": ["warn"],
-    "import/order": "off"
+    /* Хуки */
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    /* Переменные */
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    /* Импорты */
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ],
+        "newlines-between": "always"
+      }
+    ]
   }
 }
