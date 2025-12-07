@@ -98,9 +98,9 @@
 }
 
 .limitNumber:hover {
-    background: #f2f2f2;
+    background: rgba(146, 143, 148, 0.2);
 }
 
 .activeLimit {
-    color: #292929;
+    color: rgba(41, 41, 41, 1);
 }

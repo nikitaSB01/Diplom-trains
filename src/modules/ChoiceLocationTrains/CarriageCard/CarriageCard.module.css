@@ -166,7 +166,6 @@
     width: 40px;
     height: 40px;
     padding: 8px;
-    background: #f6c356;
     border-radius: 8px;
 }
 
@@ -175,7 +174,7 @@
     left: 50%;
     transform: translateX(-50%);
     top: 60px;
-    background: #fff;
+    background: rgba(255, 255, 255, 1);
     padding: 6px 12px;
     border-radius: 8px;
     font-size: 16px;
@@ -220,7 +219,7 @@
 
 /* === ДОСТУПНО ДЛЯ ПОКУПКИ === */
 .contsinerServices button.iconAvailable {
-    background: #fff;
+    background: rgba(255, 255, 255, 1);
     border: 1px solid rgba(41, 41, 41, 1);
 }
 

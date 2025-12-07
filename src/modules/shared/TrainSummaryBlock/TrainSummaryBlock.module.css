@@ -2,7 +2,7 @@
 .wrapper {
     max-width: 960px;
     width: 100%;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 1);
     border: 1px solid rgba(196, 196, 196, 1);
     overflow: visible;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
@@ -22,8 +22,8 @@
     width: 100%;
     border-left: 1px solid transparent;
     border-image: repeating-linear-gradient(to bottom,
-            #e5e5e5 0,
-            #e5e5e5 1px,
+            rgb(229, 229, 229) 0,
+            rgb(229, 229, 229) 1px,
             transparent 1px,
             transparent 3px) 1;
     display: flex;

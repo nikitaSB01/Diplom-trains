@@ -10,7 +10,7 @@
 
 .popup {
     width: 660px;
-    background: #fff;
+    background: rgba(255, 255, 255, 1);
     border-radius: 4px;
     overflow: hidden;
     animation: fadeIn 0.2s ease;

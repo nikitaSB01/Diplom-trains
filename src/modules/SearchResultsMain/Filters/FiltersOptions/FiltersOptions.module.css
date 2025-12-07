@@ -2,9 +2,8 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    /*  background-color: #2d2d2d; */
     padding: 25px 35px 20px 60px;
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 1px solid rgb(229, 229, 229);
     border-radius: 4px;
 }
 
@@ -23,7 +22,7 @@
 .icon {
     width: 20px;
     height: 20px;
-    fill: #fff;
+    fill: rgba(255, 255, 255, 1);
 }
 
 p {
@@ -45,18 +44,18 @@ p {
 }
 
 .toggle.active {
-    background-color: #FCDC9D;
+    background-color: rgba(252, 220, 157, 1);
 }
 
 .toggle .circle {
     width: 28px;
     height: 28px;
-    background-color: #C4C4C4;
+    background-color: rgba(196, 196, 196, 1);
     border-radius: 50%;
     transition: transform 0.3s ease;
 }
 
 .toggle.active .circle {
     transform: translateX(50px);
-    background-color: #FFA800;
+    background-color: rgba(255, 168, 0, 1);
 }

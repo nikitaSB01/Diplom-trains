@@ -33,11 +33,11 @@
 }
 
 .header:hover .togglePlus path {
-    fill: #FCDC9D;
+    fill: rgba(240, 220, 160, 1);
 }
 
 .header:hover .togglePlus rect {
-    stroke: #FCDC9D;
+    stroke: rgba(240, 220, 160, 1);
 }
 
 .title {

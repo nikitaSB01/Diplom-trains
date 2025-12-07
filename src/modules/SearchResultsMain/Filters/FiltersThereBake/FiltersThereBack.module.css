@@ -1,6 +1,6 @@
 .container {
     color: rgba(255, 255, 255, 1);
-    border-bottom: 1px solid #E5E5E5;
+    border-bottom: 1px solid rgb(229, 229, 229);
     cursor: pointer;
     padding: 24px 34px 30px 26px;
 }
@@ -50,11 +50,11 @@
 }
 
 .container:hover .togglePlus path {
-    fill: #FCDC9D;
+    fill: rgba(240, 220, 160, 1);
 }
 
 .container:hover .togglePlus rect {
-    stroke: #FCDC9D;
+    stroke: rgba(240, 220, 160, 1);
 }
 
 

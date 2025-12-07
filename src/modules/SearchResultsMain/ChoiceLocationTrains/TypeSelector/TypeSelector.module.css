@@ -48,12 +48,6 @@
     color: rgba(146, 143, 148, 1);
 }
 
-/* АКТИВНОЕ СОСТОЯНИЕ */
-.active {
-    /*     border-color: rgba(255, 168, 0, 1);
-    background: #fff4d1; */
-}
-
 .active .icon {
     fill: rgba(255, 168, 0, 1);
 }
@@ -66,9 +60,7 @@
     margin-top: 20px;
 }
 
-/* ============================= */
 /*        БЛОК ВАГОНОВ (MAKET)   */
-/* ============================= */
 
 .wagonsHeader {
     background: rgba(255, 217, 143, 1);

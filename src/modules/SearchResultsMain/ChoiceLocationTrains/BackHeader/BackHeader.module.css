@@ -44,5 +44,5 @@
 }
 
 .changeButton:hover, .backButton:hover {
-    background: #f3f3f3;
+    background: rgba(215, 215, 215, 0.6);
 }

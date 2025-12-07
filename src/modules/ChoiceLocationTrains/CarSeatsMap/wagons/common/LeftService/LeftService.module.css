@@ -1,6 +1,6 @@
 .leftService, .rightService {
     width: 95px;
-    background: #f5f5f5;
+    background: rgb(227, 227, 227);
     position: relative;
 }
 

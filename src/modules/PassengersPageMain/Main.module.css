@@ -9,8 +9,8 @@
 
     padding: 28px 38px 32px 26px;
 
-    background: #fff;
-    border: 2px solid #c8c8c8;
+    background: rgba(255, 255, 255, 1);
+    border: 2px solid rgb(200,200,200);
 
     cursor: pointer;
 }

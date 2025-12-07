@@ -44,9 +44,6 @@
     color: rgba(255, 255, 255, 1);
 }
 
-
-
-
 .dots {
     width: 85px;
     height: 75px;
@@ -54,11 +51,9 @@
     border: 2px solid rgba(196, 196, 196, 1);
     background: none;
     font-size: 20px;
-    color: #7d7d7d;
+    color: rgba(145, 143, 148, 1);
     display: flex;
     justify-content: center;
     align-items: end;
     padding: 18px 18px;
 }
-
-.dotsSvg {}

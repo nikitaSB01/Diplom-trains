@@ -8,8 +8,8 @@
 
 body {
     font-family: "Roboto", sans-serif;
-    color: #292929;
-    background-color: #fff;
+    color: rgba(41, 41, 41, 1);
+    background-color: rgba(255, 255, 255, 1);
 
 }
 

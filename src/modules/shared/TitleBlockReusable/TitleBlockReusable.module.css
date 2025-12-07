@@ -1,7 +1,7 @@
 .header {
     width: 100%;
     padding: 30px;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 1);
     border-bottom: 1px solid rgba(146, 143, 148, 1);
 }
 

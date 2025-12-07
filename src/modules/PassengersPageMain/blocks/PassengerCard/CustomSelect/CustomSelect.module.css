@@ -7,7 +7,7 @@
     height: 50px;
     border-radius: 4px;
     border: 1px solid rgba(146, 143, 148, 1);
-    background: #fff;
+    background: rgba(255, 255, 255, 1);
     padding: 0 13px;
     text-align: left;
 
@@ -50,17 +50,6 @@
     border-bottom: 1px solid rgba(196, 196, 196, 1);
 }
 
-/* пункт */
-.item {
-    padding: 12px 20px;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.item:hover {
-    background: #ececec;
-}
-
 .itemBtn {
     width: 100%;
     padding: 10px 13px;
@@ -72,5 +61,5 @@
 }
 
 .itemBtn:hover {
-    background: #ececec;
+    background: rgb(211, 211, 213);
 }

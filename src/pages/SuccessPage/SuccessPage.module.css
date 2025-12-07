@@ -1,7 +1,7 @@
 .page {
-    background: #f7f6f6;
+    background: rgba(246, 244, 248);
     min-height: 100vh;
-    color: #000;
+    color: rgba(41, 41, 41, 1);
 }
 
 .main {
@@ -42,7 +42,7 @@
 
 .containerInfo {
     width: 100%;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 1);
 
     border: 1px solid rgba(196, 196, 196, 1);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
@@ -54,8 +54,8 @@
 .topPanel {
     min-height: 150px;
     max-height: 150px;
-    background: #fff;
-    border: 1px solid #e5e5e5;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgb(240, 240, 240);
     padding: 20px 40px;
     display: flex;
     justify-content: space-between;
@@ -113,7 +113,6 @@
 .iconItem {
     text-align: center;
     font-size: 15px;
-    color: #4b4b4b;
 }
 
 .iconItem p {
@@ -132,8 +131,8 @@
 /* === MESSAGE === */
 .messageBlock {
     min-height: 490px;
-    background: #fff;
-    border: 1px solid #e5e5e5;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgb(240, 240, 240);
     padding: 95px 230px 130px 200px;
 
 }
@@ -164,7 +163,7 @@
 .bottom {
     min-height: 160px;
 
-    background: #f3a52b;
+    background: rgba(255, 168, 0, 0.88);
     padding: 30px 80px;
 
     display: flex;
@@ -188,7 +187,6 @@
 
 .stars {
     font-size: 26px;
-    color: #000;
 }
 
 /* Button */
