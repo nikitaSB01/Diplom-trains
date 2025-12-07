@@ -117,7 +117,7 @@ const Main: React.FC<Props> = ({
                         />
                     </div>
 
-                    <div className={styles.containerButton}>
+            <div className={`${layout.pageContainerButton} ${styles.containerButton}`}>
                         <MainButton
                             active={isFormValid}
                             size="wide"

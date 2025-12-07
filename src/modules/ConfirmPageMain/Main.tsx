@@ -67,7 +67,8 @@ const Main: React.FC<Props> = ({
 
                         />
                     </div>
-                    <div className={styles.confirmContainer}>
+
+                    <div className={`${layout.pageContainerButton} ${styles.confirmContainer}`}>
                         <MainButton
                             size="wide"
                             onClick={() =>
